@@ -17,6 +17,5 @@ libraryDependencies ++= Seq(
   "uk.gov.hmrc" %% "domain" % "5.1.0" % "test",
   "uk.gov.hmrc" %% "http-verbs" % "7.2.0" % "test",
   "uk.gov.hmrc" %% "http-verbs-play-25" % "0.9.0" % "test",
-  // If you are considering upgrading to scala-uri 1.0.0 note that it contains a breaking change that affects this project, see https://github.com/lemonlabsuk/scala-uri/issues/16
-  "io.lemonlabs" %% "scala-uri" % "0.5.7" % "test"
+  "io.lemonlabs" %% "scala-uri" % "1.1.1" % "test"
 )
