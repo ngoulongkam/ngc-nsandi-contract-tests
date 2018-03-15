@@ -18,7 +18,7 @@ package uk.gov.hmrc.ngchelptosavecontract.mobilehelptosave
 
 import java.net.URL
 
-import com.netaporter.uri.dsl._
+import io.lemonlabs.uri.dsl._
 import org.scalatest.{Assertion, AsyncWordSpec, Matchers}
 import play.api.Play
 import play.api.libs.json.{JsObject, JsValue}
@@ -26,6 +26,7 @@ import play.api.test.{DefaultAwaitTimeout, FutureAwaits}
 import uk.gov.hmrc.domain.Nino
 import uk.gov.hmrc.http.{CoreGet, HeaderCarrier, HttpReads, HttpResponse}
 import uk.gov.hmrc.ngchelptosavecontract.scalatest.WSClientSpec
+import uk.gov.hmrc.ngchelptosavecontract.support.ScalaUriConfig.config
 import uk.gov.hmrc.ngchelptosavecontract.support.{ServicesConfig, TestWSHttp}
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -151,15 +152,24 @@ class AccountSpec extends AsyncWordSpec with Matchers with FutureAwaits with Def
     }
   }
 
+  "this test's accountUrlWithParams method" should {
+    "omit parameters when they are None" in {
+      accountUrlWithParams(Some(ninoWithHtsAccount)) should include ("nino")
+      accountUrlWithParams(None) should not include "nino"
+      accountUrlWithParams(Some(ninoWithHtsAccount), correlationId = Some("something")) should include("correlationId")
+      accountUrlWithParams(Some(ninoWithHtsAccount)) should not include "correlationId"
+    }
+  }
+
   private val defaultSystemId = "MDTPMOBILE"
 
   private def account(nino: Nino, version: String = accountApiVersion, systemId: String = defaultSystemId, correlationId: Option[String] = None)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[JsValue] =
     http.GET[JsValue](accountUrlWithParams(Some(nino), Some(version), Some(systemId), correlationId))
 
-  private def accountUrlWithParams(nino: Option[Nino], version: Option[String] = Some(accountApiVersion), systemId: Option[String] = Some(defaultSystemId), correlationId: Option[String] = None) =
+  private def accountUrlWithParams(nino: Option[Nino], version: Option[String] = Some(accountApiVersion), systemId: Option[String] = Some(defaultSystemId), correlationId: Option[String] = None): String =
     accountUrlWithParamsUnvalidatedNino(nino.map(_.value), version, systemId, correlationId)
 
-  private def accountUrlWithParamsUnvalidatedNino(nino: Option[String], version: Option[String] = Some(accountApiVersion), systemId: Option[String] = Some(defaultSystemId), correlationId: Option[String] = None) =
+  private def accountUrlWithParamsUnvalidatedNino(nino: Option[String], version: Option[String] = Some(accountApiVersion), systemId: Option[String] = Some(defaultSystemId), correlationId: Option[String] = None): String =
     accountUrl.toString ? ("nino" -> nino) & ("version" -> version) & ("systemId" -> systemId) & ("correlationId" -> correlationId)
 
   // Workaround to prevent ClassCastException being thrown when setting up Play.xercesSaxParserFactory when "test" is run twice in the same sbt session.
