@@ -161,7 +161,7 @@ class AccountSpec extends AsyncWordSpec with Matchers with FutureAwaits with Def
     }
   }
 
-  private val defaultSystemId = "MDTPMOBILE"
+  private val defaultSystemId = "MDTP-MOBILE"
 
   private def account(nino: Nino, version: String = accountApiVersion, systemId: String = defaultSystemId, correlationId: Option[String] = None)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[JsValue] =
     http.GET[JsValue](accountUrlWithParams(Some(nino), Some(version), Some(systemId), correlationId))
