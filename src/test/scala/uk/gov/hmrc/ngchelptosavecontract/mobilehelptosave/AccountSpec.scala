@@ -21,7 +21,7 @@ import java.net.URL
 import io.lemonlabs.uri.dsl._
 import org.scalatest.{Assertion, AsyncWordSpec, Matchers}
 import play.api.Play
-import play.api.libs.json.{JsObject, JsValue}
+import play.api.libs.json.{JsObject, JsValue, Reads, __}
 import play.api.test.{DefaultAwaitTimeout, FutureAwaits}
 import uk.gov.hmrc.domain.Nino
 import uk.gov.hmrc.http.{CoreGet, HeaderCarrier, HttpReads, HttpResponse}
@@ -111,7 +111,7 @@ class AccountSpec extends AsyncWordSpec with Matchers with FutureAwaits with Def
 
       http.GET[HttpResponse](accountUrlWithParams(Some(ninoWithHtsAccount), version = None)).map { response =>
         response.status shouldBe 400
-        (response.json \ "error" \ "errorMessageId").as[String] shouldBe "HTS-API015-002"
+        (response.json \ "error").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-002")
       }
     }
 
@@ -120,7 +120,7 @@ class AccountSpec extends AsyncWordSpec with Matchers with FutureAwaits with Def
 
       http.GET[HttpResponse](accountUrlWithParams(Some(ninoWithHtsAccount), version = Some("V0.0"))).map { response =>
         response.status shouldBe 400
-        (response.json \ "error" \ "errorMessageId").as[String] shouldBe "HTS-API015-003"
+        (response.json \ "error").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-003")
       }
     }
 
@@ -129,7 +129,7 @@ class AccountSpec extends AsyncWordSpec with Matchers with FutureAwaits with Def
 
       http.GET[HttpResponse](accountUrlWithParams(nino = None)).map { response =>
         response.status shouldBe 400
-        (response.json \ "error" \ "errorMessageId").as[String] shouldBe "HTS-API015-004"
+        (response.json \ "error").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-004")
       }
     }
 
@@ -138,7 +138,7 @@ class AccountSpec extends AsyncWordSpec with Matchers with FutureAwaits with Def
 
       http.GET[HttpResponse](accountUrlWithParamsUnvalidatedNino(nino = Some("not a NINO"))).map { response =>
         response.status shouldBe 400
-        (response.json \ "error" \ "errorMessageId").as[String] shouldBe "HTS-API015-005"
+        (response.json \ "error").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-005")
       }
     }
 
@@ -147,7 +147,7 @@ class AccountSpec extends AsyncWordSpec with Matchers with FutureAwaits with Def
 
       http.GET[HttpResponse](accountUrlWithParams(nino = Some(ninoWithoutHtsAccount))).map { response =>
         response.status shouldBe 400
-        (response.json \ "error" \ "errorMessageId").as[String] shouldBe "HTS-API015-006"
+        (response.json \ "error").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-006")
       }
     }
   }
