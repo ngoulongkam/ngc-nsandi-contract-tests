@@ -150,6 +150,15 @@ class AccountSpec extends AsyncWordSpec with Matchers with FutureAwaits with Def
         (response.json \ "error").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-006")
       }
     }
+
+    "return 400 with two error responses when a NINO with an invalid format and the incorrect version is passed" in {
+      implicit val httpReads: HttpReads[HttpResponse] = NoErrorHandling.httpReads
+
+      http.GET[HttpResponse](accountUrlWithParamsUnvalidatedNino(nino = Some("not a NINO"), version = Some("V0.0"))).map { response =>
+        response.status shouldBe 400
+        (response.json \ "error").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-003", "HTS-API015-005")
+      }
+    }
   }
 
   "this test's accountUrlWithParams method" should {
