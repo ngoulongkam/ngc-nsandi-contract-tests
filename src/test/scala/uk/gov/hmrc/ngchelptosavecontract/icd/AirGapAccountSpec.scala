@@ -18,6 +18,7 @@ package uk.gov.hmrc.ngchelptosavecontract.icd
 
 import org.scalatest.{Matchers, WordSpec}
 import play.api.libs.json.{JsValue, Json}
+import uk.gov.hmrc.http.HttpResponse
 
 /**
   * Tests that check that the air gap JSON files for NS&I's
@@ -27,38 +28,44 @@ import play.api.libs.json.{JsValue, Json}
   * We can only check the body, not the HTTP status code or headers, because the
   * JSON files contain only the body.
   */
-class AirGapAccountSpec extends WordSpec with Matchers with AccountBodyChecks {
+class AirGapAccountSpec extends WordSpec with Matchers with AccountChecks {
 
   "GET account air gap JSON" should {
 
+    "include all fields when a value is available" in {
+      checkAllFieldsPresentResponse(JsonFileHttpResponse(200, "all-fields.json"))
+    }
+
     "return 400 HTS-API015-002 when no version parameter is passed" in {
-      val jsonBody: JsValue = loadJson("no-version.json")
-      checkNoVersionResponseBody(jsonBody)
+      checkNoVersionResponse(JsonFileHttpResponse(400, "no-version.json"))
     }
 
     "return 400 HTS-API015-003 when an incorrect version parameter is passed" in {
-      val jsonBody: JsValue = loadJson("invalid-version.json")
-      checkInvalidVersionResponseBody(jsonBody)
+      checkInvalidVersionResponse(JsonFileHttpResponse(400, "invalid-version.json"))
     }
 
     "return 400 HTS-API015-004 when no NINO is passed" in {
-      val jsonBody: JsValue = loadJson("no-nino.json")
-      checkNoNinoResponseBody(jsonBody)
+      checkNoNinoResponse(JsonFileHttpResponse(400, "no-nino.json"))
     }
 
     "return 400 HTS-API015-005 when NINO with invalid format is passed" in {
-      val jsonBody: JsValue = loadJson("invalid-nino.json")
-      checkInvalidNinoResponseBody(jsonBody)
+      checkInvalidNinoResponse(JsonFileHttpResponse(400, "invalid-nino.json"))
     }
 
     "return 400 HTS-API015-006 when NINO without a Help to Save account is passed" in {
-      checkNoAccountResponseBody(loadJson("no-account.json"))
+      checkNoAccountResponse(JsonFileHttpResponse(400, "no-account.json"))
     }
 
     "return 400 with two error responses when a NINO with an invalid format and the incorrect version is passed" in {
-      checkInvalidNinoAndVersionResponseBody(loadJson("invalid-nino-and-version.json"))
+      checkInvalidNinoAndVersionResponse(JsonFileHttpResponse(400, "invalid-nino-and-version.json"))
     }
   }
+
+}
+
+private object JsonFileHttpResponse {
+  def apply(status: Int, jsonLeafname: String): HttpResponse =
+    HttpResponse(status, Some(loadJson(jsonLeafname)))
 
   private def loadJson(leafname: String): JsValue = {
     val inputStream = getClass.getResourceAsStream(s"/airgap/$leafname")
@@ -66,8 +73,7 @@ class AirGapAccountSpec extends WordSpec with Matchers with AccountBodyChecks {
       Json.parse(inputStream)
     }
     finally {
-      inputStream.close()
+      if (inputStream != null) inputStream.close()
     }
   }
-
 }
