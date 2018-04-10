@@ -21,10 +21,11 @@ import java.net.URL
 import io.lemonlabs.uri.dsl._
 import org.scalatest.{Assertion, AsyncWordSpec, Matchers}
 import play.api.Play
-import play.api.libs.json.{JsObject, JsValue, Reads, __}
+import play.api.libs.json.{JsObject, JsValue}
 import play.api.test.{DefaultAwaitTimeout, FutureAwaits}
 import uk.gov.hmrc.domain.Nino
 import uk.gov.hmrc.http.{CoreGet, HeaderCarrier, HttpReads, HttpResponse}
+import uk.gov.hmrc.ngchelptosavecontract.icd.AccountChecks
 import uk.gov.hmrc.ngchelptosavecontract.scalatest.WSClientSpec
 import uk.gov.hmrc.ngchelptosavecontract.support.ScalaUriConfig.config
 import uk.gov.hmrc.ngchelptosavecontract.support.{ServicesConfig, TestWSHttp}
@@ -36,7 +37,10 @@ import scala.concurrent.{ExecutionContext, Future}
   * Tests that check that NS&I's /nsi-services/account endpoint
   * meets the contract that mobile-help-to-save expects of it
   */
-class AccountSpec extends AsyncWordSpec with Matchers with FutureAwaits with DefaultAwaitTimeout with WSClientSpec {
+class AccountSpec
+  extends AsyncWordSpec with Matchers
+    with FutureAwaits with DefaultAwaitTimeout with WSClientSpec
+    with AccountChecks {
   private val servicesConfig = new ServicesConfig
   private val http: CoreGet = new TestWSHttp(wsClient)
 
@@ -109,55 +113,43 @@ class AccountSpec extends AsyncWordSpec with Matchers with FutureAwaits with Def
     "return 400 HTS-API015-002 when no version parameter is passed" in {
       implicit val httpReads: HttpReads[HttpResponse] = NoErrorHandling.httpReads
 
-      http.GET[HttpResponse](accountUrlWithParams(Some(ninoWithHtsAccount), version = None)).map { response =>
-        response.status shouldBe 400
-        (response.json \ "errors").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-002")
-      }
+      http.GET[HttpResponse](accountUrlWithParams(Some(ninoWithHtsAccount), version = None))
+        .map(checkNoVersionResponse)
     }
 
     "return 400 HTS-API015-003 when an incorrect version parameter is passed" in {
       implicit val httpReads: HttpReads[HttpResponse] = NoErrorHandling.httpReads
 
-      http.GET[HttpResponse](accountUrlWithParams(Some(ninoWithHtsAccount), version = Some("V0.0"))).map { response =>
-        response.status shouldBe 400
-        (response.json \ "errors").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-003")
-      }
+      http.GET[HttpResponse](accountUrlWithParams(Some(ninoWithHtsAccount), version = Some("V0.0")))
+        .map(checkInvalidVersionResponse)
     }
 
     "return 400 HTS-API015-004 when no NINO is passed" in {
       implicit val httpReads: HttpReads[HttpResponse] = NoErrorHandling.httpReads
 
-      http.GET[HttpResponse](accountUrlWithParams(nino = None)).map { response =>
-        response.status shouldBe 400
-        (response.json \ "errors").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-004")
-      }
+      http.GET[HttpResponse](accountUrlWithParams(nino = None))
+        .map(checkNoNinoResponse)
     }
 
     "return 400 HTS-API015-005 when NINO with invalid format is passed" in {
       implicit val httpReads: HttpReads[HttpResponse] = NoErrorHandling.httpReads
 
-      http.GET[HttpResponse](accountUrlWithParamsUnvalidatedNino(nino = Some("not a NINO"))).map { response =>
-        response.status shouldBe 400
-        (response.json \ "errors").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-005")
-      }
+      http.GET[HttpResponse](accountUrlWithParamsUnvalidatedNino(nino = Some("not a NINO")))
+        .map(checkInvalidNinoResponse)
     }
 
     "return 400 HTS-API015-006 when NINO without a Help to Save account is passed" in {
       implicit val httpReads: HttpReads[HttpResponse] = NoErrorHandling.httpReads
 
-      http.GET[HttpResponse](accountUrlWithParams(nino = Some(ninoWithoutHtsAccount))).map { response =>
-        response.status shouldBe 400
-        (response.json \ "errors").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-006")
-      }
+      http.GET[HttpResponse](accountUrlWithParams(nino = Some(ninoWithoutHtsAccount)))
+        .map(checkNoAccountResponse)
     }
 
     "return 400 with two error responses when a NINO with an invalid format and the incorrect version is passed" in {
       implicit val httpReads: HttpReads[HttpResponse] = NoErrorHandling.httpReads
 
-      http.GET[HttpResponse](accountUrlWithParamsUnvalidatedNino(nino = Some("not a NINO"), version = Some("V0.0"))).map { response =>
-        response.status shouldBe 400
-        (response.json \ "errors").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-003", "HTS-API015-005")
-      }
+      http.GET[HttpResponse](accountUrlWithParamsUnvalidatedNino(nino = Some("not a NINO"), version = Some("V0.0")))
+        .map(checkInvalidNinoAndVersionResponse)
     }
   }
 
