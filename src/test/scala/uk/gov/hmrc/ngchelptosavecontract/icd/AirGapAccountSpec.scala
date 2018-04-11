@@ -56,6 +56,10 @@ class AirGapAccountSpec extends WordSpec with Matchers with AccountChecks {
       checkNoAccountResponse(JsonFileHttpResponse(400, "no-account.json"))
     }
 
+    "return 400 HTS-API015-012 when no systemId is passed" in {
+      checkNoSystemIdResponse(JsonFileHttpResponse(400, "no-system-id.json"))
+    }
+
     "return 400 with two error responses when a NINO with an invalid format and the incorrect version is passed" in {
       checkInvalidNinoAndVersionResponse(JsonFileHttpResponse(400, "invalid-nino-and-version.json"))
     }
