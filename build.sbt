@@ -20,3 +20,5 @@ libraryDependencies ++= Seq(
   "io.lemonlabs" %% "scala-uri" % "1.1.1" % "test",
   "com.github.java-json-tools" % "json-schema-validator" % "2.2.8" % "test"
 )
+
+resolvers += "emueller-bintray" at "http://dl.bintray.com/emueller/maven"
