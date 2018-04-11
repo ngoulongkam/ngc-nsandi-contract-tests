@@ -26,7 +26,6 @@ trait AccountChecks extends Matchers {
     response.status shouldBe 200
     val jsonBody = response.json
 
-    // rest of method generated with GenAllFields
     (jsonBody \ "version").as[String] should not be empty
     (jsonBody \ "correlationId").as[String] should not be empty
     (jsonBody \ "accountNumber").as[String] should not be empty
@@ -59,13 +58,12 @@ trait AccountChecks extends Matchers {
     (jsonBody \ "nbaPayee").as[String] should not be empty
     (jsonBody \ "nbaRollNumber").as[String] should not be empty
     (jsonBody \ "nbaSortCode").as[String] should not be empty
-    (jsonBody \ "terms" \ "termNumber") (0).as[Int] should not be 0
-    (jsonBody \ "terms" \ "startDate") (0).as[String] should not be empty
-    (jsonBody \ "terms" \ "endDate") (0).as[String] should not be empty
-    (jsonBody \ "terms" \ "maxBalance") (0).as[String] should not be empty
-    (jsonBody \ "terms" \ "bonusEstimate") (0).as[String] should not be empty
-    (jsonBody \ "terms" \ "bonusPaid") (0).as[String] should not be empty
-    //end generated code
+    ((jsonBody \ "terms")(0) \ "termNumber").as[Int] should not be 0
+    ((jsonBody \ "terms")(0) \ "startDate").as[String] should not be empty
+    ((jsonBody \ "terms")(0) \ "endDate").as[String] should not be empty
+    ((jsonBody \ "terms")(0) \ "maxBalance").as[String] should not be empty
+    ((jsonBody \ "terms")(0) \ "bonusEstimate").as[String] should not be empty
+    ((jsonBody \ "terms")(0) \ "bonusPaid").as[String] should not be empty
   }
 
   def checkNoVersionResponse(response: HttpResponse): Assertion = {
