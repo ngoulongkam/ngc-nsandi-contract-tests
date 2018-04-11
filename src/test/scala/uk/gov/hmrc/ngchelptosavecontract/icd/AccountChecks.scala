@@ -83,14 +83,19 @@ trait AccountChecks extends Matchers {
     (response.json \ "errors").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-004")
   }
 
+  def checkInvalidNinoResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 400
+    (response.json \ "errors").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-005")
+  }
+
   def checkNoAccountResponse(response: HttpResponse): Assertion = {
     response.status shouldBe 400
     (response.json \ "errors").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-006")
   }
 
-  def checkInvalidNinoResponse(response: HttpResponse): Assertion = {
+  def checkNoSystemIdResponse(response: HttpResponse): Assertion = {
     response.status shouldBe 400
-    (response.json \ "errors").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-005")
+    (response.json \ "errors").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-012")
   }
 
   def checkInvalidNinoAndVersionResponse(response: HttpResponse): Assertion = {

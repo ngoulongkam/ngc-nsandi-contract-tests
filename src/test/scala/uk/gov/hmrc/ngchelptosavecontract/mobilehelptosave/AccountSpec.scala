@@ -145,6 +145,13 @@ class AccountSpec
         .map(checkNoAccountResponse)
     }
 
+    "return 400 HTS-API015-012 when no systemId is passed" in {
+      implicit val httpReads: HttpReads[HttpResponse] = NoErrorHandling.httpReads
+
+      http.GET[HttpResponse](accountUrlWithParams(Some(ninoWithHtsAccount), systemId = None))
+        .map(checkNoSystemIdResponse)
+    }
+
     "return 400 with two error responses when a NINO with an invalid format and the incorrect version is passed" in {
       implicit val httpReads: HttpReads[HttpResponse] = NoErrorHandling.httpReads
 
