@@ -82,7 +82,25 @@ class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers wit
       When("Get Account API is called")
       val response = responses.allFieldsPopulated
       Then("Response should include all fields")
-      checkAllFieldsPresentResponse(response)
+    }
+
+    scenario("Closed Account - Ensure accountClosedFlag is set AND accountClosedDate and accountClosingBalance fields set") {
+      Given("An account is closed")
+      When("Get Account API is called")
+      val response = responses.closedAccount
+      Then("Response should include accountClosedFlag, accountClosedDate and accountClosingBalance")
+      checkClosedAccountResponse(response)
+    }
+
+    //    TODO: this test fail as it doesn't make sense
+    //    need to confirm if this scenario should be checking for accountBlockingCode and accountBlockingReasonCode
+    //    If it is suppose to check for clientBlockingCode and clientBlockingReasonCode then there is a bug from Atos's json response
+    scenario("Blocked account - Check Client Blocking Code & clientBlockingReason") {
+      Given("An account is blocked")
+      When("Get Account API is called")
+      val response = responses.blockedAccount
+      Then("Response should include clientBlockingCode and clientBlockingReasonCode")
+      checkBlockedAccountResponse(response)
     }
   }
 }

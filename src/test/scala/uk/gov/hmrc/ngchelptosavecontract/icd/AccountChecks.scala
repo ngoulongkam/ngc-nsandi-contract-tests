@@ -105,4 +105,17 @@ trait AccountChecks extends Matchers {
     response.status shouldBe 400
     (response.json \ "errors").as[Set[String]](Reads.set((__ \ "errorMessageId").read[String])) shouldBe Set("HTS-API015-002", "HTS-API015-004", "HTS-API015-012")
   }
+
+  def checkClosedAccountResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+    (response.json \ "accountClosedFlag").as[String] shouldBe "C"
+    (response.json \ "accountClosureDate").as[String] should not be empty //KAM TODO: Assert date format
+    (response.json \ "accountClosingBalance").as[String] should not be empty
+  }
+
+  def checkBlockedAccountResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+    (response.json \ "clientBlockingCode").as[String] should not be "00"
+    (response.json \ "clientBlockingReasonCode").as[String] should not be "00"
+  }
 }

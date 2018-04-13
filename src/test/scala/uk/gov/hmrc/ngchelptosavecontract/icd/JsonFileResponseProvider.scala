@@ -29,6 +29,8 @@ object JsonFileResponseProvider extends TestResponseProvider {
   override def noSystemId: HttpResponse = JsonFileHttpResponse(400, "no-system-id.json")
   override def noSystemIdNinoOrVersion: HttpResponse = JsonFileHttpResponse(400, "no-system-id-nino-or-version.json")
   override def allFieldsPopulated: HttpResponse = JsonFileHttpResponse(200, "all-fields.json")
+  override def closedAccount: HttpResponse = JsonFileHttpResponse(200, "closed-account.json")
+  override def blockedAccount: HttpResponse = JsonFileHttpResponse(200, "blocked-account.json")
 
   private object JsonFileHttpResponse {
     def apply(status: Int, jsonLeafname: String): HttpResponse =

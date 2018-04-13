@@ -44,6 +44,10 @@ object XlsxAccountResponseProvider extends TestResponseProvider {
 
   override def allFieldsPopulated: HttpResponse = pending
 
+  override def closedAccount: HttpResponse = pending
+
+  override def blockedAccount: HttpResponse = pending
+
   def pending = throw new TestPendingException
 
   private object Spreadsheet {
