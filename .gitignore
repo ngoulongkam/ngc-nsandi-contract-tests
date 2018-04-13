@@ -16,5 +16,7 @@ dist
 /RUNNING_PID
 /.settings
 /src/test/resources/airgap/*.json
+/src/test/resources/airgap/*.xlsx
 /node_modules
 *.iws
+.~lock.*#
