@@ -19,7 +19,6 @@ libraryDependencies ++= Seq(
   "uk.gov.hmrc" %% "http-verbs" % "7.2.0" % "test",
   "uk.gov.hmrc" %% "http-verbs-play-25" % "0.9.0" % "test",
   "io.lemonlabs" %% "scala-uri" % "1.1.1" % "test",
-  "com.github.java-json-tools" % "json-schema-validator" % "2.2.8" % "test",
   "com.eclipsesource" %% "play-json-schema-validator" % "0.8.9" % "test"
 )
 

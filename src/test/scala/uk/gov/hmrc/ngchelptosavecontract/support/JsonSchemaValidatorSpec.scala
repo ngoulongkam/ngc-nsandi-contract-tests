@@ -25,8 +25,6 @@ class JsonSchemaValidatorSpec extends WordSpec with Matchers {
 
   "validateWithJsonSchema" should {
     "return all error lines when the given json example doesn't match the schema" in {
-    //println(s"\n\n\n${scala.io.Source.fromFile(schema).getLines().mkString("\n")}\n\n\n\n")
-
       val result = validateWithJsonSchema(schema, badJsonExample)
       result.isLeft
       println(result)
