@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.ngchelptosavecontract.icd
 
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.{FeatureSpec, GivenWhenThen, Matchers}
 import play.api.libs.json.{JsValue, Json}
 import uk.gov.hmrc.http.HttpResponse
 
@@ -27,44 +27,59 @@ import uk.gov.hmrc.http.HttpResponse
   *
   * We can only check the body, not the HTTP status code or headers, because the
   * JSON files contain only the body.
+  *
+  * Scenario names are taken from "CR20 scenarios INTERNAL.xlsx" in Google Drive
   */
-class AirGapAccountSpec extends WordSpec with Matchers with AccountChecks {
-
-  "GET account air gap JSON" should {
-
-    "include all fields when a value is available" in {
-      checkAllFieldsPresentResponse(JsonFileHttpResponse(200, "all-fields.json"))
+class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers with AccountChecks {
+  feature("iSIT air gap account JSON - CR20 scenarios") {
+    scenario("Non-Existent Version Number/Empty string") {
+      When("Get Account API is called without a version parameter")
+      val response = JsonFileHttpResponse(400, "no-version.json")
+      Then("400 HTS-API015-002 error should be returned")
+      checkNoVersionResponse(response)
     }
 
-    "return 400 HTS-API015-002 when no version parameter is passed" in {
-      checkNoVersionResponse(JsonFileHttpResponse(400, "no-version.json"))
+    scenario("Invalid (unsupported) version number") {
+      When("Get Account API is called with an invalid version")
+      val response = JsonFileHttpResponse(400, "invalid-version.json")
+      Then("400 HTS-API015-003 error should be returned")
+      checkInvalidVersionResponse(response)
     }
 
-    "return 400 HTS-API015-003 when an incorrect version parameter is passed" in {
-      checkInvalidVersionResponse(JsonFileHttpResponse(400, "invalid-version.json"))
-    }
-
-    "return 400 HTS-API015-004 when no NINO is passed" in {
+    scenario("Invalid Nino / Empty String") {
+      When("Get Account API is called without a nino parameter")
+      Then("400 HTS-API015-004 error should be returned")
       checkNoNinoResponse(JsonFileHttpResponse(400, "no-nino.json"))
-    }
 
-    "return 400 HTS-API015-005 when NINO with invalid format is passed" in {
+      When("Get Account API is called with an empty nino parameter")
+      Then("400 HTS-API015-005 error should be returned")
       checkInvalidNinoResponse(JsonFileHttpResponse(400, "invalid-nino.json"))
-    }
 
-    "return 400 HTS-API015-006 when NINO without a Help to Save account is passed" in {
+      When("Get Account API is called with a nino for which no Help to Save account exists")
+      Then("400 HTS-API015-006 error should be returned")
       checkNoAccountResponse(JsonFileHttpResponse(400, "no-account.json"))
     }
 
-    "return 400 HTS-API015-012 when no systemId is passed" in {
+    scenario("Incorrect SystemID/Empty String/ Field not sent") {
+      When("Get Account API is called with no systemId parameter")
+      Then("400 HTS-API015-012 error should be returned")
       checkNoSystemIdResponse(JsonFileHttpResponse(400, "no-system-id.json"))
     }
 
-    "return 400 with two error responses when a NINO with an invalid format and the incorrect version is passed" in {
+    scenario("Check Error Codes,Error Statuses and messages in response as per ICD") {
+      When("Get Account API is called and there are multiple validation errors for the parameters")
+      Then("400 containing multiple errors should be returned")
       checkInvalidNinoAndVersionResponse(JsonFileHttpResponse(400, "invalid-nino-and-version.json"))
     }
-  }
 
+    scenario("Check all fields are present in response mandatory and non mandatory") {
+      Given("An account with all fields populated")
+      When("Get Account API is called")
+      Then("Response should include all fields")
+
+      checkAllFieldsPresentResponse(JsonFileHttpResponse(200, "all-fields.json"))
+    }
+  }
 }
 
 private object JsonFileHttpResponse {
