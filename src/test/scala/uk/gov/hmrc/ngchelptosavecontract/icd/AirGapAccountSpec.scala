@@ -76,8 +76,24 @@ class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers wit
       Given("An account with all fields populated")
       When("Get Account API is called")
       Then("Response should include all fields")
-
       checkAllFieldsPresentResponse(JsonFileHttpResponse(200, "all-fields.json"))
+    }
+
+    scenario("Closed Account - Ensure accountClosedFlag is set AND accountClosedDate and accountClosingBalance fields set") {
+      Given("An account is closed")
+      When("Get Account API is called")
+      Then("Response should include accountClosedFlag, accountClosedDate and accountClosingBalance")
+      checkClosedAccountResponse(JsonFileHttpResponse(200, "closed-account.json"))
+    }
+
+    //    TODO: this test fail as it doesn't make sense
+    //    need to confirm if this scenario should be checking for accountBlockingCode and accountBlockingReasonCode
+    //    If it is suppose to check for clientBlockingCode and clientBlockingReasonCode then there is a bug from Atos's json response
+    scenario("Blocked account - Check Client Blocking Code & clientBlockingReason") {
+      Given("An account is blocked")
+      When("Get Account API is called")
+      Then("Response should include clientBlockingCode and clientBlockingReasonCode")
+      checkBlockedAccountResponse(JsonFileHttpResponse(200, "blocked-account.json"))
     }
   }
 }
@@ -87,7 +103,7 @@ private object JsonFileHttpResponse {
     HttpResponse(status, Some(loadJson(jsonLeafname)))
 
   private def loadJson(leafname: String): JsValue = {
-    val inputStream = getClass.getResourceAsStream(s"/airgap/$leafname")
+    val inputStream = getClass.getResourceAsStream(s"/airgap/demo/$leafname")
     try {
       Json.parse(inputStream)
     }

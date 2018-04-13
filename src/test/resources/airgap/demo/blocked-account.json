@@ -1,0 +1,51 @@
+{
+  "version": "V1.0",
+  "correlationId": "551485a3-001d-91e8-060e-890c40505bd7",
+  "accountNumber": "1100000034711",
+  "availableWithdrawal": "40.80",
+  "accountBalance": "40.80",
+  "accountClosedFlag": "",
+  "accountBlockingCode": "40",
+  "accountBlockingReasonCode": "30",
+  "currentInvestmentMonth":    {
+    "investmentRemaining": "50.00",
+    "investmentLimit": "50.00",
+    "endDate": "2018-04-30"
+  },
+  "clientForename": "Olga",
+  "clientSurname": "Bedrace",
+  "dateOfBirth": "1994-09-19",
+  "addressLine1": "99 Condor Grove",
+  "addressLine2": "Blackpool",
+  "addressLine3": " ",
+  "addressLine4": " ",
+  "addressLine5": " ",
+  "postcode": "FY1 5QY",
+  "countryCode": "GB",
+  "emailAddress": "neville.morris@atos.net",
+  "commsPreference": "02",
+  "clientBlockingCode": "00",
+  "clientBlockingReasonCode": "00",
+  "clientCancellationStatus": "",
+  "nbaAccountNumber": "10460811",
+  "nbaPayee": "Mrs Olga Bedrace",
+  "nbaSortCode": "090126",
+  "terms":    [
+    {
+      "termNumber": 1,
+      "startDate": "2017-10-01",
+      "endDate": "2019-09-30",
+      "maxBalance": "40.80",
+      "bonusEstimate": "20.40",
+      "bonusPaid": "0.00"
+    },
+    {
+      "termNumber": 2,
+      "startDate": "2019-10-01",
+      "endDate": "2021-09-30",
+      "maxBalance": "0.00",
+      "bonusEstimate": "0.00",
+      "bonusPaid": "0.00"
+    }
+  ]
+}
