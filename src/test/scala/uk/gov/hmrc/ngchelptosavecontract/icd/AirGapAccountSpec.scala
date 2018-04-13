@@ -20,6 +20,8 @@ import org.scalatest.{FeatureSpec, GivenWhenThen, Matchers}
 import play.api.libs.json.{JsValue, Json}
 import uk.gov.hmrc.http.HttpResponse
 
+import scala.io.Source
+
 /**
   * Tests that check that the air gap JSON files for NS&I's
   * /nsi-services/account endpoint meet the full contract defined in the ICD

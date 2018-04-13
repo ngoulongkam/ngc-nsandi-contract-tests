@@ -22,7 +22,7 @@ class JsonSchemaValidator {
     val schema = validationSchema(schemaFilePath)
     val jsonExample = loadJsonFromFile(jsonFilePath)
     jsonValidator.validate(schema, jsonExample) match {
-      case e: JsError ⇒ Left(s"User info was not valid against schema: ${e.prettyPrint()}")
+      case e: JsError ⇒ Left(s"Given json was not valid against schema: ${e.prettyPrint()}")
       case JsSuccess(u, _) ⇒ Right(u)
     }
   }

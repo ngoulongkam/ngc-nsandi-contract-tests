@@ -21,8 +21,6 @@ class JsonSchemaValidatorSpec extends WordSpec with Matchers {
     }
   }
 
-
-
   "validateWithJsonSchema" should {
     "return all error lines when the given json example doesn't match the schema" in {
       val result = validateWithJsonSchema(schema, badJsonExample)
