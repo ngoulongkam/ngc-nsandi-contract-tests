@@ -1,27 +1,33 @@
 package uk.gov.hmrc.ngchelptosavecontract.support
 
-import com.fasterxml.jackson.databind.JsonNode
-import com.github.fge.jackson.JsonLoader
-import com.github.fge.jsonschema.main.{JsonSchema, JsonSchemaFactory}
-import play.api.Logger
+import com.eclipsesource.schema.{SchemaType, SchemaValidator}
+import play.api.libs.json.{JsError, JsSuccess, JsValue, Json}
+import uk.gov.hmrc.ngchelptosavecontract.support.JsErrorOps._
+
+import scala.io.Source
 
 class JsonSchemaValidator {
 
-  def validateExample(givenSchema: JsonNode, givenExample: JsonNode): Either[String, Unit] = {
-    val factory: JsonSchemaFactory = JsonSchemaFactory.byDefault()
-    val schema: JsonSchema = factory.getJsonSchema(givenSchema)
+  private def loadJsonFromFile(filename: String): JsValue = {
+    Json.parse(Source.fromFile(filename).getLines().mkString("\n"))
+  }
 
-    val processingReport = schema.validate(givenExample)
+  private def validationSchema(schemaFilePath: String): SchemaType = {
+    Json.fromJson[SchemaType](loadJsonFromFile(schemaFilePath)).getOrElse(sys.error("Could not parse schema string"))
+  }
 
-    processingReport.isSuccess match {
-      case true => Right(())
-      case false =>
-        Logger.info(s"Processing report: ${processingReport.iterator().next()}")
-        Left(s"The given json example does not match the schema, ${processingReport.iterator().next()}")
+  private lazy val jsonValidator: SchemaValidator = SchemaValidator()
+
+  def validateWithJsonSchema(schemaFilePath: String, jsonFilePath: String): Either[String, JsValue] = {
+    val schema = validationSchema(schemaFilePath)
+    val jsonExample = loadJsonFromFile(jsonFilePath)
+    jsonValidator.validate(schema, jsonExample) match {
+      case e: JsError ⇒ Left(s"User info was not valid against schema: ${e.prettyPrint()}")
+      case JsSuccess(u, _) ⇒ Right(u)
     }
   }
 
-  def loadResource(name: String): JsonNode = JsonLoader.fromResource(name)
+
 }
 
 object JsonSchemaValidatorImp extends JsonSchemaValidator {
