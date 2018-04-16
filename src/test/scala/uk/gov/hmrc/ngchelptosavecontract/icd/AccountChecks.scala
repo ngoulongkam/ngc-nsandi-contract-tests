@@ -221,7 +221,7 @@ trait AccountChecks extends Matchers {
   def checkClosedAccountResponse(response: HttpResponse): Assertion = {
     response.status shouldBe 200
     (response.json \ "accountClosedFlag").as[String] shouldBe "C"
-    (response.json \ "accountClosureDate").as[String] should not be empty //KAM TODO: Assert date format
+    (response.json \ "accountClosureDate").as[String] should not be empty
     (response.json \ "accountClosingBalance").as[String] should not be empty
   }
 
@@ -237,5 +237,13 @@ trait AccountChecks extends Matchers {
     response.status shouldBe 200
     ((response.json \ "terms") (0) \ "termNumber").as[Int] shouldBe 1
     ((response.json \ "terms") (1) \ "termNumber").as[Int] shouldBe 2
+  }
+
+  def checkNoBankDetailsAccountResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+    response.body should not include "nbaAccountNumber"
+    response.body should not include "nbaPayee"
+    response.body should not include "nbaRollNumber"
+    response.body should not include "nbaSortCode"
   }
 }

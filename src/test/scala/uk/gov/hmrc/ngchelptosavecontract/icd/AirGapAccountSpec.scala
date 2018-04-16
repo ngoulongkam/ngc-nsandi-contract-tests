@@ -138,5 +138,12 @@ class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers wit
       And("The date format of fields in response as per ICD")
       checkDateFieldsFormatResponse(response)
     }
+
+    scenario("Account opened - no bank details added") {
+      Given("An account opened with no bank details")
+      val response = responses.noBankDetailsAccount
+      Then("200 - Bank details should be omitted from the response")
+      checkNoBankDetailsAccountResponse(response)
+    }
   }
 }

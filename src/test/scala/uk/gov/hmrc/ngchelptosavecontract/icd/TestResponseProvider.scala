@@ -32,4 +32,5 @@ trait TestResponseProvider {
   def closedAccount: HttpResponse
   def blockedAccount: HttpResponse
   def termNumbersFieldPopulated: HttpResponse
+  def noBankDetailsAccount: HttpResponse
 }

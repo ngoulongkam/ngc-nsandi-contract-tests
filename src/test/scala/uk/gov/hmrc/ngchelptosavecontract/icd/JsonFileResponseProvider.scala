@@ -34,6 +34,7 @@ object JsonFileResponseProvider extends TestResponseProvider {
   override def closedAccount: HttpResponse = JsonFileHttpResponse(200, "closed-account.json")
   override def blockedAccount: HttpResponse = JsonFileHttpResponse(200, "blocked-account.json")
   override def termNumbersFieldPopulated: HttpResponse = JsonFileHttpResponse(200, "term-number.json")
+  override def noBankDetailsAccount: HttpResponse = JsonFileHttpResponse(200, "no-bank-details.json")
 
   private object JsonFileHttpResponse {
     def apply(status: Int, jsonLeafname: String): HttpResponse =
