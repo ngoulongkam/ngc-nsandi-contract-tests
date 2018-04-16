@@ -35,4 +35,5 @@ trait TestResponseProvider {
   def noBankDetailsAccount: HttpResponse
   def accountWithBalance: HttpResponse
   def accountWithCurrentInvestmentMonth: HttpResponse
+  def accountWithZeroBalanceAndBonus: HttpResponse
 }

@@ -256,4 +256,16 @@ trait AccountChecks extends Matchers {
     response.status shouldBe 200
     (response.json \ "currentInvestmentMonth" \ "investmentRemaining").as[String] shouldBe "25.00"
   }
+
+  def checkZeroBalanceAndBonusFieldResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+    (response.json \ "availableWithdrawal").as[String] shouldBe "0.00"
+    (response.json \ "accountBalance").as[String] shouldBe "0.00"
+    ((response.json \ "terms") (0) \ "maxBalance").as[String] shouldBe "0.00"
+    ((response.json \ "terms") (0) \"bonusEstimate").as[String] shouldBe "0.00"
+    ((response.json \ "terms") (0) \"bonusPaid").as[String] shouldBe "0.00"
+    ((response.json \ "terms") (1) \ "maxBalance").as[String] shouldBe "0.00"
+    ((response.json \ "terms") (1) \"bonusEstimate").as[String] shouldBe "0.00"
+    ((response.json \ "terms") (1) \"bonusPaid").as[String] shouldBe "0.00"
+  }
 }
