@@ -23,6 +23,7 @@ trait TestResponseProvider {
   def invalidVersion: HttpResponse
   def noNino: HttpResponse
   def invalidNino: HttpResponse
+  def invalidParams: HttpResponse
   def accountNotFound: HttpResponse
   def noSystemId: HttpResponse
   def noSystemIdNinoOrVersion: HttpResponse

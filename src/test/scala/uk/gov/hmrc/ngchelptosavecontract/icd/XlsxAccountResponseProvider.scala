@@ -36,6 +36,8 @@ object XlsxAccountResponseProvider extends TestResponseProvider {
 
   override def invalidNino: HttpResponse = Spreadsheet.response("Account-NINOWithSPACING")
 
+  override def invalidParams: HttpResponse = Spreadsheet.response("Account-InvalidParams")
+
   override def accountNotFound: HttpResponse = Spreadsheet.response("Account-NinoDoesNotExist")
 
   override def noSystemId: HttpResponse = Spreadsheet.response("Account-NoSystemId")

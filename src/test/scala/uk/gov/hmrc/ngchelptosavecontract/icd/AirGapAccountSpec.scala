@@ -46,6 +46,13 @@ class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers wit
       checkInvalidVersionResponse(response)
     }
 
+    scenario("Invalid parameters") {
+      When("Get Account API is called with an invalid parameter")
+      val response = responses.invalidParams
+      Then("400 containing multiple errors should be returned")
+      checkInvalidParamResponse(response)
+    }
+
     scenario("Invalid Nino / Empty String") {
       When("Get Account API is called without a nino parameter")
       val noNinoResponse = responses.noNino

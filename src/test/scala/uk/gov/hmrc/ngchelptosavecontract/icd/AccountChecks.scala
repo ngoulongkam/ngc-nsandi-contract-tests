@@ -106,6 +106,11 @@ trait AccountChecks extends Matchers {
     (response.json \ "errors").as[Set[String]](Reads.set((__ \ "errorMessageId").read[String])) shouldBe Set("HTS-API015-002", "HTS-API015-004", "HTS-API015-012")
   }
 
+  def checkInvalidParamResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 400
+    (response.json \ "errors").as[Set[String]](Reads.set((__ \ "errorMessageId").read[String])) shouldBe Set("HTS-API015-005", "HTS-API015-003")
+  }
+
   def checkClosedAccountResponse(response: HttpResponse): Assertion = {
     response.status shouldBe 200
     (response.json \ "accountClosedFlag").as[String] shouldBe "C"
