@@ -251,4 +251,9 @@ trait AccountChecks extends Matchers {
     response.status shouldBe 200
     (response.json \ "accountBalance").as[String] shouldBe "600.00"
   }
+
+  def checkCurrentInvestmentMonthResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+    (response.json \ "currentInvestmentMonth" \ "investmentRemaining").as[String] shouldBe "25.00"
+  }
 }

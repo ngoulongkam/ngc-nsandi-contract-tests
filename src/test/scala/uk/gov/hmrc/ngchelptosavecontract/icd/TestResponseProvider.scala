@@ -34,4 +34,5 @@ trait TestResponseProvider {
   def termNumbersFieldPopulated: HttpResponse
   def noBankDetailsAccount: HttpResponse
   def accountWithBalance: HttpResponse
+  def accountWithCurrentInvestmentMonth: HttpResponse
 }

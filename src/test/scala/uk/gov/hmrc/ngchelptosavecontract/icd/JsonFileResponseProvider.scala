@@ -36,6 +36,7 @@ object JsonFileResponseProvider extends TestResponseProvider {
   override def termNumbersFieldPopulated: HttpResponse = JsonFileHttpResponse(200, "term-number.json")
   override def noBankDetailsAccount: HttpResponse = JsonFileHttpResponse(200, "no-bank-details.json")
   override def accountWithBalance: HttpResponse = JsonFileHttpResponse(200, "all-fields.json")
+  override def accountWithCurrentInvestmentMonth: HttpResponse = JsonFileHttpResponse(200, "all-fields.json")
 
   private object JsonFileHttpResponse {
     def apply(status: Int, jsonLeafname: String): HttpResponse =

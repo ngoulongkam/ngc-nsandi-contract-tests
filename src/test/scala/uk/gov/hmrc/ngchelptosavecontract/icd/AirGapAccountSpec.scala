@@ -152,5 +152,12 @@ class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers wit
       Then("200 - Response should include a balance")
       checkBalanceFieldResponse(response)
     }
+
+    scenario("Customer with non zero amount paid in current month") {
+      Given("An account with non zero amount paid in current month")
+      val response = responses.accountWithCurrentInvestmentMonth
+      Then("200 - Response should include an amount paid currentInvestmentMonth")
+      checkCurrentInvestmentMonthResponse(response)
+    }
   }
 }
