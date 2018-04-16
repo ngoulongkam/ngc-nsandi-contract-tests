@@ -82,6 +82,7 @@ class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers wit
       When("Get Account API is called")
       val response = responses.allFieldsPopulated
       Then("Response should include all fields")
+      checkAllFieldsPresentResponse(response)
     }
 
     scenario("Closed Account - Ensure accountClosedFlag is set AND accountClosedDate and accountClosingBalance fields set") {
