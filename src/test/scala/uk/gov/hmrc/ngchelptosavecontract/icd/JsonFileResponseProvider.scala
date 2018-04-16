@@ -26,7 +26,7 @@ object JsonFileResponseProvider extends TestResponseProvider {
   override def noNino: HttpResponse = JsonFileHttpResponse(400, "no-nino.json")
   override def invalidNino: HttpResponse = JsonFileHttpResponse(400, "invalid-nino.json")
   override def invalidParams: HttpResponse = JsonFileHttpResponse(400, "invalid-params.json")
-  override def accountNotFound: HttpResponse = JsonFileHttpResponse(400, "no-account.json")
+  override def accountNotFound: HttpResponse = JsonFileHttpResponse(400, "account-not-found.json")
   override def noSystemId: HttpResponse = JsonFileHttpResponse(400, "no-system-id.json")
   override def noSystemIdNinoOrVersion: HttpResponse = JsonFileHttpResponse(400, "no-system-id-nino-or-version.json")
   override def allFieldsPopulated: HttpResponse = JsonFileHttpResponse(200, "all-fields.json")
