@@ -66,6 +66,42 @@ trait AccountChecks extends Matchers {
     ((jsonBody \ "terms")(0) \ "bonusPaid").as[String] should not be empty
   }
 
+  def checkAllMandatoryFieldsPresentResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+    val jsonBody = response.json
+
+    (jsonBody \ "version").as[String] should not be empty
+    (jsonBody \ "accountNumber").as[String] should not be empty
+    (jsonBody \ "availableWithdrawal").as[String] should not be empty
+    (jsonBody \ "accountBalance").as[String] should not be empty
+    (jsonBody \ "accountBlockingCode").as[String] should not be empty
+    (jsonBody \ "accountBlockingReasonCode").as[String] should not be empty
+    (jsonBody \ "currentInvestmentMonth" \ "investmentRemaining").as[String] should not be empty
+    (jsonBody \ "currentInvestmentMonth" \ "investmentLimit").as[String] should not be empty
+    (jsonBody \ "currentInvestmentMonth" \ "endDate").as[String] should not be empty
+    (jsonBody \ "clientForename").as[String] should not be empty
+    (jsonBody \ "clientSurname").as[String] should not be empty
+    (jsonBody \ "dateOfBirth").as[String] should not be empty
+    (jsonBody \ "addressLine1").as[String] should not be empty
+    (jsonBody \ "addressLine2").as[String] should not be empty
+    (jsonBody \ "postcode").as[String] should not be empty
+    (jsonBody \ "commsPreference").as[String] should not be empty
+    (jsonBody \ "clientBlockingCode").as[String] should not be empty
+    (jsonBody \ "clientBlockingReasonCode").as[String] should not be empty
+    ((jsonBody \ "terms")(0) \ "termNumber").as[Int] should not be 0
+    ((jsonBody \ "terms")(0) \ "startDate").as[String] should not be empty
+    ((jsonBody \ "terms")(0) \ "endDate").as[String] should not be empty
+    ((jsonBody \ "terms")(0) \ "maxBalance").as[String] should not be empty
+    ((jsonBody \ "terms")(0) \ "bonusEstimate").as[String] should not be empty
+    ((jsonBody \ "terms")(0) \ "bonusPaid").as[String] should not be empty
+    ((jsonBody \ "terms")(1) \ "termNumber").as[Int] should not be 0
+    ((jsonBody \ "terms")(1) \ "startDate").as[String] should not be empty
+    ((jsonBody \ "terms")(1) \ "endDate").as[String] should not be empty
+    ((jsonBody \ "terms")(1) \ "maxBalance").as[String] should not be empty
+    ((jsonBody \ "terms")(1) \ "bonusEstimate").as[String] should not be empty
+    ((jsonBody \ "terms")(1) \ "bonusPaid").as[String] should not be empty
+  }
+
   def checkNoVersionResponse(response: HttpResponse): Assertion = {
     response.status shouldBe 400
     (response.json \ "errors").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-002")

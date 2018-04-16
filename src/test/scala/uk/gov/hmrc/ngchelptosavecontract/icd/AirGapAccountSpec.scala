@@ -113,5 +113,12 @@ class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers wit
       Given("An account is blocked (client blocking, not account blocking")
       pending
     }
+
+    scenario("Check all mandatory fields populated in Response") {
+      Given("An account with all mandatory fields populated")
+      val response = responses.allMandatoryFieldsPopulated
+      Then("Response should include all mandatory fields")
+      checkAllMandatoryFieldsPresentResponse(response)
+    }
   }
 }

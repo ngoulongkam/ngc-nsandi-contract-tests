@@ -28,6 +28,7 @@ trait TestResponseProvider {
   def noSystemId: HttpResponse
   def noSystemIdNinoOrVersion: HttpResponse
   def allFieldsPopulated: HttpResponse
+  def allMandatoryFieldsPopulated: HttpResponse
   def closedAccount: HttpResponse
   def blockedAccount: HttpResponse
 }
