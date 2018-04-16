@@ -93,15 +93,18 @@ class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers wit
       checkClosedAccountResponse(response)
     }
 
-    //    TODO: this test fail as it doesn't make sense
-    //    need to confirm if this scenario should be checking for accountBlockingCode and accountBlockingReasonCode
-    //    If it is suppose to check for clientBlockingCode and clientBlockingReasonCode then there is a bug from Atos's json response
+    // TODO: test a variety of blocked accounts and clients and check that the correct values are in the
+    // accountBlockingCode, accountBlockingReasonCode, clientBlockingCode and clientBlockingReasonCode
+    // fields (not just whether they are "00" or not)
     scenario("Blocked account - Check Client Blocking Code & clientBlockingReason") {
-      Given("An account is blocked")
+      Given("An account is blocked (account blocking, not client blocking")
       When("Get Account API is called")
-      val response = responses.blockedAccount
-      Then("Response should include clientBlockingCode and clientBlockingReasonCode")
-      checkBlockedAccountResponse(response)
+      val blockedAccountResponse = responses.blockedAccount
+      Then("Response should include accountBlockingCode and accountBlockingReasonCode")
+      checkBlockedAccountResponse(blockedAccountResponse)
+
+      Given("An account is blocked (client blocking, not account blocking")
+      pending
     }
   }
 }

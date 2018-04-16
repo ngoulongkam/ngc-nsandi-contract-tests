@@ -115,7 +115,9 @@ trait AccountChecks extends Matchers {
 
   def checkBlockedAccountResponse(response: HttpResponse): Assertion = {
     response.status shouldBe 200
-    (response.json \ "clientBlockingCode").as[String] should not be "00"
-    (response.json \ "clientBlockingReasonCode").as[String] should not be "00"
+    (response.json \ "accountBlockingCode").as[String] should not be "00"
+    (response.json \ "accountBlockingReasonCode").as[String] should not be "00"
+    (response.json \ "clientBlockingCode").as[String] shouldBe "00"
+    (response.json \ "clientBlockingReasonCode").as[String] shouldBe "00"
   }
 }
