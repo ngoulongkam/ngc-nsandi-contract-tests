@@ -31,4 +31,5 @@ trait TestResponseProvider {
   def allMandatoryFieldsPopulated: HttpResponse
   def closedAccount: HttpResponse
   def blockedAccount: HttpResponse
+  def termNumbersFieldPopulated: HttpResponse
 }

@@ -161,4 +161,10 @@ trait AccountChecks extends Matchers {
     (response.json \ "clientBlockingCode").as[String] shouldBe "00"
     (response.json \ "clientBlockingReasonCode").as[String] shouldBe "00"
   }
+
+  def checkCorrectTermNumberPresentResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+    ((response.json \ "terms") (0) \ "termNumber").as[Int] shouldBe 1
+    ((response.json \ "terms") (1) \ "termNumber").as[Int] shouldBe 2
+  }
 }
