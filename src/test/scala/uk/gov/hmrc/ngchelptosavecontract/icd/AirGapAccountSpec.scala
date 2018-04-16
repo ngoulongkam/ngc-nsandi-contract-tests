@@ -29,7 +29,7 @@ import org.scalatest.{FeatureSpec, GivenWhenThen, Matchers}
   * Scenario names are taken from "CR20 scenarios INTERNAL.xlsx" in Google Drive
   */
 class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers with AccountChecks {
-  private val responses: TestResponseProvider = JsonFileResponseProvider // can be switched to JsonFileResponseProvider
+  private val responses: TestResponseProvider = JsonFileResponseProvider // can be switched to between XlsxAccountResponseProvider and JsonFileResponseProvider
 
   feature("iSIT air gap account JSON - CR20 scenarios") {
     scenario("Non-Existent Version Number/Empty string") {
@@ -126,6 +126,17 @@ class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers wit
       val response = responses.termNumbersFieldPopulated
       Then("Response should include the correct term number")
       checkCorrectTermNumberPresentResponse(response)
+    }
+
+    scenario("Check Data format for each field as per ICD") {
+      Given("An account with all fields populated")
+      val response = responses.allFieldsPopulated
+      Then("The character format of all fields in response as per ICD")
+      checkAllFieldsCharacterFormatResponse(response)
+      And("The regex format of fields in response as per ICD")
+      checkFieldsWithRegexFormatResponse(response)
+      And("The date format of fields in response as per ICD")
+      checkDateFieldsFormatResponse(response)
     }
   }
 }

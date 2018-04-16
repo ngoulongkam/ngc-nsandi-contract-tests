@@ -58,12 +58,12 @@ trait AccountChecks extends Matchers {
     (jsonBody \ "nbaPayee").as[String] should not be empty
     (jsonBody \ "nbaRollNumber").as[String] should not be empty
     (jsonBody \ "nbaSortCode").as[String] should not be empty
-    ((jsonBody \ "terms")(0) \ "termNumber").as[Int] should not be 0
-    ((jsonBody \ "terms")(0) \ "startDate").as[String] should not be empty
-    ((jsonBody \ "terms")(0) \ "endDate").as[String] should not be empty
-    ((jsonBody \ "terms")(0) \ "maxBalance").as[String] should not be empty
-    ((jsonBody \ "terms")(0) \ "bonusEstimate").as[String] should not be empty
-    ((jsonBody \ "terms")(0) \ "bonusPaid").as[String] should not be empty
+    ((jsonBody \ "terms") (0) \ "termNumber").as[Int] should not be 0
+    ((jsonBody \ "terms") (0) \ "startDate").as[String] should not be empty
+    ((jsonBody \ "terms") (0) \ "endDate").as[String] should not be empty
+    ((jsonBody \ "terms") (0) \ "maxBalance").as[String] should not be empty
+    ((jsonBody \ "terms") (0) \ "bonusEstimate").as[String] should not be empty
+    ((jsonBody \ "terms") (0) \ "bonusPaid").as[String] should not be empty
   }
 
   def checkAllMandatoryFieldsPresentResponse(response: HttpResponse): Assertion = {
@@ -88,18 +88,89 @@ trait AccountChecks extends Matchers {
     (jsonBody \ "commsPreference").as[String] should not be empty
     (jsonBody \ "clientBlockingCode").as[String] should not be empty
     (jsonBody \ "clientBlockingReasonCode").as[String] should not be empty
-    ((jsonBody \ "terms")(0) \ "termNumber").as[Int] should not be 0
-    ((jsonBody \ "terms")(0) \ "startDate").as[String] should not be empty
-    ((jsonBody \ "terms")(0) \ "endDate").as[String] should not be empty
-    ((jsonBody \ "terms")(0) \ "maxBalance").as[String] should not be empty
-    ((jsonBody \ "terms")(0) \ "bonusEstimate").as[String] should not be empty
-    ((jsonBody \ "terms")(0) \ "bonusPaid").as[String] should not be empty
-    ((jsonBody \ "terms")(1) \ "termNumber").as[Int] should not be 0
-    ((jsonBody \ "terms")(1) \ "startDate").as[String] should not be empty
-    ((jsonBody \ "terms")(1) \ "endDate").as[String] should not be empty
-    ((jsonBody \ "terms")(1) \ "maxBalance").as[String] should not be empty
-    ((jsonBody \ "terms")(1) \ "bonusEstimate").as[String] should not be empty
-    ((jsonBody \ "terms")(1) \ "bonusPaid").as[String] should not be empty
+    ((jsonBody \ "terms") (0) \ "termNumber").as[Int] should not be 0
+    ((jsonBody \ "terms") (0) \ "startDate").as[String] should not be empty
+    ((jsonBody \ "terms") (0) \ "endDate").as[String] should not be empty
+    ((jsonBody \ "terms") (0) \ "maxBalance").as[String] should not be empty
+    ((jsonBody \ "terms") (0) \ "bonusEstimate").as[String] should not be empty
+    ((jsonBody \ "terms") (0) \ "bonusPaid").as[String] should not be empty
+    ((jsonBody \ "terms") (1) \ "termNumber").as[Int] should not be 0
+    ((jsonBody \ "terms") (1) \ "startDate").as[String] should not be empty
+    ((jsonBody \ "terms") (1) \ "endDate").as[String] should not be empty
+    ((jsonBody \ "terms") (1) \ "maxBalance").as[String] should not be empty
+    ((jsonBody \ "terms") (1) \ "bonusEstimate").as[String] should not be empty
+    ((jsonBody \ "terms") (1) \ "bonusPaid").as[String] should not be empty
+  }
+
+  def checkAllFieldsCharacterFormatResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+    val jsonBody = response.json
+    //TODO: check all comments in this method to check if <=7 character correct for 9(4)V9(2) format
+    (jsonBody \ "version").as[String].length should be <= 6
+    (jsonBody \ "correlationId").as[String].length should be <= 38
+    (jsonBody \ "accountNumber").as[String].length should be <= 30
+    (jsonBody \ "availableWithdrawal").as[String].length should be <= 7 //is 7 character correct for 9(4)V9(2) format
+    (jsonBody \ "accountBalance").as[String].length should be <= 7 //is 7 character correct for 9(4)V9(2) format
+    (jsonBody \ "accountClosedFlag").as[String].length should be <= 1
+    (jsonBody \ "accountClosureDate").as[String].length should be <= 10
+    (jsonBody \ "accountClosingBalance").as[String].length should be <= 7 //is 7 character correct for 9(4)V9(2) format
+    (jsonBody \ "accountBlockingCode").as[String].length should be <= 2
+    (jsonBody \ "accountBlockingReasonCode").as[String].length should be <= 2
+    (jsonBody \ "currentInvestmentMonth" \ "investmentRemaining").as[String].length should be <= 7 //is 7 character correct for 9(4)V9(2) format
+    (jsonBody \ "currentInvestmentMonth" \ "investmentLimit").as[String].length should be <= 7 //is 7 character correct for 9(4)V9(2) format
+    (jsonBody \ "currentInvestmentMonth" \ "endDate").as[String].length should be <= 10
+    (jsonBody \ "clientForename").as[String].length should be <= 26
+    (jsonBody \ "clientSurname").as[String].length should be <= 300 //TODO: do we need 300 for surname?
+    (jsonBody \ "dateOfBirth").as[String].length should be <= 10
+    (jsonBody \ "addressLine1").as[String].length should be <= 35
+    (jsonBody \ "addressLine2").as[String].length should be <= 35
+    (jsonBody \ "addressLine3").as[String].length should be <= 35
+    (jsonBody \ "addressLine4").as[String].length should be <= 35
+    (jsonBody \ "addressLine5").as[String].length should be <= 35
+    (jsonBody \ "postcode").as[String].length should be <= 10
+    (jsonBody \ "countryCode").as[String].length should be <= 2
+    (jsonBody \ "emailAddress").as[String].length should be <= 254
+    (jsonBody \ "commsPreference").as[String].length should be <= 2
+    (jsonBody \ "clientBlockingCode").as[String].length should be <= 2
+    (jsonBody \ "clientBlockingReasonCode").as[String].length should be <= 2
+    (jsonBody \ "clientCancellationStatus").as[String].length should be <= 1
+    (jsonBody \ "nbaAccountNumber").as[String].length should be <= 8
+    (jsonBody \ "nbaPayee").as[String].length should be <= 38
+    (jsonBody \ "nbaRollNumber").as[String].length should be <= 18
+    (jsonBody \ "nbaSortCode").as[String].length should be <= 6
+    ((jsonBody \ "terms") (0) \ "termNumber").as[Int] should (be(1) or be(2))
+    ((jsonBody \ "terms") (0) \ "startDate").as[String].length should be <= 10
+    ((jsonBody \ "terms") (0) \ "endDate").as[String].length should be <= 10
+    ((jsonBody \ "terms") (0) \ "maxBalance").as[String].length should be <= 7 //is 7 character correct for 9(4)V9(2) format
+    ((jsonBody \ "terms") (0) \ "bonusEstimate").as[String].length should be <= 7 //is 7 character correct for 9(4)V9(2) format
+    ((jsonBody \ "terms") (0) \ "bonusPaid").as[String].length should be <= 7 //is 7 character correct for 9(4)V9(2) format
+  }
+
+  def checkFieldsWithRegexFormatResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+    val jsonBody = response.json
+    val moneyValuesRegex = "^\\d{1,}\\.\\d{2}$".r
+
+    (jsonBody \ "availableWithdrawal").as[String] should fullyMatch regex moneyValuesRegex
+    (jsonBody \ "accountBalance").as[String] should fullyMatch regex moneyValuesRegex
+    (jsonBody \ "accountClosingBalance").as[String] should fullyMatch regex moneyValuesRegex
+    (jsonBody \ "currentInvestmentMonth" \ "investmentRemaining").as[String] should fullyMatch regex moneyValuesRegex
+    (jsonBody \ "currentInvestmentMonth" \ "investmentLimit").as[String] should fullyMatch regex moneyValuesRegex
+    ((jsonBody \ "terms") (0) \ "maxBalance").as[String] should fullyMatch regex moneyValuesRegex
+    ((jsonBody \ "terms") (0) \ "bonusEstimate").as[String] should fullyMatch regex moneyValuesRegex
+    ((jsonBody \ "terms") (0) \ "bonusPaid").as[String] should fullyMatch regex moneyValuesRegex
+  }
+
+  def checkDateFieldsFormatResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+    val jsonBody = response.json
+    val iso8601DateFormatRegex = "([0-9]{4}-[0-9]{2}-[0-9]{2})".r
+
+    (jsonBody \ "accountClosureDate").as[String] should fullyMatch regex iso8601DateFormatRegex
+    (jsonBody \ "currentInvestmentMonth" \ "endDate").as[String] should fullyMatch regex iso8601DateFormatRegex
+    (jsonBody \ "dateOfBirth").as[String] should fullyMatch regex iso8601DateFormatRegex
+    ((jsonBody \ "terms") (0) \ "startDate").as[String] should fullyMatch regex iso8601DateFormatRegex
+    ((jsonBody \ "terms") (0) \ "endDate").as[String] should fullyMatch regex iso8601DateFormatRegex
   }
 
   def checkNoVersionResponse(response: HttpResponse): Assertion = {
