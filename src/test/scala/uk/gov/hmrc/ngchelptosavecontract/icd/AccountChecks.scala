@@ -246,4 +246,9 @@ trait AccountChecks extends Matchers {
     response.body should not include "nbaRollNumber"
     response.body should not include "nbaSortCode"
   }
+
+  def checkBalanceFieldResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+    (response.json \ "accountBalance").as[String] shouldBe "600.00"
+  }
 }

@@ -145,5 +145,12 @@ class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers wit
       Then("200 - Bank details should be omitted from the response")
       checkNoBankDetailsAccountResponse(response)
     }
+
+    scenario("Customer with non zero balance") {
+      Given("An account with non zero balance")
+      val response = responses.accountWithBalance
+      Then("200 - Response should include a balance")
+      checkBalanceFieldResponse(response)
+    }
   }
 }

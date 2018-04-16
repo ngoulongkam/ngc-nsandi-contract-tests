@@ -56,6 +56,8 @@ object XlsxAccountResponseProvider extends TestResponseProvider {
 
   override def noBankDetailsAccount: HttpResponse = pending
 
+  override def accountWithBalance: HttpResponse = pending
+
   def pending = throw new TestPendingException
 
   private object Spreadsheet {
