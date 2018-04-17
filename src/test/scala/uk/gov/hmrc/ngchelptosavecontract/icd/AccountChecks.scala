@@ -310,4 +310,9 @@ trait AccountChecks extends Matchers {
     ((response.json \ "terms") (1) \ "bonusEstimate").as[String] shouldBe "0.00"
     ((response.json \ "terms") (1) \ "bonusPaid").as[String] shouldBe "0.00"
   }
+
+  def checkAccountWithNoCorrelationIdResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+    (response.json \ "correlationId").as[String] should not be empty
+  }
 }

@@ -42,4 +42,5 @@ trait TestResponseProvider {
   def accountWithBuildingSocietyBankDetails: HttpResponse
   def accountPaidInMaxForTheMonth: HttpResponse
   def accountWithZeroBalance: HttpResponse
+  def accountWithNoCorrelationId: HttpResponse
 }

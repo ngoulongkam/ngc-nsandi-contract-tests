@@ -74,6 +74,8 @@ object XlsxAccountResponseProvider extends TestResponseProvider {
 
   override def accountWithZeroBalance: HttpResponse = Spreadsheet.response("Account - Customer with zero balance")
 
+  override def accountWithNoCorrelationId: HttpResponse = Spreadsheet.response("Account-NoCorrelationID")
+
   def pending = throw new TestPendingException
 
   private object Spreadsheet {

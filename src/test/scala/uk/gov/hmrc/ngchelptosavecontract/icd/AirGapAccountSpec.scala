@@ -208,5 +208,12 @@ class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers wit
       Then("200 - All balance related fields should be 0.00")
       checkAccountWithZeroBalanceResponse(response)
     }
+
+    scenario("Request with no correllation ID") {
+      Given("Calling Account API with no correlationId")
+      val response = responses.accountWithNoCorrelationId
+      Then("200 - Response should return a new correlationId")
+      checkAccountWithNoCorrelationIdResponse(response)
+    }
   }
 }
