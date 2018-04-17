@@ -152,11 +152,14 @@ class AccountSpec
         .map(checkNoSystemIdResponse)
     }
 
-    "return 400 with two error responses when a NINO with an invalid format and the incorrect version is passed" in {
+    "return 400 with multiple errors when there are multiple request errors" in {
       implicit val httpReads: HttpReads[HttpResponse] = NoErrorHandling.httpReads
 
       http.GET[HttpResponse](accountUrlWithParamsUnvalidatedNino(nino = Some("not a NINO"), version = Some("V0.0")))
         .map(checkInvalidNinoAndVersionResponse)
+
+      http.GET[HttpResponse](accountUrlWithParams(nino = None, version = None, systemId = None, correlationId = None))
+        .map(checkNoSystemIdNinoOrVersionResponse)
     }
   }
 

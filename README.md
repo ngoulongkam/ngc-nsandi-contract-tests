@@ -7,7 +7,19 @@ Contract tests for the contracts that #team-nextgenconsumer's services expect of
 
 Note that these tests do not connect directly to NS&I, they connect to help-to-save-proxy which in turn connects to NS&I. help-to-save-proxy handles authentication to NS&I using certificates and HTTP basic auth.
 
-## Running locally:
+## Running air gap tests locally
+
+Ensure you have the following installed:
+* [Java JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+* [SBT](https://www.scala-sbt.org/)
+
+Copy the air gap JSON spreadsheet (e.g. `WebApiTestingReport_16042018_fixed_headings.xlsx`) into directory `src/test/resources/airgap`.
+
+Then run tests with:
+
+    sbt "testOnly *.AirGap*Spec"
+
+## Running locally against stub:
 
 ```
 sm --start NGC_HELP_TO_SAVE_CONTRACT_TESTS -f

@@ -1,0 +1,13 @@
+{
+  "errors": [
+    {
+      "errorMessageId": "HTS-API015-002"
+    },
+    {
+      "errorMessageId": "HTS-API015-004"
+    },
+    {
+      "errorMessageId": "HTS-API015-012"
+    }
+  ]
+}
