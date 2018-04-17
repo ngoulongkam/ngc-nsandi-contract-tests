@@ -50,7 +50,7 @@ class AccountSpec
 
   private val isoDateRegex = "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
 
-  private val ninoWithHtsAccount = Nino("EM000001A")
+  private val ninoWithHtsAccount = Nino("EM000005A")
   private val ninoWithoutHtsAccount = Nino("EM123456A")
 
   private implicit val hc: HeaderCarrier = HeaderCarrier()
@@ -58,19 +58,21 @@ class AccountSpec
   "GET /nsi-services/account" should {
     """Return 200 and account details when account is present for passed NINO""" in {
       account(ninoWithHtsAccount).map { jsonBody =>
-        (jsonBody \ "accountBalance").as[String] shouldBe "200.00"
+        withClue(jsonBody) {
+          (jsonBody \ "accountBalance").as[String] shouldBe "0.00"
 
-        (jsonBody \ "currentInvestmentMonth" \ "investmentRemaining").as[String] shouldBe "0.00"
-        (jsonBody \ "currentInvestmentMonth" \ "investmentLimit").as[String] shouldBe "50.00"
-        (jsonBody \ "currentInvestmentMonth" \ "endDate").as[String] should fullyMatch regex isoDateRegex
+          (jsonBody \ "currentInvestmentMonth" \ "investmentRemaining").as[String] shouldBe "50.00"
+          (jsonBody \ "currentInvestmentMonth" \ "investmentLimit").as[String] shouldBe "50.00"
+          (jsonBody \ "currentInvestmentMonth" \ "endDate").as[String] should fullyMatch regex isoDateRegex
 
-        ((jsonBody \ "terms")(0) \ "termNumber").as[Int] shouldBe 1
-        ((jsonBody \ "terms")(0) \ "endDate").as[String] should fullyMatch regex isoDateRegex
-        ((jsonBody \ "terms")(0) \ "bonusEstimate").as[String] shouldBe "100.00"
+          ((jsonBody \ "terms") (0) \ "termNumber").as[Int] shouldBe 1
+          ((jsonBody \ "terms") (0) \ "endDate").as[String] should fullyMatch regex isoDateRegex
+          ((jsonBody \ "terms") (0) \ "bonusEstimate").as[String] shouldBe "0.00"
 
-        ((jsonBody \ "terms")(1) \ "termNumber").as[Int] shouldBe 2
-        ((jsonBody \ "terms")(1) \ "endDate").as[String] should fullyMatch regex isoDateRegex
-        ((jsonBody \ "terms")(1) \ "bonusEstimate").as[String] shouldBe "0.00"
+          ((jsonBody \ "terms") (1) \ "termNumber").as[Int] shouldBe 2
+          ((jsonBody \ "terms") (1) \ "endDate").as[String] should fullyMatch regex isoDateRegex
+          ((jsonBody \ "terms") (1) \ "bonusEstimate").as[String] shouldBe "0.00"
+        }
 
         withClue(jsonBody \ "correlationId") {
           jsonBody.as[JsObject].keys should not contain "correlationId"
@@ -85,7 +87,7 @@ class AccountSpec
           (jsonBody \ "correlationId").as[String] shouldBe passedCorrelationId
 
           // other fields should also be present
-          (jsonBody \ "accountBalance").as[String] shouldBe "200.00"
+          (jsonBody \ "accountBalance").as[String] shouldBe "0.00"
         }
       }
 
