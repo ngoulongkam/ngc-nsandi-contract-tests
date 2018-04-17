@@ -250,5 +250,12 @@ class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers wit
       Then("200 - bonusEstimate should be more than 0 and bonusPaid should same as bonusEstimate")
       checkAccountWith1stTermBonusPaidResponse(response)
     }
+
+    scenario("Check Account-where-MaxFirstBonusReached") {
+      Given("An account have reached maximum first term bonus")
+      val response = responses.accountWithMaxFirstTerm
+      Then("200 - Maximum bonus reached in first term response")
+      checkAccountWithMaxFirstTermResponse(response)
+    }
   }
 }

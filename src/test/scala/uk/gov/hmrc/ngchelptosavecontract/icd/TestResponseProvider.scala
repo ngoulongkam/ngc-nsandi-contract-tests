@@ -48,4 +48,5 @@ trait TestResponseProvider {
   def accountWith1stTermBonusNotYetBeenPaid: HttpResponse
   def accountWith2ndTermBonusNotYetBeenPaid: HttpResponse
   def accountWith1stTermBonusPaid: HttpResponse
+  def accountWithMaxFirstTerm: HttpResponse
 }

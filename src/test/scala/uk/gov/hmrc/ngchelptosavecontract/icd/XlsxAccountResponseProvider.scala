@@ -86,6 +86,8 @@ object XlsxAccountResponseProvider extends TestResponseProvider {
 
   override def accountWith1stTermBonusPaid: HttpResponse = Spreadsheet.response("Account-Customer who has estimated 1st  term bonus greater than zero and paid")
 
+  override def accountWithMaxFirstTerm: HttpResponse = Spreadsheet.response("Account-Account-Retrieve-MaxFirstBonusReached")
+
   def pending = throw new TestPendingException
 
   private object Spreadsheet {

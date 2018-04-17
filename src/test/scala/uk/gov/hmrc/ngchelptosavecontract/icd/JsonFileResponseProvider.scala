@@ -50,6 +50,7 @@ object JsonFileResponseProvider extends TestResponseProvider {
   override def accountWith1stTermBonusNotYetBeenPaid: HttpResponse = JsonFileHttpResponse(200, "account-with-1st-term-bonus-not-been-paid.json")
   override def accountWith2ndTermBonusNotYetBeenPaid: HttpResponse = JsonFileHttpResponse(200, "account-with-2nd-term-bonus-not-been-paid.json")
   override def accountWith1stTermBonusPaid: HttpResponse = JsonFileHttpResponse(200, "account-with-1st-term-bonus-paid.json")
+  override def accountWithMaxFirstTerm: HttpResponse = JsonFileHttpResponse(200, "account-with-maximum-1st-term-bonus.json")
 
   private object JsonFileHttpResponse {
     def apply(status: Int, jsonLeafname: String): HttpResponse =
