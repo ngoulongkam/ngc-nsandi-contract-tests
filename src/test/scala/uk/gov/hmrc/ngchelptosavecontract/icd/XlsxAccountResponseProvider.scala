@@ -80,6 +80,8 @@ object XlsxAccountResponseProvider extends TestResponseProvider {
 
   override def accountWithIsleOfManPostcode: HttpResponse = Spreadsheet.response("Account -Check Account With IOM postcode")
 
+  override def accountWith1stTermBonusNotYetBeenPaid: HttpResponse = Spreadsheet.response("Account-Customer who has estimated 1st term bonus greater than zero but bonus not yet paid")
+
   def pending = throw new TestPendingException
 
   private object Spreadsheet {

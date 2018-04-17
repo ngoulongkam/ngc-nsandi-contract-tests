@@ -328,4 +328,10 @@ trait AccountChecks extends Matchers {
     (response.json \ "postcode").as[String] should startWith ("IM")
     (response.json \ "countryCode").as[String] shouldBe "GB"
   }
+
+  def checkAccountWith1stTermBonusNotYetBeenPaidResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+    ((response.json \ "terms") (0) \ "bonusEstimate").as[String] should not be "0.00"
+    ((response.json \ "terms") (0) \ "bonusPaid").as[String] shouldBe "0.00"
+  }
 }

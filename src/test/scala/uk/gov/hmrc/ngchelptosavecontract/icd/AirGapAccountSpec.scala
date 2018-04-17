@@ -229,5 +229,12 @@ class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers wit
       Then("200 - IM Post code should be included in the field")
       checkAccountWithIsleOfManPostcodeResponse(response)
     }
+
+    scenario("Customer who has estimated 1st term bonus greater than zero but bonus not yet paid") {
+      Given("An account with 1st term bonus but its not yet paid")
+      val response = responses.accountWith1stTermBonusNotYetBeenPaid
+      Then("200 - bonusEstimate should be more than 0 and bonusPaid should be 0 in the response")
+      checkAccountWith1stTermBonusNotYetBeenPaidResponse(response)
+    }
   }
 }
