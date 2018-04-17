@@ -29,7 +29,7 @@ import org.scalatest.{FeatureSpec, GivenWhenThen, Matchers}
   * Scenario names are taken from "CR20 scenarios INTERNAL.xlsx" in Google Drive
   */
 class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers with AccountChecks {
-  private val responses: TestResponseProvider = JsonFileResponseProvider // can be switched to between XlsxAccountResponseProvider and JsonFileResponseProvider
+  private val responses: TestResponseProvider = XlsxAccountResponseProvider // can be switched to between XlsxAccountResponseProvider and JsonFileResponseProvider
 
   feature("iSIT air gap account JSON - CR20 scenarios") {
     scenario("Non-Existent Version Number/Empty string") {
