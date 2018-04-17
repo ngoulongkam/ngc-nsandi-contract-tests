@@ -321,4 +321,10 @@ trait AccountChecks extends Matchers {
     (response.json \ "postcode").as[String] should startWith ("GY")
     (response.json \ "countryCode").as[String] shouldBe "GB"
   }
+
+  def checkAccountWithIsleOfManPostcodeResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+    (response.json \ "postcode").as[String] should startWith ("IM")
+    (response.json \ "countryCode").as[String] shouldBe "GB"
+  }
 }

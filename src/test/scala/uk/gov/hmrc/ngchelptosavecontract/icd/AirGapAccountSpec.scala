@@ -222,5 +222,12 @@ class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers wit
       Then("200 - GY Post code should be included in the field")
       checkAccountWithChannelIslandsPostcodeResponse(response)
     }
+
+    scenario("Check customer with IOM post code") {
+      Given("An account with Isle of Man Post code")
+      val response = responses.accountWithIsleOfManPostcode
+      Then("200 - IM Post code should be included in the field")
+      checkAccountWithIsleOfManPostcodeResponse(response)
+    }
   }
 }

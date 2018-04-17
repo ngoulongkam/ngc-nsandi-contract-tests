@@ -1,0 +1,48 @@
+{
+  "version": "V1.0",
+  "correlationId": "551485a3-001d-91e8-060e-890c40505bd7",
+  "accountNumber": "1100000204844",
+  "availableWithdrawal": "0.00",
+  "accountBalance": "0.00",
+  "accountClosedFlag": "",
+  "accountBlockingCode": "00",
+  "accountBlockingReasonCode": "00",
+  "currentInvestmentMonth": {
+    "investmentRemaining": "50.00",
+    "investmentLimit": "50.00",
+    "endDate": "2018-04-30"
+  },
+  "clientForename": "Johanna",
+  "clientSurname": "Battason",
+  "dateOfBirth": "1991-07-15",
+  "addressLine1": "1st Floor South West Wing",
+  "addressLine2": "Moorland Building",
+  "addressLine3": "Blackpool",
+  "addressLine4": " ",
+  "addressLine5": " ",
+  "postcode": "IM1 2EL",
+  "countryCode": "GB",
+  "emailAddress": "neville.morris@atos.net",
+  "commsPreference": "02",
+  "clientBlockingCode": "00",
+  "clientBlockingReasonCode": "00",
+  "clientCancellationStatus": "",
+  "terms": [
+    {
+      "termNumber": 1,
+      "startDate": "2018-04-01",
+      "endDate": "2020-03-31",
+      "maxBalance": "0.00",
+      "bonusEstimate": "0.00",
+      "bonusPaid": "0.00"
+    },
+    {
+      "termNumber": 2,
+      "startDate": "2020-04-01",
+      "endDate": "2022-03-31",
+      "maxBalance": "0.00",
+      "bonusEstimate": "0.00",
+      "bonusPaid": "0.00"
+    }
+  ]
+}

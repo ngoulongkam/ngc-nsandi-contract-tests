@@ -46,6 +46,7 @@ object JsonFileResponseProvider extends TestResponseProvider {
   override def accountWithZeroBalance: HttpResponse = JsonFileHttpResponse(200, "zero-balance-account.json")
   override def accountWithNoCorrelationId: HttpResponse = JsonFileHttpResponse(200, "generate-new-correlation-id.json")
   override def accountWithChannelIslandsPostcode: HttpResponse = JsonFileHttpResponse(200, "channel-islands-postcode.json")
+  override def accountWithIsleOfManPostcode: HttpResponse = JsonFileHttpResponse(200, "isle-of-man-postcode.json")
 
   private object JsonFileHttpResponse {
     def apply(status: Int, jsonLeafname: String): HttpResponse =
