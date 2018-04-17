@@ -62,7 +62,7 @@ object XlsxAccountResponseProvider extends TestResponseProvider {
 
   override def accountWithBalance: HttpResponse = Spreadsheet.response("Account - Customer with Non zero balance")
 
-  override def accountWithCurrentInvestmentMonth: HttpResponse = pending
+  override def accountWithCurrentInvestmentMonth: HttpResponse = Spreadsheet.response("Account - Customer with non zero amount paid in current month")
 
   override def accountWithZeroBalanceAndBonus: HttpResponse = Spreadsheet.response("Account-Customer who has zero balance and zero bonus")
 

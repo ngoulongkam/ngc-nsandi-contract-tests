@@ -38,7 +38,7 @@ object JsonFileResponseProvider extends TestResponseProvider {
   override def termNumbersFieldPopulated: HttpResponse = JsonFileHttpResponse(200, "term-number.json")
   override def noBankDetailsAccount: HttpResponse = JsonFileHttpResponse(200, "no-bank-details.json")
   override def accountWithBalance: HttpResponse = JsonFileHttpResponse(200, "non-zero-balance-account.json")
-  override def accountWithCurrentInvestmentMonth: HttpResponse = JsonFileHttpResponse(200, "all-fields.json")
+  override def accountWithCurrentInvestmentMonth: HttpResponse = JsonFileHttpResponse(200, "non-zero-amount-paid-this-month.json")
   override def accountWithZeroBalanceAndBonus: HttpResponse = JsonFileHttpResponse(200, "zero-balance-account.json")
   override def accountWithUKPostcode: HttpResponse = JsonFileHttpResponse(200, "uk-postcode-account.json")
   override def accountWithBuildingSocietyBankDetails: HttpResponse = JsonFileHttpResponse(200, "building-society-bank-details.json")
