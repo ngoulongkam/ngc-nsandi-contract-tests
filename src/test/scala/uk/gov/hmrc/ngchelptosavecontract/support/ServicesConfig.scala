@@ -26,8 +26,12 @@ import play.api.Configuration
 class ServicesConfig {
 
   protected def configuration: Configuration = Configuration(
-    ConfigFactory.load("test")
+    ConfigFactory.load(environment)
   )
+
+  private lazy val environment = {
+    sys.props.get("environment").getOrElse("local")
+  }
 
   protected lazy val rootServices = "microservice.services"
 
