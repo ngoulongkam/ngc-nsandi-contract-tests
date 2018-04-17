@@ -13,7 +13,7 @@ Ensure you have the following installed:
 * [Java JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 * [SBT](https://www.scala-sbt.org/)
 
-Copy `WebApi_Testing Update v1.0.xlsx` into directory `src/test/resources/airgap`.
+Copy the air gap JSON spreadsheet (e.g. `WebApiTestingReport_16042018_fixed_headings.xlsx`) into directory `src/test/resources/airgap`.
 
 Then run tests with:
 

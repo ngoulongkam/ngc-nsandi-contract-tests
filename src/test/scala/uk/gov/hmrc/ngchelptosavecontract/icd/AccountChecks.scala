@@ -31,7 +31,7 @@ trait AccountChecks extends Matchers {
     (jsonBody \ "accountNumber").as[String] should not be empty
     (jsonBody \ "availableWithdrawal").as[String] should not be empty
     (jsonBody \ "accountBalance").as[String] should not be empty
-    (jsonBody \ "accountClosedFlag").as[String] should not be empty
+    (jsonBody \ "accountClosedFlag").as[String] shouldBe ""
     (jsonBody \ "accountClosureDate").as[String] should not be empty
     (jsonBody \ "accountClosingBalance").as[String] should not be empty
     (jsonBody \ "accountBlockingCode").as[String] should not be empty

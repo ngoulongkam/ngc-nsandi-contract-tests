@@ -24,33 +24,33 @@ import uk.gov.hmrc.http.HttpResponse
 import scala.collection.JavaConverters._
 import scala.util.matching.Regex
 
-case class TestResult(testName: String, response: HttpResponse)
+case class TestResult(testName: String, status: Int, responseBody: String)
 
 object XlsxAccountResponseProvider extends TestResponseProvider {
 
-  override def noVersion: HttpResponse = Spreadsheet.response("Account-NoVersion")
+  override def noVersion: HttpResponse = Spreadsheet.response("ACT02-Account-NoVersion")
 
   override def invalidVersion: HttpResponse = pending
 
-  override def noNino: HttpResponse = Spreadsheet.response("Account-NoNino")
+  override def noNino: HttpResponse = Spreadsheet.response("ACT19-Account-NoNino")
 
-  override def invalidNino: HttpResponse = Spreadsheet.response("Account-NINOWithSPACING")
+  override def invalidNino: HttpResponse = Spreadsheet.response("ACT20-Account-NINOWithSPACING")
 
-  override def invalidParams: HttpResponse = Spreadsheet.response("Account-InvalidParams")
+  override def invalidParams: HttpResponse = Spreadsheet.response("ACT21-Account-InvalidParams")
 
-  override def accountNotFound: HttpResponse = Spreadsheet.response("Account-NinoDoesNotExist")
+  override def accountNotFound: HttpResponse = pending
 
-  override def noSystemId: HttpResponse = Spreadsheet.response("Account-NoSystemId")
+  override def noSystemId: HttpResponse = Spreadsheet.response("ACT03-Account-NoSystemId")
 
   override def noSystemIdNinoOrVersion: HttpResponse = Spreadsheet.response("Account-No-SysId-CorrelationID-NINO-Version")
 
-  override def allFieldsPopulated: HttpResponse = pending
+  override def allFieldsPopulated: HttpResponse = Spreadsheet.response("ACT06-Account -Check all fields present in Response")
 
-  override def allMandatoryFieldsPopulated: HttpResponse = pending
+  override def allMandatoryFieldsPopulated: HttpResponse = Spreadsheet.response("ACT05-Account - Check all mandatory fields populated in Response")
 
-  override def closedAccount: HttpResponse = Spreadsheet.response("Account-ClosedAccount")
+  override def closedAccount: HttpResponse = Spreadsheet.response("ACT07-Account-ClosedAccount")
 
-  override def blockedAccount: HttpResponse = Spreadsheet.response("Account-BlockedAccount")
+  override def blockedAccount: HttpResponse = Spreadsheet.response("ACT08-Account-BlockedAccount")
 
   override def termNumbersFieldPopulated: HttpResponse = pending
 
@@ -60,18 +60,21 @@ object XlsxAccountResponseProvider extends TestResponseProvider {
 
   override def accountWithCurrentInvestmentMonth: HttpResponse = pending
 
-  override def accountWithZeroBalanceAndBonus: HttpResponse = Spreadsheet.response("Account-Retrieve-AllDetails-ZeroBalance")
+  override def accountWithZeroBalanceAndBonus: HttpResponse = pending
 
   def pending = throw new TestPendingException
 
   private object Spreadsheet {
-    def response(testName: String): HttpResponse = testResultsMap(testName)
+    def response(testName: String): HttpResponse = {
+      val testResult = testResultsMap(testName)
+      HttpResponse(testResult.status, Some(Json.parse(testResult.responseBody)))
+    }
 
-    private val testResultsMap: Map[String, HttpResponse] = testResults.map(r => (r.testName, r.response)).toMap
+    private val testResultsMap: Map[String, TestResult] = testResults.map(r => (r.testName, r)).toMap
 
     private def testResults: Seq[TestResult] = {
-      val HeadingRowNum = 2 - 1
-      val FirstDataRowNum = 3 - 1
+      val HeadingRowNum = 1 - 1
+      val FirstDataRowNum = 2 - 1
 
       val workbook: Workbook = loadWorkbook
 
@@ -92,7 +95,7 @@ object XlsxAccountResponseProvider extends TestResponseProvider {
           .find(cell => cell.getCellTypeEnum == CellType.STRING && cell.getStringCellValue == value)
       }
 
-      def findColumnIndex(name: String) = find(headingRow, name).get.getColumnIndex
+      def findColumnIndex(name: String) = find(headingRow, name).getOrElse(sys.error(s"Couldn't find column with name $name")).getColumnIndex
 
       val testNameColumnIndex = findColumnIndex("Test Name")
       val jsonResponseColumnIndex = findColumnIndex("Json Response")
@@ -107,10 +110,8 @@ object XlsxAccountResponseProvider extends TestResponseProvider {
 
         TestResult(
           cellString(testNameColumnIndex),
-          HttpResponse(
-            statusCode(cellString(statusColumnIndex)),
-            Some(Json.parse(cellString(jsonResponseColumnIndex)))
-          )
+          statusCode(cellString(statusColumnIndex)),
+          cellString(jsonResponseColumnIndex)
         )
       }
 
@@ -121,7 +122,7 @@ object XlsxAccountResponseProvider extends TestResponseProvider {
     }
 
     private def loadWorkbook = {
-      val resourceName = "/airgap/WebApi_Testing Update v1.0.xlsx"
+      val resourceName = "/airgap/WebApiTestingReport_16042018_fixed_headings.xlsx"
       val inputStreamIfExists = Option(getClass.getResourceAsStream(resourceName))
       inputStreamIfExists.map { inputStream =>
         try {
