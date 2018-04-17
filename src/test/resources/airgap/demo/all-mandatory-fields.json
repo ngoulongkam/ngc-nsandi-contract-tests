@@ -1,0 +1,40 @@
+{
+  "version": "V1.0",
+  "accountNumber": "1400000006005",
+  "availableWithdrawal": "0.00",
+  "accountBalance": "0.00",
+  "accountBlockingCode": "00",
+  "accountBlockingReasonCode": "00",
+  "currentInvestmentMonth":    {
+    "investmentRemaining": "50.00",
+    "investmentLimit": "50.00",
+    "endDate": "2018-04-30"
+  },
+  "clientForename": "Bertie",
+  "clientSurname": "Bee",
+  "dateOfBirth": "1963-02-01",
+  "addressLine1": "3 Findon Street",
+  "addressLine2": "Hackriston",
+  "postcode": "DH7 6LR",
+  "commsPreference": "02",
+  "clientBlockingCode": "00",
+  "clientBlockingReasonCode": "00",
+  "terms":    [
+    {
+      "termNumber": 1,
+      "startDate": "2018-01-01",
+      "endDate": "2019-12-31",
+      "maxBalance": "0.00",
+      "bonusEstimate": "0.00",
+      "bonusPaid": "0.00"
+    },
+    {
+      "termNumber": 2,
+      "startDate": "2020-01-01",
+      "endDate": "2021-12-31",
+      "maxBalance": "0.00",
+      "bonusEstimate": "0.00",
+      "bonusPaid": "0.00"
+    }
+  ]
+}

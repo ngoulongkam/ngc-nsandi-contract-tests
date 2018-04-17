@@ -29,7 +29,7 @@ import org.scalatest.{FeatureSpec, GivenWhenThen, Matchers}
   * Scenario names are taken from "CR20 scenarios INTERNAL.xlsx" in Google Drive
   */
 class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers with AccountChecks {
-  private val responses: TestResponseProvider = XlsxAccountResponseProvider // can be switched to JsonFileResponseProvider
+  private val responses: TestResponseProvider = JsonFileResponseProvider // can be switched to between XlsxAccountResponseProvider and JsonFileResponseProvider
 
   feature("iSIT air gap account JSON - CR20 scenarios") {
     scenario("Non-Existent Version Number/Empty string") {
@@ -44,6 +44,13 @@ class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers wit
       val response = responses.invalidVersion
       Then("400 HTS-API015-003 error should be returned")
       checkInvalidVersionResponse(response)
+    }
+
+    scenario("Invalid parameters") {
+      When("Get Account API is called with an invalid parameter")
+      val response = responses.invalidParams
+      Then("400 containing multiple errors should be returned")
+      checkInvalidParamResponse(response)
     }
 
     scenario("Invalid Nino / Empty String") {
@@ -83,6 +90,81 @@ class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers wit
       val response = responses.allFieldsPopulated
       Then("Response should include all fields")
       checkAllFieldsPresentResponse(response)
+    }
+
+    scenario("Closed Account - Ensure accountClosedFlag is set AND accountClosedDate and accountClosingBalance fields set") {
+      Given("An account is closed")
+      When("Get Account API is called")
+      val response = responses.closedAccount
+      Then("Response should include accountClosedFlag, accountClosedDate and accountClosingBalance")
+      checkClosedAccountResponse(response)
+    }
+
+    // TODO: test a variety of blocked accounts and clients and check that the correct values are in the
+    // accountBlockingCode, accountBlockingReasonCode, clientBlockingCode and clientBlockingReasonCode
+    // fields (not just whether they are "00" or not)
+    scenario("Blocked account - Check Client Blocking Code & clientBlockingReason") {
+      Given("An account is blocked (account blocking, not client blocking")
+      When("Get Account API is called")
+      val blockedAccountResponse = responses.blockedAccount
+      Then("Response should include accountBlockingCode and accountBlockingReasonCode")
+      checkBlockedAccountResponse(blockedAccountResponse)
+
+      Given("An account is blocked (client blocking, not account blocking")
+      pending
+    }
+
+    scenario("Check all mandatory fields populated in Response") {
+      Given("An account with all mandatory fields populated")
+      val response = responses.allMandatoryFieldsPopulated
+      Then("Response should include all mandatory fields")
+      checkAllMandatoryFieldsPresentResponse(response)
+    }
+
+    scenario("Term1/Term2 customer and check Term Numbers are set correctly") {
+      Given("An account with Term1/Term2 fields populated")
+      val response = responses.termNumbersFieldPopulated
+      Then("Response should include the correct term number")
+      checkCorrectTermNumberPresentResponse(response)
+    }
+
+    scenario("Check Data format for each field as per ICD") {
+      Given("An account with all fields populated")
+      val response = responses.allFieldsPopulated
+      Then("The character format of all fields in response as per ICD")
+      checkAllFieldsCharacterFormatResponse(response)
+      And("The regex format of fields in response as per ICD")
+      checkFieldsWithRegexFormatResponse(response)
+      And("The date format of fields in response as per ICD")
+      checkDateFieldsFormatResponse(response)
+    }
+
+    scenario("Account opened - no bank details added") {
+      Given("An account opened with no bank details")
+      val response = responses.noBankDetailsAccount
+      Then("200 - Bank details should be omitted from the response")
+      checkNoBankDetailsAccountResponse(response)
+    }
+
+    scenario("Customer with non zero balance") {
+      Given("An account with non zero balance")
+      val response = responses.accountWithBalance
+      Then("200 - Response should include a balance")
+      checkBalanceFieldResponse(response)
+    }
+
+    scenario("Customer with non zero amount paid in current month") {
+      Given("An account with non zero amount paid in current month")
+      val response = responses.accountWithCurrentInvestmentMonth
+      Then("200 - Response should include an amount paid currentInvestmentMonth")
+      checkCurrentInvestmentMonthResponse(response)
+    }
+
+    scenario("Customer who has zero balance and zero bonus") {
+      Given("An account has zero balance and zero bonus")
+      val response = responses.accountWithZeroBalanceAndBonus
+      Then("200 - Balance and bonus should have zero in the response")
+      checkZeroBalanceAndBonusFieldResponse(response)
     }
   }
 }

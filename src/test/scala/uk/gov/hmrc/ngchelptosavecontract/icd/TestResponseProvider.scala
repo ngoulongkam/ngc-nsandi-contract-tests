@@ -23,8 +23,17 @@ trait TestResponseProvider {
   def invalidVersion: HttpResponse
   def noNino: HttpResponse
   def invalidNino: HttpResponse
+  def invalidParams: HttpResponse
   def accountNotFound: HttpResponse
   def noSystemId: HttpResponse
   def noSystemIdNinoOrVersion: HttpResponse
   def allFieldsPopulated: HttpResponse
+  def allMandatoryFieldsPopulated: HttpResponse
+  def closedAccount: HttpResponse
+  def blockedAccount: HttpResponse
+  def termNumbersFieldPopulated: HttpResponse
+  def noBankDetailsAccount: HttpResponse
+  def accountWithBalance: HttpResponse
+  def accountWithCurrentInvestmentMonth: HttpResponse
+  def accountWithZeroBalanceAndBonus: HttpResponse
 }

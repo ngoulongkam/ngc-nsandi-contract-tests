@@ -1,0 +1,20 @@
+{
+  "terms": [
+    {
+      "termNumber": 1,
+      "startDate": "2018-01-01",
+      "endDate": "2019-12-31",
+      "maxBalance": "0.00",
+      "bonusEstimate": "0.00",
+      "bonusPaid": "0.00"
+    },
+    {
+      "termNumber": 2,
+      "startDate": "2020-01-01",
+      "endDate": "2021-12-31",
+      "maxBalance": "0.00",
+      "bonusEstimate": "0.00",
+      "bonusPaid": "0.00"
+    }
+  ]
+}
