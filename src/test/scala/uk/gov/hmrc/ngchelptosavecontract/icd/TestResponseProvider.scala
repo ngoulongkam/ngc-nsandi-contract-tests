@@ -20,6 +20,7 @@ import uk.gov.hmrc.http.HttpResponse
 
 trait TestResponseProvider {
   def incorrectAuthorizationHeader: HttpResponse
+  def nullAuthorizationHeader: HttpResponse
   def noVersion: HttpResponse
   def invalidVersion: HttpResponse
   def noNino: HttpResponse

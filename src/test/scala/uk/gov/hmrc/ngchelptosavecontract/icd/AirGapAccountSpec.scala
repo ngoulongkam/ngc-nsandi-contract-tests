@@ -39,6 +39,13 @@ class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers wit
       checkIncorrectAuthorizationHeaderResponse(response)
     }
 
+    scenario("Null Authorization header") {
+      When("Get Account API is called with null authorization header")
+      val response = responses.nullAuthorizationHeader
+      Then("401 HTS-API015-001 error should be returned")
+      checkNullAuthorizationHeaderResponse(response)
+    }
+
     scenario("Empty Version Number/Empty string") {
       When("Get Account API is called without a version parameter")
       val response = responses.noVersion

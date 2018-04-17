@@ -30,6 +30,8 @@ object XlsxAccountResponseProvider extends TestResponseProvider {
 
   override def incorrectAuthorizationHeader: HttpResponse = Spreadsheet.response("Account-IncorrectAuthorizationHeader")
 
+  override def nullAuthorizationHeader: HttpResponse = Spreadsheet.response("Account-Null authorization header")
+
   override def noVersion: HttpResponse = Spreadsheet.response("Account-NoVersion")
 
   override def invalidVersion: HttpResponse = pending
