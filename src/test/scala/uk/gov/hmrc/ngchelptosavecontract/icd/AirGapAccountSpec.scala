@@ -194,5 +194,12 @@ class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers wit
       Then("200 - investmentRemaining should be 0 in the response")
       checkAccountPaidInMaxForTheMonthResponse(response)
     }
+
+    scenario("Customer with Zero balance") {
+      Given("An account with zero balance")
+      val response = responses.accountWithZeroBalance
+      Then("200 - All balance related fields should be 0.00")
+      checkAccountWithZeroBalanceResponse(response)
+    }
   }
 }

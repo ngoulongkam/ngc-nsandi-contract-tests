@@ -70,6 +70,8 @@ object XlsxAccountResponseProvider extends TestResponseProvider {
 
   override def accountPaidInMaxForTheMonth: HttpResponse = Spreadsheet.response("Account - Customer with no headroomAccount-MaxPaidInForTheMonth")
 
+  override def accountWithZeroBalance: HttpResponse = Spreadsheet.response("Account - Customer with zero balance")
+
   def pending = throw new TestPendingException
 
   private object Spreadsheet {
