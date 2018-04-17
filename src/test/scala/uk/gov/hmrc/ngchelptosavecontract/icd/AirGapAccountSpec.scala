@@ -173,5 +173,12 @@ class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers wit
       Then("200 - UK Post code should be in the response")
       checkUKPostcodeFieldResponse(response)
     }
+
+    scenario("Check Account with Building Society as bank details") {
+      Given("An account with Building Society as bank details")
+      val response = responses.accountWithBuildingSocietyBankDetails
+      Then("200 - nbaRollNumber should be included in the response")
+      checkAccountWithNbaRollNumberFieldResponse(response)
+    }
   }
 }
