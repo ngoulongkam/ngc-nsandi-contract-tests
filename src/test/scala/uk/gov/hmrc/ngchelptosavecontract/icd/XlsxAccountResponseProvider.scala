@@ -76,6 +76,8 @@ object XlsxAccountResponseProvider extends TestResponseProvider {
 
   override def accountWithNoCorrelationId: HttpResponse = Spreadsheet.response("Account-NoCorrelationID")
 
+  override def accountWithChannelIslandsPostcode: HttpResponse = Spreadsheet.response("Account -Check Account With Channel Island postcode")
+
   def pending = throw new TestPendingException
 
   private object Spreadsheet {

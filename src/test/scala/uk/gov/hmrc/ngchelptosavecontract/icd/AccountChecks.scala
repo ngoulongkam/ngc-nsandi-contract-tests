@@ -315,4 +315,10 @@ trait AccountChecks extends Matchers {
     response.status shouldBe 200
     (response.json \ "correlationId").as[String] should not be empty
   }
+
+  def checkAccountWithChannelIslandsPostcodeResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+    (response.json \ "postcode").as[String] should startWith ("GY")
+    (response.json \ "countryCode").as[String] shouldBe "GB"
+  }
 }

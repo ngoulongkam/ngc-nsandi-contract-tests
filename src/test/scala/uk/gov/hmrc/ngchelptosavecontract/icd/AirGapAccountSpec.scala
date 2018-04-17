@@ -215,5 +215,12 @@ class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers wit
       Then("200 - Response should return a new correlationId")
       checkAccountWithNoCorrelationIdResponse(response)
     }
+
+    scenario("Check customer with Channel Islands Post code") {
+      Given("An account with Channel Islands Post code")
+      val response = responses.accountWithChannelIslandsPostcode
+      Then("200 - GY Post code should be included in the field")
+      checkAccountWithChannelIslandsPostcodeResponse(response)
+    }
   }
 }

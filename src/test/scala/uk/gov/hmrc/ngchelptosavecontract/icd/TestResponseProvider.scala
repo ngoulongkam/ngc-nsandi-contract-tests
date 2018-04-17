@@ -43,4 +43,5 @@ trait TestResponseProvider {
   def accountPaidInMaxForTheMonth: HttpResponse
   def accountWithZeroBalance: HttpResponse
   def accountWithNoCorrelationId: HttpResponse
+  def accountWithChannelIslandsPostcode: HttpResponse
 }
