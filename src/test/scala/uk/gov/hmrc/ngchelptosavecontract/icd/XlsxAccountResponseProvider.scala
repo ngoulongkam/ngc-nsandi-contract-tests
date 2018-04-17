@@ -36,6 +36,8 @@ object XlsxAccountResponseProvider extends TestResponseProvider {
 
   override def invalidNino: HttpResponse = Spreadsheet.response("Account-NINOWithSPACING")
 
+  override def invalidParams: HttpResponse = Spreadsheet.response("Account-InvalidParams")
+
   override def accountNotFound: HttpResponse = Spreadsheet.response("Account-NinoDoesNotExist")
 
   override def noSystemId: HttpResponse = Spreadsheet.response("Account-NoSystemId")
@@ -44,9 +46,21 @@ object XlsxAccountResponseProvider extends TestResponseProvider {
 
   override def allFieldsPopulated: HttpResponse = pending
 
+  override def allMandatoryFieldsPopulated: HttpResponse = pending
+
   override def closedAccount: HttpResponse = Spreadsheet.response("Account-ClosedAccount")
 
   override def blockedAccount: HttpResponse = Spreadsheet.response("Account-BlockedAccount")
+
+  override def termNumbersFieldPopulated: HttpResponse = pending
+
+  override def noBankDetailsAccount: HttpResponse = pending
+
+  override def accountWithBalance: HttpResponse = pending
+
+  override def accountWithCurrentInvestmentMonth: HttpResponse = pending
+
+  override def accountWithZeroBalanceAndBonus: HttpResponse = Spreadsheet.response("Account-Retrieve-AllDetails-ZeroBalance")
 
   def pending = throw new TestPendingException
 
