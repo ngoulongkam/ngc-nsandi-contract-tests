@@ -38,11 +38,11 @@ object XlsxAccountResponseProvider extends TestResponseProvider {
 
   override def invalidParams: HttpResponse = Spreadsheet.response("ACT21-Account-InvalidParams")
 
-  override def accountNotFound: HttpResponse = pending
+  override def accountNotFound: HttpResponse = Spreadsheet.response("ACT01-Account-Invalid NINO")
 
   override def noSystemId: HttpResponse = Spreadsheet.response("ACT03-Account-NoSystemId")
 
-  override def noSystemIdNinoOrVersion: HttpResponse = Spreadsheet.response("Account-No-SysId-CorrelationID-NINO-Version")
+  override def noSystemIdNinoOrVersion: HttpResponse = Spreadsheet.response("ACT03-Account-NoSystemId")
 
   override def allFieldsPopulated: HttpResponse = Spreadsheet.response("ACT06-Account -Check all fields present in Response")
 
@@ -52,15 +52,15 @@ object XlsxAccountResponseProvider extends TestResponseProvider {
 
   override def blockedAccount: HttpResponse = Spreadsheet.response("ACT08-Account-BlockedAccount")
 
-  override def termNumbersFieldPopulated: HttpResponse = pending
+  override def termNumbersFieldPopulated: HttpResponse = Spreadsheet.response("ACT09-Account -Check Term1 and Term customer and check Term2 Number set correctly")
 
-  override def noBankDetailsAccount: HttpResponse = pending
+  override def noBankDetailsAccount: HttpResponse = Spreadsheet.response("ACT13-Account- Account Opened No bank details")
 
   override def accountWithBalance: HttpResponse = pending
 
   override def accountWithCurrentInvestmentMonth: HttpResponse = pending
 
-  override def accountWithZeroBalanceAndBonus: HttpResponse = pending
+  override def accountWithZeroBalanceAndBonus: HttpResponse = Spreadsheet.response("ACT27-Account-Customer who has zero balance and zero bonus")
 
   def pending = throw new TestPendingException
 
