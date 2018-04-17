@@ -182,8 +182,11 @@ class AccountSpec
   private def accountUrlWithParams(nino: Option[Nino], version: Option[String] = Some(accountApiVersion), systemId: Option[String] = Some(defaultSystemId), correlationId: Option[String] = None): String =
     accountUrlWithParamsUnvalidatedNino(nino.map(_.value), version, systemId, correlationId)
 
-  private def accountUrlWithParamsUnvalidatedNino(nino: Option[String], version: Option[String] = Some(accountApiVersion), systemId: Option[String] = Some(defaultSystemId), correlationId: Option[String] = None): String =
-    accountUrl.toString ? ("nino" -> nino) & ("version" -> version) & ("systemId" -> systemId) & ("correlationId" -> correlationId)
+  private def accountUrlWithParamsUnvalidatedNino(nino: Option[String], version: Option[String] = Some(accountApiVersion), systemId: Option[String] = Some(defaultSystemId), correlationId: Option[String] = None): String = {
+    val url = accountUrl.toString ? ("nino" -> nino) & ("version" -> version) & ("systemId" -> systemId) & ("correlationId" -> correlationId)
+    info(s"Using account URL: $url")
+    url
+  }
 
   // Workaround to prevent ClassCastException being thrown when setting up Play.xercesSaxParserFactory when "test" is run twice in the same sbt session.
   Play
