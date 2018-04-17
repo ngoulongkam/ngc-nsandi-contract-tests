@@ -236,5 +236,12 @@ class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers wit
       Then("200 - bonusEstimate should be more than 0 and bonusPaid should be 0 in the response")
       checkAccountWith1stTermBonusNotYetBeenPaidResponse(response)
     }
+
+    scenario("Customer who has estimated 2nd term bonus greater than zero but bonus not yet paid") {
+      Given("An account with 2nd term bonus but its not yet paid")
+      val response = responses.accountWith2ndTermBonusNotYetBeenPaid
+      Then("200 - 2nd term bonusEstimate should be more than 0 and bonusPaid should be 0 in the response")
+      checkAccountWith2ndTermBonusNotYetBeenPaidResponse(response)
+    }
   }
 }
