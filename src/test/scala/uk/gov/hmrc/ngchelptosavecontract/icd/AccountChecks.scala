@@ -64,6 +64,12 @@ trait AccountChecks extends Matchers {
     ((jsonBody \ "terms") (0) \ "maxBalance").as[String] should not be empty
     ((jsonBody \ "terms") (0) \ "bonusEstimate").as[String] should not be empty
     ((jsonBody \ "terms") (0) \ "bonusPaid").as[String] should not be empty
+    ((jsonBody \ "terms") (1) \ "termNumber").as[Int] should not be 0
+    ((jsonBody \ "terms") (1) \ "startDate").as[String] should not be empty
+    ((jsonBody \ "terms") (1) \ "endDate").as[String] should not be empty
+    ((jsonBody \ "terms") (1) \ "maxBalance").as[String] should not be empty
+    ((jsonBody \ "terms") (1) \ "bonusEstimate").as[String] should not be empty
+    ((jsonBody \ "terms") (1) \ "bonusPaid").as[String] should not be empty
   }
 
   def checkAllMandatoryFieldsPresentResponse(response: HttpResponse): Assertion = {
@@ -144,6 +150,12 @@ trait AccountChecks extends Matchers {
     ((jsonBody \ "terms") (0) \ "maxBalance").as[String].length should be <= 7 //is 7 character correct for 9(4)V9(2) format
     ((jsonBody \ "terms") (0) \ "bonusEstimate").as[String].length should be <= 7 //is 7 character correct for 9(4)V9(2) format
     ((jsonBody \ "terms") (0) \ "bonusPaid").as[String].length should be <= 7 //is 7 character correct for 9(4)V9(2) format
+    ((jsonBody \ "terms") (1) \ "termNumber").as[Int] should (be(1) or be(2))
+    ((jsonBody \ "terms") (1) \ "startDate").as[String].length should be <= 10
+    ((jsonBody \ "terms") (1) \ "endDate").as[String].length should be <= 10
+    ((jsonBody \ "terms") (1) \ "maxBalance").as[String].length should be <= 7 //is 7 character correct for 9(4)V9(2) format
+    ((jsonBody \ "terms") (1) \ "bonusEstimate").as[String].length should be <= 7 //is 7 character correct for 9(4)V9(2) format
+    ((jsonBody \ "terms") (1) \ "bonusPaid").as[String].length should be <= 7 //is 7 character correct for 9(4)V9(2) format
   }
 
   def checkFieldsWithRegexFormatResponse(response: HttpResponse): Assertion = {
@@ -159,6 +171,9 @@ trait AccountChecks extends Matchers {
     ((jsonBody \ "terms") (0) \ "maxBalance").as[String] should fullyMatch regex moneyValuesRegex
     ((jsonBody \ "terms") (0) \ "bonusEstimate").as[String] should fullyMatch regex moneyValuesRegex
     ((jsonBody \ "terms") (0) \ "bonusPaid").as[String] should fullyMatch regex moneyValuesRegex
+    ((jsonBody \ "terms") (1) \ "maxBalance").as[String] should fullyMatch regex moneyValuesRegex
+    ((jsonBody \ "terms") (1) \ "bonusEstimate").as[String] should fullyMatch regex moneyValuesRegex
+    ((jsonBody \ "terms") (1) \ "bonusPaid").as[String] should fullyMatch regex moneyValuesRegex
   }
 
   def checkDateFieldsFormatResponse(response: HttpResponse): Assertion = {
@@ -171,6 +186,8 @@ trait AccountChecks extends Matchers {
     (jsonBody \ "dateOfBirth").as[String] should fullyMatch regex iso8601DateFormatRegex
     ((jsonBody \ "terms") (0) \ "startDate").as[String] should fullyMatch regex iso8601DateFormatRegex
     ((jsonBody \ "terms") (0) \ "endDate").as[String] should fullyMatch regex iso8601DateFormatRegex
+    ((jsonBody \ "terms") (1) \ "startDate").as[String] should fullyMatch regex iso8601DateFormatRegex
+    ((jsonBody \ "terms") (1) \ "endDate").as[String] should fullyMatch regex iso8601DateFormatRegex
   }
 
   def checkIncorrectAuthorizationHeaderResponse(response: HttpResponse): Assertion = {
