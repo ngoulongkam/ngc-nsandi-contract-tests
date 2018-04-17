@@ -166,5 +166,26 @@ class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers wit
       Then("200 - Balance and bonus should have zero in the response")
       checkZeroBalanceAndBonusFieldResponse(response)
     }
+
+    scenario("Check customer with UK Post code") {
+      Given("An account with a UK Post code")
+      val response = responses.accountWithUKPostcode
+      Then("200 - UK Post code should be in the response")
+      checkUKPostcodeFieldResponse(response)
+    }
+
+    scenario("Check Account with Building Society as bank details") {
+      Given("An account with Building Society as bank details")
+      val response = responses.accountWithBuildingSocietyBankDetails
+      Then("200 - nbaRollNumber should be included in the response")
+      checkAccountWithNbaRollNumberFieldResponse(response)
+    }
+
+    scenario("Customer with No headroom(paid in max for the month)") {
+      Given("An account paid in max for the month")
+      val response = responses.accountPaidInMaxForTheMonth
+      Then("200 - investmentRemaining should be 0 in the response")
+      checkAccountPaidInMaxForTheMonthResponse(response)
+    }
   }
 }

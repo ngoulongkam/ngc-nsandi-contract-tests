@@ -1,0 +1,51 @@
+{
+  "version": "V1.0",
+  "correlationId": "17643edd-1b93-45a4-8b56-2e539aa7ee07",
+  "accountNumber": "1100000066771",
+  "availableWithdrawal": "79.02",
+  "accountBalance": "91.01",
+  "accountClosedFlag": "",
+  "accountBlockingCode": "00",
+  "accountBlockingReasonCode": "00",
+  "currentInvestmentMonth": {
+    "investmentRemaining": "0.00",
+    "investmentLimit": "50.00",
+    "endDate": "2018-04-30"
+  },
+  "clientForename": "Bobby",
+  "clientSurname": "Bally",
+  "dateOfBirth": "1994-09-19",
+  "addressLine1": "9 Meldon Avenue",
+  "addressLine2": "Sherburn",
+  "addressLine3": "DURHAM",
+  "addressLine4": " ",
+  "addressLine5": " ",
+  "postcode": "DH6 1JX",
+  "countryCode": "GB",
+  "emailAddress": "alex.trainor@atos.net",
+  "commsPreference": "02",
+  "clientBlockingCode": "00",
+  "clientBlockingReasonCode": "00",
+  "clientCancellationStatus": "",
+  "nbaAccountNumber": "12345678",
+  "nbaPayee": "Bobby Bally",
+  "nbaSortCode": "873748",
+  "terms": [
+    {
+      "termNumber": 1,
+      "startDate": "2017-11-01",
+      "endDate": "2019-10-31",
+      "maxBalance": "91.01",
+      "bonusEstimate": "45.50",
+      "bonusPaid": "0.00"
+    },
+    {
+      "termNumber": 2,
+      "startDate": "2019-11-01",
+      "endDate": "2021-10-31",
+      "maxBalance": "0.00",
+      "bonusEstimate": "0.00",
+      "bonusPaid": "0.00"
+    }
+  ]
+}

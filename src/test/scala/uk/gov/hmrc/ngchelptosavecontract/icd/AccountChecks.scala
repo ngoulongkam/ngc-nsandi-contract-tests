@@ -268,4 +268,23 @@ trait AccountChecks extends Matchers {
     ((response.json \ "terms") (1) \"bonusEstimate").as[String] shouldBe "0.00"
     ((response.json \ "terms") (1) \"bonusPaid").as[String] shouldBe "0.00"
   }
+
+  def checkUKPostcodeFieldResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+    (response.json \ "postcode").as[String] shouldBe "FY1 5QY"
+    (response.json \ "countryCode").as[String] shouldBe "GB"
+  }
+
+  def checkAccountWithNbaRollNumberFieldResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+    (response.json \ "nbaRollNumber").as[String] should not be empty
+    (response.json \ "nbaSortCode").as[String] should not be empty
+    (response.json \ "nbaRollNumber").as[String] shouldBe "A1234567AAA"
+    (response.json \ "nbaSortCode").as[String] shouldBe "202020"
+  }
+
+  def checkAccountPaidInMaxForTheMonthResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+    (response.json \ "currentInvestmentMonth" \ "investmentRemaining").as[String] shouldBe "0.00"
+  }
 }
