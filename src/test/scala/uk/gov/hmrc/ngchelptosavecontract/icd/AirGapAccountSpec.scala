@@ -32,7 +32,7 @@ class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers wit
   private val responses: TestResponseProvider = XlsxAccountResponseProvider // can be switched to between XlsxAccountResponseProvider and JsonFileResponseProvider
 
   feature("iSIT air gap account JSON - CR20 scenarios") {
-    scenario("Non-Existent Version Number/Empty string") {
+    scenario("Empty Version Number/Empty string") {
       When("Get Account API is called without a version parameter")
       val response = responses.noVersion
       Then("400 HTS-API015-002 error should be returned")
@@ -70,7 +70,7 @@ class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers wit
       checkNoAccountResponse(noAccountResponse)
     }
 
-    scenario("Incorrect SystemID/Empty String/ Field not sent") {
+    scenario("SystemID Field not sent") {
       When("Get Account API is called with no systemId parameter")
       val response = responses.noSystemId
       Then("400 HTS-API015-012 error should be returned")
