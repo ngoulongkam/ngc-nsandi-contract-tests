@@ -17,8 +17,6 @@
 package uk.gov.hmrc.ngchelptosavecontract.icd
 
 import org.scalatest.{FeatureSpec, GivenWhenThen, Matchers}
-import play.api.libs.json.{JsValue, Json}
-import uk.gov.hmrc.http.HttpResponse
 
 /**
   * Tests that check that the air gap JSON files for NS&I's
@@ -31,68 +29,60 @@ import uk.gov.hmrc.http.HttpResponse
   * Scenario names are taken from "CR20 scenarios INTERNAL.xlsx" in Google Drive
   */
 class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers with AccountChecks {
+  private val responses: TestResponseProvider = XlsxAccountResponseProvider // can be switched to JsonFileResponseProvider
+
   feature("iSIT air gap account JSON - CR20 scenarios") {
     scenario("Non-Existent Version Number/Empty string") {
       When("Get Account API is called without a version parameter")
-      val response = JsonFileHttpResponse(400, "no-version.json")
+      val response = responses.noVersion
       Then("400 HTS-API015-002 error should be returned")
       checkNoVersionResponse(response)
     }
 
     scenario("Invalid (unsupported) version number") {
       When("Get Account API is called with an invalid version")
-      val response = JsonFileHttpResponse(400, "invalid-version.json")
+      val response = responses.invalidVersion
       Then("400 HTS-API015-003 error should be returned")
       checkInvalidVersionResponse(response)
     }
 
     scenario("Invalid Nino / Empty String") {
       When("Get Account API is called without a nino parameter")
+      val noNinoResponse = responses.noNino
       Then("400 HTS-API015-004 error should be returned")
-      checkNoNinoResponse(JsonFileHttpResponse(400, "no-nino.json"))
+      checkNoNinoResponse(noNinoResponse)
 
       When("Get Account API is called with an empty nino parameter")
+      val invalidNinoResponse = responses.invalidNino
       Then("400 HTS-API015-005 error should be returned")
-      checkInvalidNinoResponse(JsonFileHttpResponse(400, "invalid-nino.json"))
+      checkInvalidNinoResponse(invalidNinoResponse)
 
       When("Get Account API is called with a nino for which no Help to Save account exists")
+      val noAccountResponse = responses.accountNotFound
       Then("400 HTS-API015-006 error should be returned")
-      checkNoAccountResponse(JsonFileHttpResponse(400, "no-account.json"))
+      checkNoAccountResponse(noAccountResponse)
     }
 
     scenario("Incorrect SystemID/Empty String/ Field not sent") {
       When("Get Account API is called with no systemId parameter")
+      val response = responses.noSystemId
       Then("400 HTS-API015-012 error should be returned")
-      checkNoSystemIdResponse(JsonFileHttpResponse(400, "no-system-id.json"))
+      checkNoSystemIdResponse(response)
     }
 
     scenario("Check Error Codes,Error Statuses and messages in response as per ICD") {
       When("Get Account API is called and there are multiple validation errors for the parameters")
+      val response = responses.noSystemIdNinoOrVersion
       Then("400 containing multiple errors should be returned")
-      checkInvalidNinoAndVersionResponse(JsonFileHttpResponse(400, "invalid-nino-and-version.json"))
+      checkNoSystemIdNinoOrVersionResponse(response)
     }
 
     scenario("Check all fields are present in response mandatory and non mandatory") {
       Given("An account with all fields populated")
       When("Get Account API is called")
+      val response = responses.allFieldsPopulated
       Then("Response should include all fields")
-
-      checkAllFieldsPresentResponse(JsonFileHttpResponse(200, "all-fields.json"))
-    }
-  }
-}
-
-private object JsonFileHttpResponse {
-  def apply(status: Int, jsonLeafname: String): HttpResponse =
-    HttpResponse(status, Some(loadJson(jsonLeafname)))
-
-  private def loadJson(leafname: String): JsValue = {
-    val inputStream = getClass.getResourceAsStream(s"/airgap/$leafname")
-    try {
-      Json.parse(inputStream)
-    }
-    finally {
-      if (inputStream != null) inputStream.close()
+      checkAllFieldsPresentResponse(response)
     }
   }
 }

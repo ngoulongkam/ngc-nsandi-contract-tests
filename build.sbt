@@ -9,6 +9,7 @@ testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-u", "target/te
 testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-oDF")
 
 val playVersion = "2.5.18"
+val poiVersion = "3.17"
 libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "3.0.4" % "test",
   "org.pegdown" % "pegdown" % "1.6.0" % "test",
@@ -17,5 +18,7 @@ libraryDependencies ++= Seq(
   "uk.gov.hmrc" %% "domain" % "5.1.0" % "test",
   "uk.gov.hmrc" %% "http-verbs" % "7.2.0" % "test",
   "uk.gov.hmrc" %% "http-verbs-play-25" % "0.9.0" % "test",
-  "io.lemonlabs" %% "scala-uri" % "1.1.1" % "test"
+  "io.lemonlabs" %% "scala-uri" % "1.1.1" % "test",
+  "org.apache.poi" % "poi" % poiVersion % "test",
+  "org.apache.poi" % "poi-ooxml" % poiVersion % "test"
 )
