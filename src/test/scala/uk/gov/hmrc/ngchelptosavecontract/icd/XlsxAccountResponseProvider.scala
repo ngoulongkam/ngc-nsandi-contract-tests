@@ -34,7 +34,7 @@ object XlsxAccountResponseProvider extends TestResponseProvider {
 
   override def noVersion: HttpResponse = Spreadsheet.response("Account-NoVersion")
 
-  override def invalidVersion: HttpResponse = pending
+  override def invalidVersion: HttpResponse = Spreadsheet.response("Account-InvalidVersionID")
 
   override def noNino: HttpResponse = Spreadsheet.response("Account-NoNino")
 

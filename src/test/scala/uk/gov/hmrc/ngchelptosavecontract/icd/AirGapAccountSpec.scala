@@ -53,7 +53,7 @@ class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers wit
       checkNoVersionResponse(response)
     }
 
-    scenario("Invalid (unsupported) version number") {
+    scenario("Invalid Version ID") {
       When("Get Account API is called with an invalid version")
       val response = responses.invalidVersion
       Then("400 HTS-API015-003 error should be returned")
