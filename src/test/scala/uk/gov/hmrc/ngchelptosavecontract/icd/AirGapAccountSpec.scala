@@ -60,7 +60,7 @@ class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers wit
       checkInvalidVersionResponse(response)
     }
 
-    scenario("Invalid parameters") {
+    scenario("Request with Invalid Params") {
       When("Get Account API is called with an invalid parameter")
       val response = responses.invalidParams
       Then("400 containing multiple errors should be returned")
