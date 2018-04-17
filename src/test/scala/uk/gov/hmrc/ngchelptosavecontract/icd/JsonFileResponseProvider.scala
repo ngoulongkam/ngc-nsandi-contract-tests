@@ -21,6 +21,7 @@ import uk.gov.hmrc.http.HttpResponse
 
 // We will probably delete this and use XlsxAccountResponseProvider instead
 object JsonFileResponseProvider extends TestResponseProvider {
+  override def incorrectAuthorizationHeader: HttpResponse = JsonFileHttpResponse(401, "incorrect-authorization-header.json")
   override def noVersion: HttpResponse = JsonFileHttpResponse(400, "no-version.json")
   override def invalidVersion: HttpResponse = JsonFileHttpResponse(400, "invalid-version.json")
   override def noNino: HttpResponse = JsonFileHttpResponse(400, "no-nino.json")

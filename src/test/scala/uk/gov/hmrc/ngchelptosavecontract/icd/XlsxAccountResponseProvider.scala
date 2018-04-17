@@ -28,6 +28,8 @@ case class TestResult(testName: String, status: Int, responseBody: String)
 
 object XlsxAccountResponseProvider extends TestResponseProvider {
 
+  override def incorrectAuthorizationHeader: HttpResponse = Spreadsheet.response("Account-IncorrectAuthorizationHeader")
+
   override def noVersion: HttpResponse = Spreadsheet.response("Account-NoVersion")
 
   override def invalidVersion: HttpResponse = pending

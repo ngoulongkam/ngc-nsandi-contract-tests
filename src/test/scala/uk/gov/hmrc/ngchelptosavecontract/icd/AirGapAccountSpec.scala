@@ -32,6 +32,13 @@ class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers wit
   private val responses: TestResponseProvider = XlsxAccountResponseProvider // can be switched to between XlsxAccountResponseProvider and JsonFileResponseProvider
 
   feature("iSIT air gap account JSON - CR20 scenarios") {
+    scenario("Incorrect Authorization header") {
+      When("Get Account API is called with incorrect authorization header")
+      val response = responses.incorrectAuthorizationHeader
+      Then("401 HTS-API015-001 error should be returned")
+      checkIncorrectAuthorizationHeaderResponse(response)
+    }
+
     scenario("Empty Version Number/Empty string") {
       When("Get Account API is called without a version parameter")
       val response = responses.noVersion

@@ -19,6 +19,7 @@ package uk.gov.hmrc.ngchelptosavecontract.icd
 import uk.gov.hmrc.http.HttpResponse
 
 trait TestResponseProvider {
+  def incorrectAuthorizationHeader: HttpResponse
   def noVersion: HttpResponse
   def invalidVersion: HttpResponse
   def noNino: HttpResponse

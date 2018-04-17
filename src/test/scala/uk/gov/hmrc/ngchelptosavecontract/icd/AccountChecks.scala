@@ -173,6 +173,11 @@ trait AccountChecks extends Matchers {
     ((jsonBody \ "terms") (0) \ "endDate").as[String] should fullyMatch regex iso8601DateFormatRegex
   }
 
+  def checkIncorrectAuthorizationHeaderResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 401
+    (response.json \ "errors").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-001")
+  }
+
   def checkNoVersionResponse(response: HttpResponse): Assertion = {
     response.status shouldBe 400
     (response.json \ "errors").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-002")
