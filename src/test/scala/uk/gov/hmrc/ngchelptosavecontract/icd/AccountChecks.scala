@@ -282,4 +282,9 @@ trait AccountChecks extends Matchers {
     (response.json \ "nbaRollNumber").as[String] shouldBe "A1234567AAA"
     (response.json \ "nbaSortCode").as[String] shouldBe "202020"
   }
+
+  def checkAccountPaidInMaxForTheMonthResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+    (response.json \ "currentInvestmentMonth" \ "investmentRemaining").as[String] shouldBe "0.00"
+  }
 }

@@ -180,5 +180,12 @@ class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers wit
       Then("200 - nbaRollNumber should be included in the response")
       checkAccountWithNbaRollNumberFieldResponse(response)
     }
+
+    scenario("Customer with No headroom(paid in max for the month)") {
+      Given("An account paid in max for the month")
+      val response = responses.accountPaidInMaxForTheMonth
+      Then("200 - investmentRemaining should be 0 in the response")
+      checkAccountPaidInMaxForTheMonthResponse(response)
+    }
   }
 }
