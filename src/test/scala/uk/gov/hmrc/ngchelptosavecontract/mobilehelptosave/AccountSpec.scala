@@ -73,10 +73,6 @@ class AccountSpec
           ((jsonBody \ "terms") (1) \ "endDate").as[String] should fullyMatch regex isoDateRegex
           ((jsonBody \ "terms") (1) \ "bonusEstimate").as[String] shouldBe "0.00"
         }
-
-        withClue(jsonBody \ "correlationId") {
-          jsonBody.as[JsObject].keys should not contain "correlationId"
-        }
       }
     }
 
