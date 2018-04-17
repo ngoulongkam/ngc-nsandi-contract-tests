@@ -1,0 +1,51 @@
+{
+  "version": "V1.0",
+  "correlationId": "4af11b39-2bb4-4284-b3d2-34b8af743d55",
+  "accountNumber": "1400000000265",
+  "availableWithdrawal": "247.33",
+  "accountBalance": "247.33",
+  "accountClosedFlag": "",
+  "accountBlockingCode": "00",
+  "accountBlockingReasonCode": "00",
+  "currentInvestmentMonth": {
+    "investmentRemaining": "50.00",
+    "investmentLimit": "50.00",
+    "endDate": "2018-04-30"
+  },
+  "clientForename": "Rupert",
+  "clientSurname": "Chestnut",
+  "dateOfBirth": "1994-10-19",
+  "addressLine1": "99 Condor Grove",
+  "addressLine2": "Blackpool",
+  "addressLine3": " ",
+  "addressLine4": " ",
+  "addressLine5": " ",
+  "postcode": "FY1 5QY",
+  "countryCode": "GB",
+  "emailAddress": "alex.trainor@atos.net",
+  "commsPreference": "02",
+  "clientBlockingCode": "00",
+  "clientBlockingReasonCode": "00",
+  "clientCancellationStatus": "",
+  "nbaAccountNumber": "12345678",
+  "nbaPayee": "Rupert Chestnut",
+  "nbaSortCode": "873748",
+  "terms": [
+    {
+      "termNumber": 1,
+      "startDate": "2017-10-01",
+      "endDate": "2019-09-30",
+      "maxBalance": "219.85",
+      "bonusEstimate": "109.92",
+      "bonusPaid": "109.92"
+    },
+    {
+      "termNumber": 2,
+      "startDate": "2019-10-01",
+      "endDate": "2021-09-30",
+      "maxBalance": "247.33",
+      "bonusEstimate": "13.74",
+      "bonusPaid": "0.00"
+    }
+  ]
+}

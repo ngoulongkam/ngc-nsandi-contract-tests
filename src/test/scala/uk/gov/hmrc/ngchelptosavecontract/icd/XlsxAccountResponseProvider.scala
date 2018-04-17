@@ -84,6 +84,8 @@ object XlsxAccountResponseProvider extends TestResponseProvider {
 
   override def accountWith2ndTermBonusNotYetBeenPaid: HttpResponse = Spreadsheet.response("Account-Customer who has estimated 2nd  term bonus greater than zero but bonus not yet paid")
 
+  override def accountWith1stTermBonusPaid: HttpResponse = Spreadsheet.response("Account-Customer who has estimated 1st  term bonus greater than zero and paid")
+
   def pending = throw new TestPendingException
 
   private object Spreadsheet {

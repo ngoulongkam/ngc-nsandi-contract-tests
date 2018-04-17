@@ -47,4 +47,5 @@ trait TestResponseProvider {
   def accountWithIsleOfManPostcode: HttpResponse
   def accountWith1stTermBonusNotYetBeenPaid: HttpResponse
   def accountWith2ndTermBonusNotYetBeenPaid: HttpResponse
+  def accountWith1stTermBonusPaid: HttpResponse
 }
