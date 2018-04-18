@@ -26,7 +26,7 @@ import play.api.test.{DefaultAwaitTimeout, FutureAwaits}
 import uk.gov.hmrc.domain.Nino
 import uk.gov.hmrc.http.logging.Authorization
 import uk.gov.hmrc.http.{CoreGet, HeaderCarrier, HttpReads, HttpResponse}
-import uk.gov.hmrc.ngchelptosavecontract.icd.AccountChecks
+import uk.gov.hmrc.ngchelptosavecontract.icd.checks.AccountChecks
 import uk.gov.hmrc.ngchelptosavecontract.scalatest.WSClientSpec
 import uk.gov.hmrc.ngchelptosavecontract.support.ScalaUriConfig.config
 import uk.gov.hmrc.ngchelptosavecontract.support.{ServicesConfig, TestWSHttp}

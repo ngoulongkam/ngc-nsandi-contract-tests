@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.ngchelptosavecontract.icd
+package uk.gov.hmrc.ngchelptosavecontract.icd.responseprovider.account
 
 import uk.gov.hmrc.http.HttpResponse
 
-trait TestResponseProvider {
+trait AccountTestResponseProvider {
   def incorrectAuthorizationHeader: HttpResponse
   def nullAuthorizationHeader: HttpResponse
   def noVersion: HttpResponse

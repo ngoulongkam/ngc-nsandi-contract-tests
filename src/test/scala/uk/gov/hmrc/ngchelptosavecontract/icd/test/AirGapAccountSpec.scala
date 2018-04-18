@@ -14,9 +14,11 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.ngchelptosavecontract.icd
+package uk.gov.hmrc.ngchelptosavecontract.icd.test
 
 import org.scalatest.{FeatureSpec, GivenWhenThen, Matchers}
+import uk.gov.hmrc.ngchelptosavecontract.icd.checks.AccountChecks
+import uk.gov.hmrc.ngchelptosavecontract.icd.responseprovider.account.{AccountTestResponseProvider, XlsxAccountResponseProvider}
 
 /**
   * Tests that check that the air gap JSON files for NS&I's
@@ -29,7 +31,7 @@ import org.scalatest.{FeatureSpec, GivenWhenThen, Matchers}
   * Scenario names are taken from "CR20 scenarios INTERNAL.xlsx" in Google Drive
   */
 class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers with AccountChecks {
-  private val responses: TestResponseProvider = XlsxAccountResponseProvider // can be switched to between XlsxAccountResponseProvider and JsonFileResponseProvider
+  private val responses: AccountTestResponseProvider = XlsxAccountResponseProvider // can be switched to between XlsxAccountResponseProvider and AccountJsonFileResponseProvider
 
   feature("iSIT air gap account JSON - CR20 scenarios") {
     scenario("Incorrect Authorization header") {
