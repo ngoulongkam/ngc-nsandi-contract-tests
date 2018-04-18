@@ -30,4 +30,6 @@ object XlsxTransactionResponseProvider extends TransactionResponseProvider {
   override def missingSystemId: HttpResponse = AirGapSpreadsheet.response("NoSystemId")
 
   override def allMandatoryFieldsPopulated: HttpResponse = AirGapSpreadsheet.response("CheckAllMandatoryFields")
+
+  override def accountWithNoTransaction: HttpResponse = AirGapSpreadsheet.response("NinowithZeroTransactions")
 }

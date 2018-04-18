@@ -26,4 +26,5 @@ object JsonFileTransactionResponseProvider extends TransactionResponseProvider {
   override def incorrectAuthorizationHeader: HttpResponse = JsonFileHttpResponse(401, "incorrect-authorization-header.json")
   override def missingSystemId: HttpResponse = JsonFileHttpResponse(400, "no-system-id.json")
   override def allMandatoryFieldsPopulated: HttpResponse = JsonFileHttpResponse(200, "transaction-all-mandatory-fields.json")
+  override def accountWithNoTransaction: HttpResponse = JsonFileHttpResponse(200, "zero-transactions.json")
 }

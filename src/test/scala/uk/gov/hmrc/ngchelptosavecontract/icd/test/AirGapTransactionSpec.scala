@@ -70,5 +70,12 @@ class AirGapTransactionSpec extends FeatureSpec with GivenWhenThen with Matchers
       Then("Response should include all mandatory fields")
       checkAllMandatoryFieldsPopulated(response)
     }
+
+    scenario("NINO with ZERO Transactions") {
+      When("A account have with no transaction made")
+      val response = responses.accountWithNoTransaction
+      Then("Response should not include any transaction fields")
+      checkAccountWithNoTransactionResponse(response)
+    }
   }
 }
