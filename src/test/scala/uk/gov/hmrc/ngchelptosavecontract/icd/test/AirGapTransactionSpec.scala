@@ -55,5 +55,12 @@ class AirGapTransactionSpec extends FeatureSpec with GivenWhenThen with Matchers
       Then("401 - HTS-API015-001 error should be returned")
       checkIncorrectAuthorizationHeader(response)
     }
+
+    scenario("SystemID Field not sent") {
+      When("Get Transaction API is called with no systemId")
+      val response = responses.missingSystemId
+      Then("400 - HTS-API015-012 error should be returned")
+      checkMissingSystemIdResponse(response)
+    }
   }
 }

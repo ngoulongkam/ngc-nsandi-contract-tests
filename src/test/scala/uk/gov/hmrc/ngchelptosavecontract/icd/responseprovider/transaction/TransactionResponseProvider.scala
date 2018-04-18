@@ -22,4 +22,5 @@ trait TransactionResponseProvider {
   def invalidNino: HttpResponse
   def missingVersionNumber: HttpResponse
   def incorrectAuthorizationHeader: HttpResponse
+  def missingSystemId: HttpResponse
 }

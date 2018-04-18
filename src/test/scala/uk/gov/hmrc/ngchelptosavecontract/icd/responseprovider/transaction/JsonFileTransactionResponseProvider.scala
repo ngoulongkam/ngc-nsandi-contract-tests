@@ -24,4 +24,5 @@ object JsonFileTransactionResponseProvider extends TransactionResponseProvider {
   override def invalidNino: HttpResponse = JsonFileHttpResponse(400, "account-not-found.json")
   override def missingVersionNumber: HttpResponse = JsonFileHttpResponse(400, "no-version.json")
   override def incorrectAuthorizationHeader: HttpResponse = JsonFileHttpResponse(401, "incorrect-authorization-header.json")
+  override def missingSystemId: HttpResponse = JsonFileHttpResponse(400, "no-system-id.json")
 }

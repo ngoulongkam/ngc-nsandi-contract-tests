@@ -26,4 +26,6 @@ object XlsxTransactionResponseProvider extends TransactionResponseProvider {
   override def missingVersionNumber: HttpResponse = AirGapSpreadsheet.response("Trans-NoVersion")
 
   override def incorrectAuthorizationHeader: HttpResponse = AirGapSpreadsheet.response("Incorrect Authorisation Header")
+
+  override def missingSystemId: HttpResponse = AirGapSpreadsheet.response("NoSystemId")
 }
