@@ -22,4 +22,8 @@ import uk.gov.hmrc.ngchelptosavecontract.support.AirGapSpreadsheet
 object XlsxTransactionResponseProvider extends TransactionTestResponseProvider {
 
   override def invalidNino: HttpResponse = AirGapSpreadsheet.response("NinoDoesNotExist")
+
+  override def missingVersionNumber: HttpResponse = AirGapSpreadsheet.response("Trans-NoVersion")
+
+  override def incorrectAuthorizationHeader: HttpResponse = AirGapSpreadsheet.response("Incorrect Authorisation Header")
 }

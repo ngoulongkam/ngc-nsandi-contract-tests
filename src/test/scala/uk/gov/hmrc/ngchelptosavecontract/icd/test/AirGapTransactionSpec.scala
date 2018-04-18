@@ -41,5 +41,19 @@ class AirGapTransactionSpec extends FeatureSpec with GivenWhenThen with Matchers
       Then("400 - HTS-API015-006 error should be returned")
       checkInvalidNinoResponse(response)
     }
+
+    scenario("Empty Version Number") {
+      When("Get Transaction API is called with missing version number")
+      val response = responses.missingVersionNumber
+      Then("400 - HTS-API015-002 error should be returned")
+      checkMissingVersionNumberResponse(response)
+    }
+
+    scenario("Incorrect Authorization header") {
+      When("Get Transaction API is called with incorrect authorization header")
+      val response = responses.incorrectAuthorizationHeader
+      Then("401 - HTS-API015-001 error should be returned")
+      checkIncorrectAuthorizationHeader(response)
+    }
   }
 }

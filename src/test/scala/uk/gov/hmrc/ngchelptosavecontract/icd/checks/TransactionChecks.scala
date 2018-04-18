@@ -26,4 +26,14 @@ trait TransactionChecks extends Matchers {
     response.status shouldBe 400
     (response.json \ "errors").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-006")
   }
+
+  def checkMissingVersionNumberResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 400
+    (response.json \ "errors").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-002")
+  }
+
+  def checkIncorrectAuthorizationHeader(response: HttpResponse): Assertion = {
+    response.status shouldBe 401
+    (response.json \ "errors").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-001")
+  }
 }
