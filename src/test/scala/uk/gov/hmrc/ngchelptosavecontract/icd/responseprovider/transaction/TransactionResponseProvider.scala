@@ -23,4 +23,5 @@ trait TransactionResponseProvider {
   def missingVersionNumber: HttpResponse
   def incorrectAuthorizationHeader: HttpResponse
   def missingSystemId: HttpResponse
+  def allMandatoryFieldsPopulated: HttpResponse
 }

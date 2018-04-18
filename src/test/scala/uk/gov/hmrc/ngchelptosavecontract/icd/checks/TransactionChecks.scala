@@ -41,4 +41,20 @@ trait TransactionChecks extends Matchers {
     response.status shouldBe 400
     (response.json \ "errors").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-012")
   }
+
+  def checkAllMandatoryFieldsPopulated(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+    val jsonBody = response.json
+
+    (jsonBody \ "version").as[String] should not be empty
+    (jsonBody \ "startBalance").as[String] should not be empty
+    (jsonBody \ "finalBalance").as[String] should not be empty
+    ((jsonBody \ "transactions") (0) \ "sequence").as[String] should not be empty
+    ((jsonBody \ "transactions") (0) \ "amount").as[String] should not be empty
+    ((jsonBody \ "transactions") (0) \ "operation").as[String] should not be empty
+    ((jsonBody \ "transactions") (0) \ "description").as[String] should not be empty
+    ((jsonBody \ "transactions") (0) \ "transactionReference").as[String] should not be empty
+    ((jsonBody \ "transactions") (0) \ "transactionDate").as[String] should not be empty
+    ((jsonBody \ "transactions") (0) \ "accountDate").as[String] should not be empty
+  }
 }

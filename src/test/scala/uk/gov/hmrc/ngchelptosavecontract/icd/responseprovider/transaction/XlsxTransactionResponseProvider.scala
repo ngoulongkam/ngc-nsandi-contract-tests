@@ -28,4 +28,6 @@ object XlsxTransactionResponseProvider extends TransactionResponseProvider {
   override def incorrectAuthorizationHeader: HttpResponse = AirGapSpreadsheet.response("Incorrect Authorisation Header")
 
   override def missingSystemId: HttpResponse = AirGapSpreadsheet.response("NoSystemId")
+
+  override def allMandatoryFieldsPopulated: HttpResponse = AirGapSpreadsheet.response("CheckAllMandatoryFields")
 }
