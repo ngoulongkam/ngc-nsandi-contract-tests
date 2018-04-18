@@ -64,6 +64,12 @@ trait AccountChecks extends Matchers {
     ((jsonBody \ "terms") (0) \ "maxBalance").as[String] should not be empty
     ((jsonBody \ "terms") (0) \ "bonusEstimate").as[String] should not be empty
     ((jsonBody \ "terms") (0) \ "bonusPaid").as[String] should not be empty
+    ((jsonBody \ "terms") (1) \ "termNumber").as[Int] should not be 0
+    ((jsonBody \ "terms") (1) \ "startDate").as[String] should not be empty
+    ((jsonBody \ "terms") (1) \ "endDate").as[String] should not be empty
+    ((jsonBody \ "terms") (1) \ "maxBalance").as[String] should not be empty
+    ((jsonBody \ "terms") (1) \ "bonusEstimate").as[String] should not be empty
+    ((jsonBody \ "terms") (1) \ "bonusPaid").as[String] should not be empty
   }
 
   def checkAllMandatoryFieldsPresentResponse(response: HttpResponse): Assertion = {
@@ -144,6 +150,12 @@ trait AccountChecks extends Matchers {
     ((jsonBody \ "terms") (0) \ "maxBalance").as[String].length should be <= 7 //is 7 character correct for 9(4)V9(2) format
     ((jsonBody \ "terms") (0) \ "bonusEstimate").as[String].length should be <= 7 //is 7 character correct for 9(4)V9(2) format
     ((jsonBody \ "terms") (0) \ "bonusPaid").as[String].length should be <= 7 //is 7 character correct for 9(4)V9(2) format
+    ((jsonBody \ "terms") (1) \ "termNumber").as[Int] should (be(1) or be(2))
+    ((jsonBody \ "terms") (1) \ "startDate").as[String].length should be <= 10
+    ((jsonBody \ "terms") (1) \ "endDate").as[String].length should be <= 10
+    ((jsonBody \ "terms") (1) \ "maxBalance").as[String].length should be <= 7 //is 7 character correct for 9(4)V9(2) format
+    ((jsonBody \ "terms") (1) \ "bonusEstimate").as[String].length should be <= 7 //is 7 character correct for 9(4)V9(2) format
+    ((jsonBody \ "terms") (1) \ "bonusPaid").as[String].length should be <= 7 //is 7 character correct for 9(4)V9(2) format
   }
 
   def checkFieldsWithRegexFormatResponse(response: HttpResponse): Assertion = {
@@ -159,6 +171,9 @@ trait AccountChecks extends Matchers {
     ((jsonBody \ "terms") (0) \ "maxBalance").as[String] should fullyMatch regex moneyValuesRegex
     ((jsonBody \ "terms") (0) \ "bonusEstimate").as[String] should fullyMatch regex moneyValuesRegex
     ((jsonBody \ "terms") (0) \ "bonusPaid").as[String] should fullyMatch regex moneyValuesRegex
+    ((jsonBody \ "terms") (1) \ "maxBalance").as[String] should fullyMatch regex moneyValuesRegex
+    ((jsonBody \ "terms") (1) \ "bonusEstimate").as[String] should fullyMatch regex moneyValuesRegex
+    ((jsonBody \ "terms") (1) \ "bonusPaid").as[String] should fullyMatch regex moneyValuesRegex
   }
 
   def checkDateFieldsFormatResponse(response: HttpResponse): Assertion = {
@@ -171,6 +186,18 @@ trait AccountChecks extends Matchers {
     (jsonBody \ "dateOfBirth").as[String] should fullyMatch regex iso8601DateFormatRegex
     ((jsonBody \ "terms") (0) \ "startDate").as[String] should fullyMatch regex iso8601DateFormatRegex
     ((jsonBody \ "terms") (0) \ "endDate").as[String] should fullyMatch regex iso8601DateFormatRegex
+    ((jsonBody \ "terms") (1) \ "startDate").as[String] should fullyMatch regex iso8601DateFormatRegex
+    ((jsonBody \ "terms") (1) \ "endDate").as[String] should fullyMatch regex iso8601DateFormatRegex
+  }
+
+  def checkIncorrectAuthorizationHeaderResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 401
+    (response.json \ "errors").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-001")
+  }
+
+  def checkNullAuthorizationHeaderResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 401
+    (response.json \ "errors").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-001")
   }
 
   def checkNoVersionResponse(response: HttpResponse): Assertion = {
@@ -249,12 +276,13 @@ trait AccountChecks extends Matchers {
 
   def checkBalanceFieldResponse(response: HttpResponse): Assertion = {
     response.status shouldBe 200
-    (response.json \ "accountBalance").as[String] shouldBe "600.00"
+    (response.json \ "accountBalance").as[String] shouldBe "45.12"
   }
 
   def checkCurrentInvestmentMonthResponse(response: HttpResponse): Assertion = {
     response.status shouldBe 200
-    (response.json \ "currentInvestmentMonth" \ "investmentRemaining").as[String] shouldBe "25.00"
+    (response.json \ "currentInvestmentMonth" \ "investmentRemaining").as[String] shouldBe "43.00"
+    (response.json \ "currentInvestmentMonth" \ "investmentRemaining").as[String] should not be "50.00"
   }
 
   def checkZeroBalanceAndBonusFieldResponse(response: HttpResponse): Assertion = {
@@ -267,5 +295,82 @@ trait AccountChecks extends Matchers {
     ((response.json \ "terms") (1) \ "maxBalance").as[String] shouldBe "0.00"
     ((response.json \ "terms") (1) \"bonusEstimate").as[String] shouldBe "0.00"
     ((response.json \ "terms") (1) \"bonusPaid").as[String] shouldBe "0.00"
+  }
+
+  def checkUKPostcodeFieldResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+    (response.json \ "postcode").as[String] shouldBe "FY1 5QY"
+    (response.json \ "countryCode").as[String] shouldBe "GB"
+  }
+
+  def checkAccountWithNbaRollNumberFieldResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+    (response.json \ "nbaRollNumber").as[String] should not be empty
+    (response.json \ "nbaSortCode").as[String] should not be empty
+    (response.json \ "nbaRollNumber").as[String] shouldBe "A1234567AAA"
+    (response.json \ "nbaSortCode").as[String] shouldBe "202020"
+  }
+
+  def checkAccountPaidInMaxForTheMonthResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+    (response.json \ "currentInvestmentMonth" \ "investmentRemaining").as[String] shouldBe "0.00"
+  }
+
+  def checkAccountWithZeroBalanceResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+    (response.json \ "availableWithdrawal").as[String] shouldBe "0.00"
+    (response.json \ "accountBalance").as[String] shouldBe "0.00"
+    (response.json \ "currentInvestmentMonth" \ "investmentRemaining").as[String] shouldBe "50.00"
+    ((response.json \ "terms") (0) \ "maxBalance").as[String] shouldBe "0.00"
+    ((response.json \ "terms") (0) \ "bonusEstimate").as[String] shouldBe "0.00"
+    ((response.json \ "terms") (0) \ "bonusPaid").as[String] shouldBe "0.00"
+    ((response.json \ "terms") (1) \ "maxBalance").as[String] shouldBe "0.00"
+    ((response.json \ "terms") (1) \ "bonusEstimate").as[String] shouldBe "0.00"
+    ((response.json \ "terms") (1) \ "bonusPaid").as[String] shouldBe "0.00"
+  }
+
+  def checkAccountWithNoCorrelationIdResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+    (response.json \ "correlationId").as[String] should not be empty
+  }
+
+  def checkAccountWithChannelIslandsPostcodeResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+    (response.json \ "postcode").as[String] should startWith ("GY")
+    (response.json \ "countryCode").as[String] shouldBe "GB"
+  }
+
+  def checkAccountWithIsleOfManPostcodeResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+    (response.json \ "postcode").as[String] should startWith ("IM")
+    (response.json \ "countryCode").as[String] shouldBe "GB"
+  }
+
+  def checkAccountWith1stTermBonusNotYetBeenPaidResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+    ((response.json \ "terms") (0) \ "bonusEstimate").as[String] should not be "0.00"
+    ((response.json \ "terms") (0) \ "bonusPaid").as[String] shouldBe "0.00"
+  }
+
+  def checkAccountWith2ndTermBonusNotYetBeenPaidResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+    ((response.json \ "terms") (1) \ "bonusEstimate").as[String] should not be "0.00"
+    ((response.json \ "terms") (1) \ "bonusPaid").as[String] shouldBe "0.00"
+  }
+
+  def checkAccountWith1stTermBonusPaidResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+    val bonusAmount = "109.92"
+    ((response.json \ "terms") (0) \ "bonusEstimate").as[String] should not be "0.00"
+    ((response.json \ "terms") (0) \ "bonusPaid").as[String] should not be "0.00"
+    ((response.json \ "terms") (0) \ "bonusEstimate").as[String] shouldBe bonusAmount
+    ((response.json \ "terms") (0) \ "bonusPaid").as[String] shouldBe bonusAmount
+  }
+
+  def checkAccountWithMaxFirstTermResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+    ((response.json \ "terms") (0) \ "maxBalance").as[String] shouldBe "1200.00"
+    ((response.json \ "terms") (0) \ "bonusEstimate").as[String] shouldBe "600.00"
+    ((response.json \ "terms") (0) \ "bonusPaid").as[String] shouldBe "600.00"
   }
 }

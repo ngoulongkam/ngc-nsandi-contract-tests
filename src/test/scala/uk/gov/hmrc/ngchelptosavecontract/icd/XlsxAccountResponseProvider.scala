@@ -28,39 +28,65 @@ case class TestResult(testName: String, status: Int, responseBody: String)
 
 object XlsxAccountResponseProvider extends TestResponseProvider {
 
-  override def noVersion: HttpResponse = Spreadsheet.response("ACT02-Account-NoVersion")
+  override def incorrectAuthorizationHeader: HttpResponse = Spreadsheet.response("Account-IncorrectAuthorizationHeader")
 
-  override def invalidVersion: HttpResponse = pending
+  override def nullAuthorizationHeader: HttpResponse = Spreadsheet.response("Account-Null authorization header")
 
-  override def noNino: HttpResponse = Spreadsheet.response("ACT19-Account-NoNino")
+  override def noVersion: HttpResponse = Spreadsheet.response("Account-NoVersion")
 
-  override def invalidNino: HttpResponse = Spreadsheet.response("ACT20-Account-NINOWithSPACING")
+  override def invalidVersion: HttpResponse = Spreadsheet.response("Account-InvalidVersionID")
 
-  override def invalidParams: HttpResponse = Spreadsheet.response("ACT21-Account-InvalidParams")
+  override def noNino: HttpResponse = Spreadsheet.response("Account-NoNino")
 
-  override def accountNotFound: HttpResponse = pending
+  override def invalidNino: HttpResponse = Spreadsheet.response("Account-NINOWithSPACING")
 
-  override def noSystemId: HttpResponse = Spreadsheet.response("ACT03-Account-NoSystemId")
+  override def invalidParams: HttpResponse = Spreadsheet.response("Account-InvalidParams")
 
-  override def noSystemIdNinoOrVersion: HttpResponse = Spreadsheet.response("Account-No-SysId-CorrelationID-NINO-Version")
+  override def accountNotFound: HttpResponse = Spreadsheet.response("Account-Invalid NINO")
 
-  override def allFieldsPopulated: HttpResponse = Spreadsheet.response("ACT06-Account -Check all fields present in Response")
+  override def noSystemId: HttpResponse = Spreadsheet.response("Account-NoSystemId")
 
-  override def allMandatoryFieldsPopulated: HttpResponse = Spreadsheet.response("ACT05-Account - Check all mandatory fields populated in Response")
+  override def noSystemIdNinoOrVersion: HttpResponse = Spreadsheet.response("Account-Empty String")
 
-  override def closedAccount: HttpResponse = Spreadsheet.response("ACT07-Account-ClosedAccount")
+  override def allFieldsPopulated: HttpResponse = Spreadsheet.response("Account -Check all fields present in Response")
 
-  override def blockedAccount: HttpResponse = Spreadsheet.response("ACT08-Account-BlockedAccount")
+  override def allMandatoryFieldsPopulated: HttpResponse = Spreadsheet.response("Account - Check all mandatory fields populated in Response")
 
-  override def termNumbersFieldPopulated: HttpResponse = pending
+  override def closedAccount: HttpResponse = Spreadsheet.response("Account-ClosedAccount")
 
-  override def noBankDetailsAccount: HttpResponse = pending
+  override def blockedAccount: HttpResponse = Spreadsheet.response("Account-BlockedAccount")
 
-  override def accountWithBalance: HttpResponse = pending
+  override def termNumbersFieldPopulated: HttpResponse = Spreadsheet.response("Account -Check Term1 and Term customer and check Term2 Number set correctly")
 
-  override def accountWithCurrentInvestmentMonth: HttpResponse = pending
+  override def noBankDetailsAccount: HttpResponse = Spreadsheet.response("Account- Account Opened No bank details")
 
-  override def accountWithZeroBalanceAndBonus: HttpResponse = pending
+  override def accountWithBalance: HttpResponse = Spreadsheet.response("Account - Customer with Non zero balance")
+
+  override def accountWithCurrentInvestmentMonth: HttpResponse = Spreadsheet.response("Account - Customer with non zero amount paid in current month")
+
+  override def accountWithZeroBalanceAndBonus: HttpResponse = Spreadsheet.response("Account-Customer who has zero balance and zero bonus")
+
+  override def accountWithUKPostcode: HttpResponse = Spreadsheet.response("Account -Check Account With UK postcode")
+
+  override def accountWithBuildingSocietyBankDetails: HttpResponse = Spreadsheet.response("Account - Check Account With Building society as bank details")
+
+  override def accountPaidInMaxForTheMonth: HttpResponse = Spreadsheet.response("Account - Customer with no headroomAccount-MaxPaidInForTheMonth")
+
+  override def accountWithZeroBalance: HttpResponse = Spreadsheet.response("Account - Customer with zero balance")
+
+  override def accountWithNoCorrelationId: HttpResponse = Spreadsheet.response("Account-NoCorrelationID")
+
+  override def accountWithChannelIslandsPostcode: HttpResponse = Spreadsheet.response("Account -Check Account With Channel Island postcode")
+
+  override def accountWithIsleOfManPostcode: HttpResponse = Spreadsheet.response("Account -Check Account With IOM postcode")
+
+  override def accountWith1stTermBonusNotYetBeenPaid: HttpResponse = Spreadsheet.response("Account-Customer who has estimated 1st term bonus greater than zero but bonus not yet paid")
+
+  override def accountWith2ndTermBonusNotYetBeenPaid: HttpResponse = Spreadsheet.response("Account-Customer who has estimated 2nd  term bonus greater than zero but bonus not yet paid")
+
+  override def accountWith1stTermBonusPaid: HttpResponse = Spreadsheet.response("Account-Customer who has estimated 1st  term bonus greater than zero and paid")
+
+  override def accountWithMaxFirstTerm: HttpResponse = Spreadsheet.response("Account-Account-Retrieve-MaxFirstBonusReached")
 
   def pending = throw new TestPendingException
 
@@ -99,7 +125,7 @@ object XlsxAccountResponseProvider extends TestResponseProvider {
 
       val testNameColumnIndex = findColumnIndex("Test Name")
       val jsonResponseColumnIndex = findColumnIndex("Json Response")
-      val statusColumnIndex = findColumnIndex("Status")
+      val statusColumnIndex = findColumnIndex("Raw Response Status")
 
       def rowIsNotEmpty(row: Row) = {
         !row.getCell(testNameColumnIndex).getStringCellValue.isEmpty
@@ -122,7 +148,7 @@ object XlsxAccountResponseProvider extends TestResponseProvider {
     }
 
     private def loadWorkbook = {
-      val resourceName = "/airgap/WebApiTestingReport_16042018_fixed_headings.xlsx"
+      val resourceName = "/airgap/WebApiTestingReport_17042018.xlsx"
       val inputStreamIfExists = Option(getClass.getResourceAsStream(resourceName))
       inputStreamIfExists.map { inputStream =>
         try {

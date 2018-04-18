@@ -32,21 +32,35 @@ class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers wit
   private val responses: TestResponseProvider = XlsxAccountResponseProvider // can be switched to between XlsxAccountResponseProvider and JsonFileResponseProvider
 
   feature("iSIT air gap account JSON - CR20 scenarios") {
-    scenario("Non-Existent Version Number/Empty string") {
+    scenario("Incorrect Authorization header") {
+      When("Get Account API is called with incorrect authorization header")
+      val response = responses.incorrectAuthorizationHeader
+      Then("401 HTS-API015-001 error should be returned")
+      checkIncorrectAuthorizationHeaderResponse(response)
+    }
+
+    scenario("Null Authorization header") {
+      When("Get Account API is called with null authorization header")
+      val response = responses.nullAuthorizationHeader
+      Then("401 HTS-API015-001 error should be returned")
+      checkNullAuthorizationHeaderResponse(response)
+    }
+
+    scenario("Empty Version Number/Empty string") {
       When("Get Account API is called without a version parameter")
       val response = responses.noVersion
       Then("400 HTS-API015-002 error should be returned")
       checkNoVersionResponse(response)
     }
 
-    scenario("Invalid (unsupported) version number") {
+    scenario("Invalid Version ID") {
       When("Get Account API is called with an invalid version")
       val response = responses.invalidVersion
       Then("400 HTS-API015-003 error should be returned")
       checkInvalidVersionResponse(response)
     }
 
-    scenario("Invalid parameters") {
+    scenario("Request with Invalid Params") {
       When("Get Account API is called with an invalid parameter")
       val response = responses.invalidParams
       Then("400 containing multiple errors should be returned")
@@ -70,7 +84,7 @@ class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers wit
       checkNoAccountResponse(noAccountResponse)
     }
 
-    scenario("Incorrect SystemID/Empty String/ Field not sent") {
+    scenario("SystemID Field not sent") {
       When("Get Account API is called with no systemId parameter")
       val response = responses.noSystemId
       Then("400 HTS-API015-012 error should be returned")
@@ -165,6 +179,83 @@ class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers wit
       val response = responses.accountWithZeroBalanceAndBonus
       Then("200 - Balance and bonus should have zero in the response")
       checkZeroBalanceAndBonusFieldResponse(response)
+    }
+
+    scenario("Check customer with UK Post code") {
+      Given("An account with a UK Post code")
+      val response = responses.accountWithUKPostcode
+      Then("200 - UK Post code should be in the response")
+      checkUKPostcodeFieldResponse(response)
+    }
+
+    scenario("Check Account with Building Society as bank details") {
+      Given("An account with Building Society as bank details")
+      val response = responses.accountWithBuildingSocietyBankDetails
+      Then("200 - nbaRollNumber should be included in the response")
+      checkAccountWithNbaRollNumberFieldResponse(response)
+    }
+
+    scenario("Customer with No headroom(paid in max for the month)") {
+      Given("An account paid in max for the month")
+      val response = responses.accountPaidInMaxForTheMonth
+      Then("200 - investmentRemaining should be 0 in the response")
+      checkAccountPaidInMaxForTheMonthResponse(response)
+    }
+
+    scenario("Customer with Zero balance") {
+      Given("An account with zero balance")
+      val response = responses.accountWithZeroBalance
+      Then("200 - All balance related fields should be 0.00")
+      checkAccountWithZeroBalanceResponse(response)
+    }
+
+    scenario("Request with no correllation ID") {
+      Given("Calling Account API with no correlationId")
+      val response = responses.accountWithNoCorrelationId
+      Then("200 - Response should return a new correlationId")
+      checkAccountWithNoCorrelationIdResponse(response)
+    }
+
+    scenario("Check customer with Channel Islands Post code") {
+      Given("An account with Channel Islands Post code")
+      val response = responses.accountWithChannelIslandsPostcode
+      Then("200 - GY Post code should be included in the field")
+      checkAccountWithChannelIslandsPostcodeResponse(response)
+    }
+
+    scenario("Check customer with IOM post code") {
+      Given("An account with Isle of Man Post code")
+      val response = responses.accountWithIsleOfManPostcode
+      Then("200 - IM Post code should be included in the field")
+      checkAccountWithIsleOfManPostcodeResponse(response)
+    }
+
+    scenario("Customer who has estimated 1st term bonus greater than zero but bonus not yet paid") {
+      Given("An account with 1st term bonus but its not yet paid")
+      val response = responses.accountWith1stTermBonusNotYetBeenPaid
+      Then("200 - bonusEstimate should be more than 0 and bonusPaid should be 0 in the response")
+      checkAccountWith1stTermBonusNotYetBeenPaidResponse(response)
+    }
+
+    scenario("Customer who has estimated 2nd term bonus greater than zero but bonus not yet paid") {
+      Given("An account with 2nd term bonus but its not yet paid")
+      val response = responses.accountWith2ndTermBonusNotYetBeenPaid
+      Then("200 - 2nd term bonusEstimate should be more than 0 and bonusPaid should be 0 in the response")
+      checkAccountWith2ndTermBonusNotYetBeenPaidResponse(response)
+    }
+
+    scenario("Customer who has estimated 1st term bonus greater than zero and bonus paid") {
+      Given("An account with 1st term bonus and it is paid")
+      val response = responses.accountWith1stTermBonusPaid
+      Then("200 - bonusEstimate should be more than 0 and bonusPaid should same as bonusEstimate")
+      checkAccountWith1stTermBonusPaidResponse(response)
+    }
+
+    scenario("Check Account-where-MaxFirstBonusReached") {
+      Given("An account have reached maximum first term bonus")
+      val response = responses.accountWithMaxFirstTerm
+      Then("200 - Maximum bonus reached in first term response")
+      checkAccountWithMaxFirstTermResponse(response)
     }
   }
 }

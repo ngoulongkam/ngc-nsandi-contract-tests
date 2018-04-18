@@ -1,0 +1,51 @@
+{
+  "version": "V1.0",
+  "correlationId": "551485a3-001d-91e8-060e-890c40505bd7",
+  "accountNumber": "1100000038745",
+  "availableWithdrawal": "26.88",
+  "accountBalance": "26.88",
+  "accountClosedFlag": "",
+  "accountBlockingCode": "00",
+  "accountBlockingReasonCode": "00",
+  "currentInvestmentMonth": {
+    "investmentRemaining": "50.00",
+    "investmentLimit": "50.00",
+    "endDate": "2018-04-30"
+  },
+  "clientForename": "Oliver George",
+  "clientSurname": "De Kock",
+  "dateOfBirth": "1994-09-19",
+  "addressLine1": "99 Condor Grove",
+  "addressLine2": "Blackpool",
+  "addressLine3": " ",
+  "addressLine4": " ",
+  "addressLine5": " ",
+  "postcode": "FY1 5QY",
+  "countryCode": "GB",
+  "emailAddress": "robert.ure@atos.net",
+  "commsPreference": "00",
+  "clientBlockingCode": "00",
+  "clientBlockingReasonCode": "00",
+  "clientCancellationStatus": "",
+  "nbaAccountNumber": "12345678",
+  "nbaPayee": "Oliver George de Knock",
+  "nbaSortCode": "873748",
+  "terms": [
+    {
+      "termNumber": 1,
+      "startDate": "2017-10-01",
+      "endDate": "2019-09-30",
+      "maxBalance": "26.88",
+      "bonusEstimate": "13.44",
+      "bonusPaid": "0.00"
+    },
+    {
+      "termNumber": 2,
+      "startDate": "2019-10-01",
+      "endDate": "2021-09-30",
+      "maxBalance": "0.00",
+      "bonusEstimate": "0.00",
+      "bonusPaid": "0.00"
+    }
+  ]
+}

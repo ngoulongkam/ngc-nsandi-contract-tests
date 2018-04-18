@@ -19,6 +19,8 @@ package uk.gov.hmrc.ngchelptosavecontract.icd
 import uk.gov.hmrc.http.HttpResponse
 
 trait TestResponseProvider {
+  def incorrectAuthorizationHeader: HttpResponse
+  def nullAuthorizationHeader: HttpResponse
   def noVersion: HttpResponse
   def invalidVersion: HttpResponse
   def noNino: HttpResponse
@@ -36,4 +38,15 @@ trait TestResponseProvider {
   def accountWithBalance: HttpResponse
   def accountWithCurrentInvestmentMonth: HttpResponse
   def accountWithZeroBalanceAndBonus: HttpResponse
+  def accountWithUKPostcode: HttpResponse
+  def accountWithBuildingSocietyBankDetails: HttpResponse
+  def accountPaidInMaxForTheMonth: HttpResponse
+  def accountWithZeroBalance: HttpResponse
+  def accountWithNoCorrelationId: HttpResponse
+  def accountWithChannelIslandsPostcode: HttpResponse
+  def accountWithIsleOfManPostcode: HttpResponse
+  def accountWith1stTermBonusNotYetBeenPaid: HttpResponse
+  def accountWith2ndTermBonusNotYetBeenPaid: HttpResponse
+  def accountWith1stTermBonusPaid: HttpResponse
+  def accountWithMaxFirstTerm: HttpResponse
 }

@@ -21,6 +21,8 @@ import uk.gov.hmrc.http.HttpResponse
 
 // We will probably delete this and use XlsxAccountResponseProvider instead
 object JsonFileResponseProvider extends TestResponseProvider {
+  override def incorrectAuthorizationHeader: HttpResponse = JsonFileHttpResponse(401, "incorrect-authorization-header.json")
+  override def nullAuthorizationHeader: HttpResponse = JsonFileHttpResponse(401, "null-authorization-header.json")
   override def noVersion: HttpResponse = JsonFileHttpResponse(400, "no-version.json")
   override def invalidVersion: HttpResponse = JsonFileHttpResponse(400, "invalid-version.json")
   override def noNino: HttpResponse = JsonFileHttpResponse(400, "no-nino.json")
@@ -35,9 +37,20 @@ object JsonFileResponseProvider extends TestResponseProvider {
   override def blockedAccount: HttpResponse = JsonFileHttpResponse(200, "blocked-account.json")
   override def termNumbersFieldPopulated: HttpResponse = JsonFileHttpResponse(200, "term-number.json")
   override def noBankDetailsAccount: HttpResponse = JsonFileHttpResponse(200, "no-bank-details.json")
-  override def accountWithBalance: HttpResponse = JsonFileHttpResponse(200, "all-fields.json")
-  override def accountWithCurrentInvestmentMonth: HttpResponse = JsonFileHttpResponse(200, "all-fields.json")
+  override def accountWithBalance: HttpResponse = JsonFileHttpResponse(200, "non-zero-balance-account.json")
+  override def accountWithCurrentInvestmentMonth: HttpResponse = JsonFileHttpResponse(200, "non-zero-amount-paid-this-month.json")
   override def accountWithZeroBalanceAndBonus: HttpResponse = JsonFileHttpResponse(200, "zero-balance-account.json")
+  override def accountWithUKPostcode: HttpResponse = JsonFileHttpResponse(200, "uk-postcode-account.json")
+  override def accountWithBuildingSocietyBankDetails: HttpResponse = JsonFileHttpResponse(200, "building-society-bank-details.json")
+  override def accountPaidInMaxForTheMonth: HttpResponse = JsonFileHttpResponse(200, "no-headroom-account.json")
+  override def accountWithZeroBalance: HttpResponse = JsonFileHttpResponse(200, "zero-balance-account.json")
+  override def accountWithNoCorrelationId: HttpResponse = JsonFileHttpResponse(200, "generate-new-correlation-id.json")
+  override def accountWithChannelIslandsPostcode: HttpResponse = JsonFileHttpResponse(200, "channel-islands-postcode.json")
+  override def accountWithIsleOfManPostcode: HttpResponse = JsonFileHttpResponse(200, "isle-of-man-postcode.json")
+  override def accountWith1stTermBonusNotYetBeenPaid: HttpResponse = JsonFileHttpResponse(200, "account-with-1st-term-bonus-not-been-paid.json")
+  override def accountWith2ndTermBonusNotYetBeenPaid: HttpResponse = JsonFileHttpResponse(200, "account-with-2nd-term-bonus-not-been-paid.json")
+  override def accountWith1stTermBonusPaid: HttpResponse = JsonFileHttpResponse(200, "account-with-1st-term-bonus-paid.json")
+  override def accountWithMaxFirstTerm: HttpResponse = JsonFileHttpResponse(200, "account-with-maximum-1st-term-bonus.json")
 
   private object JsonFileHttpResponse {
     def apply(status: Int, jsonLeafname: String): HttpResponse =
