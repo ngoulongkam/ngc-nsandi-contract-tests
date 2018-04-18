@@ -16,15 +16,24 @@
 
 package uk.gov.hmrc.ngchelptosavecontract.support
 
-import play.api.libs.json.JsValue
-import uk.gov.hmrc.http.HttpResponse
-import uk.gov.hmrc.ngchelptosavecontract.support.Resources.loadResourceJson
+import play.api.libs.json.JsError
 
-object JsonFileHttpResponse {
-  def apply(status: Int, jsonLeafname: String): HttpResponse =
-    HttpResponse(status, Some(loadJson(jsonLeafname)))
+import scala.language.implicitConversions
 
-  private def loadJson(leafname: String): JsValue = {
-    loadResourceJson(s"/airgap/demo/$leafname")
-  }
+object JsErrorOps {
+
+  implicit def jsErrorOps(error: JsError): JsErrorOps = new JsErrorOps(error)
+
+}
+
+class JsErrorOps(val error: JsError) extends AnyVal {
+
+  /**
+   * Create a legible string describing the error suitable for debugging purposes
+   */
+  def prettyPrint: String = error.errors.map {
+    case (jsPath, validationErrors) ⇒
+      jsPath.toString + "[" + validationErrors.map(_.message).mkString(",") + "]"
+  }.mkString("\n ")
+
 }

@@ -1,0 +1,78 @@
+{
+  "$id": "http://hts.nsandi.com/error.json",
+  "type": "object",
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "properties": {
+    "version": {
+      "$id": "/properties/version",
+      "type": "string",
+      "title": "The Version Schema",
+      "description": "The version of the service being requested.",
+      "default": "",
+      "examples": [
+        "V1.0"
+      ]
+    },
+    "correlationId": {
+      "$id": "/properties/messages/items/properties/messageId",
+      "type": "string",
+      "title": "The CorrelationId Schema",
+      "description": "A unique identifier used to trace a specific invocation of the service.",
+      "minLength": 1,
+      "maxLength": 38,
+      "examples": [
+        "10368ac2-0025-91e8-060e-890c40505bd7"
+      ]
+    },
+    "errors": {
+      "$id": "/properties/errors",
+      "type": "array",
+      "items": {
+        "$id": "/properties/errors/items",
+        "type": "object",
+        "properties": {
+          "errorMessageId": {
+            "$id": "/properties/errors/properties/errorMessageId",
+            "type": "string",
+            "title": "The Errormessageid Schema",
+            "description": "A code identifying the message category. ",
+            "default": "",
+            "examples": [
+              "HTS-API015-003"
+            ]
+          },
+          "errorMessage": {
+            "$id": "/properties/error/properties/errorMessage",
+            "type": "string",
+            "title": "The Errormessage Schema",
+            "description": "The detailed error message.",
+            "default": "",
+            "examples": [
+              "Unsupported service version. Expected V1.0, received v1"
+            ]
+          },
+          "errorDetail": {
+            "$id": "/properties/error/properties/errorDetail",
+            "type": "string",
+            "title": "The Errordetail Schema",
+            "description": "Additional error details",
+            "default": "",
+            "examples": [
+              "Field: version"
+            ]
+          }
+        },
+        "required": [
+          "errorMessageId",
+          "errorMessage",
+          "errorDetail"
+        ]
+      }
+    }
+  },
+  "required": [
+    "version",
+    "errors"
+  ]
+}

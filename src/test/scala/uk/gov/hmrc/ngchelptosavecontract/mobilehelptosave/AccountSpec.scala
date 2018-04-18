@@ -73,6 +73,8 @@ class AccountSpec
           ((jsonBody \ "terms") (1) \ "termNumber").as[Int] shouldBe 2
           ((jsonBody \ "terms") (1) \ "endDate").as[String] should fullyMatch regex isoDateRegex
           ((jsonBody \ "terms") (1) \ "bonusEstimate").as[String] shouldBe "0.00"
+
+          shouldBeValidAccountJson(jsonBody)
         }
       }
     }
@@ -85,6 +87,8 @@ class AccountSpec
 
           // other fields should also be present
           (jsonBody \ "accountBalance").as[String] shouldBe "0.00"
+
+          shouldBeValidAccountJson(jsonBody)
         }
       }
 
@@ -101,6 +105,8 @@ class AccountSpec
         withClue(jsonBody) {
           response.status shouldBe 200
           (jsonBody \ "accountBalance").as[String] shouldBe "0.00"
+
+          shouldBeValidAccountJson(jsonBody)
         }
       }
     }
@@ -117,6 +123,8 @@ class AccountSpec
         val jsonBody = response.json
         jsonBody.as[JsObject].keys should contain("errors")
         (jsonBody \ "correlationId").as[String] shouldBe passedCorrelationId
+
+        shouldBeValidAccountJson(jsonBody)
       }
     }
 

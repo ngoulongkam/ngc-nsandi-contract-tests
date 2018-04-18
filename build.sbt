@@ -20,5 +20,8 @@ libraryDependencies ++= Seq(
   "uk.gov.hmrc" %% "http-verbs-play-25" % "0.9.0" % "test",
   "io.lemonlabs" %% "scala-uri" % "1.1.1" % "test",
   "org.apache.poi" % "poi" % poiVersion % "test",
-  "org.apache.poi" % "poi-ooxml" % poiVersion % "test"
+  "org.apache.poi" % "poi-ooxml" % poiVersion % "test",
+  "com.eclipsesource" %% "play-json-schema-validator" % "0.8.9" % "test"
 )
+
+resolvers += "emueller-bintray" at "http://dl.bintray.com/emueller/maven"

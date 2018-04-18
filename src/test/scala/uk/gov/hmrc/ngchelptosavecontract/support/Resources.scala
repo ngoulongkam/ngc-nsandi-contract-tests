@@ -16,15 +16,23 @@
 
 package uk.gov.hmrc.ngchelptosavecontract.support
 
-import play.api.libs.json.JsValue
-import uk.gov.hmrc.http.HttpResponse
-import uk.gov.hmrc.ngchelptosavecontract.support.Resources.loadResourceJson
+import java.io.InputStream
 
-object JsonFileHttpResponse {
-  def apply(status: Int, jsonLeafname: String): HttpResponse =
-    HttpResponse(status, Some(loadJson(jsonLeafname)))
+import play.api.libs.json.{JsValue, Json}
 
-  private def loadJson(leafname: String): JsValue = {
-    loadResourceJson(s"/airgap/demo/$leafname")
+object Resources {
+  def withResource[R](resourceName: String, clazz: Class[_] = getClass)(f: InputStream => R): R = {
+    val inputStreamIfExists = Option(clazz.getResourceAsStream(resourceName))
+    inputStreamIfExists.map { inputStream =>
+      try {
+        f(inputStream)
+      }
+      finally {
+        inputStream.close()
+      }
+    }.getOrElse(sys.error(s"Could not find resource $resourceName"))
   }
+
+  def loadResourceJson(resourceName: String): JsValue =
+    Resources.withResource(resourceName)(Json.parse)
 }
