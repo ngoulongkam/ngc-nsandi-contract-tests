@@ -19,6 +19,7 @@ package uk.gov.hmrc.ngchelptosavecontract.support
 import org.apache.poi.ss.usermodel.{CellType, Row, Workbook, WorkbookFactory}
 import play.api.libs.json.Json
 import uk.gov.hmrc.http.HttpResponse
+import uk.gov.hmrc.ngchelptosavecontract.support.Resources.withResource
 
 import scala.collection.JavaConverters._
 import scala.util.matching.Regex
@@ -82,16 +83,6 @@ object AirGapSpreadsheet {
       .toSeq
   }
 
-  private def loadWorkbook = {
-    val resourceName = "/airgap/WebApiTestingReport_17042018.xlsx"
-    val inputStreamIfExists = Option(getClass.getResourceAsStream(resourceName))
-    inputStreamIfExists.map { inputStream =>
-      try {
-        WorkbookFactory.create(inputStream)
-      }
-      finally {
-        inputStream.close()
-      }
-    }.getOrElse(sys.error(s"Could not find resource $resourceName"))
-  }
+  private def loadWorkbook: Workbook =
+    withResource("/airgap/WebApiTestingReport_17042018.xlsx")(WorkbookFactory.create)
 }

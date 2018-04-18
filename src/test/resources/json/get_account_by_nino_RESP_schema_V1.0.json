@@ -1,0 +1,480 @@
+{
+  "$id": "http://example.com/get_account_by_nino.json",
+  "type": "object",
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "properties": {
+    "version": {
+      "$id": "/properties/version",
+      "type": "string",
+      "title": "The Version Schema",
+      "description": "The version of the service being requested.",
+      "examples": [
+        "V1.0"
+      ]
+    },
+    "correlationId": {
+      "$id": "/properties/messages/items/properties/messageId",
+      "type": "string",
+      "title": "The CorrelationId Schema",
+      "description": "Used to trace a specific invocation of the service.",
+      "minLength": 1,
+      "maxLength": 38,
+      "examples": [
+        "10368ac2-0025-91e8-060e-890c40505bd7"
+      ]
+    },
+    "accountNumber": {
+      "$id": "/properties/accountNumber",
+      "type": "string",
+      "title": "The Accountnumber Schema",
+      "description": "The HTS Account Number.",
+      "examples": [
+        "1100000112057"
+      ]
+    },
+    "availableWithdrawal": {
+      "$id": "/properties/availableWithdrawal",
+      "type": "string",
+      "title": "The Availablewithdrawal Schema",
+      "description": "The current cleared balance for this account.",
+      "minLength": 3,
+      "maxLength": 7,
+      "pattern": "^\\d{1,}\\.\\d{2}$",
+      "examples": [
+        "575.00"
+      ]
+    },
+    "accountBalance": {
+      "$id": "/properties/accountBalance",
+      "type": "string",
+      "title": "The Accountbalance Schema",
+      "description": "The current balance of the account.",
+      "minLength": 3,
+      "maxLength": 7,
+      "pattern": "^\\d{1,}\\.\\d{2}$",
+      "examples": [
+        "600.00"
+      ]
+    },
+    "accountClosedFlag": {
+      "$id": "/properties/accountClosedFlag",
+      "type": "string",
+      "title": "The Accountclosedflag Schema",
+      "description": "Indicates if the account is closed.",
+      "minLength": 0,
+      "maxLength": 1,
+      "examples": [
+        " "
+      ]
+    },
+    "accountClosureDate": {
+      "$id": "/properties/accountClosureDate",
+      "type": "string",
+      "title": "The Accountclosuredate Schema",
+      "description": "Date that the account was closed.",
+      "minLength": 10,
+      "maxLength": 10,
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+      "examples": [
+        ""
+      ]
+    },
+    "accountClosingBalance": {
+      "$id": "/properties/accountClosingBalance",
+      "type": "string",
+      "title": "The Accountclosingbalance Schema",
+      "description": "The account balance when closed.",
+      "minLength": 3,
+      "maxLength": 7,
+      "pattern": "^\\d{1,}\\.\\d{2}$",
+      "examples": [
+        ""
+      ]
+    },
+    "accountBlockingCode": {
+      "$id": "/properties/accountBlockingCode",
+      "type": "string",
+      "title": "The Accountblockingcode Schema",
+      "description": "Indication of restrictions on the account.",
+      "minLength": 2,
+      "maxLength": 2,
+      "examples": [
+        "00"
+      ]
+    },
+    "accountBlockingReasonCode": {
+      "$id": "/properties/accountBlockingReasonCode",
+      "type": "string",
+      "title": "The Accountblockingreasoncode Schema",
+      "description": "The reason for any restrictions on the account.",
+      "minLength": 2,
+      "maxLength": 2,
+      "examples": [
+        "00"
+      ]
+    },
+    "currentInvestmentMonth": {
+      "$id": "/properties/currentInvestmentMonth",
+      "type": "object",
+      "properties": {
+        "investmentRemaining": {
+          "$id": "/properties/currentInvestmentMonth/properties/investmentRemaining",
+          "type": "string",
+          "title": "The Investmentremaining Schema",
+          "description": "Amount that can still be invested in the current month.",
+          "minLength": 3,
+          "maxLength": 7,
+          "pattern": "^\\d{1,}\\.\\d{2}$",
+          "examples": [
+            "25.00"
+          ]
+        },
+        "investmentLimit": {
+          "$id": "/properties/currentInvestmentMonth/properties/investmentLimit",
+          "type": "string",
+          "title": "The Investmentlimit Schema",
+          "description": "The monthly investment limit according to the scheme rules.",
+          "minLength": 3,
+          "maxLength": 7,
+          "pattern": "^\\d{1,}\\.\\d{2}$",
+          "examples": [
+            "50.00"
+          ]
+        },
+        "endDate": {
+          "$id": "/properties/currentInvestmentMonth/properties/endDate",
+          "type": "string",
+          "title": "The Enddate Schema",
+          "description": "The last day of the current monthly investment period.",
+          "minLength": 10,
+          "maxLength": 10,
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+          "examples": [
+            "2018-02-28"
+          ]
+        }
+      },
+      "required": [
+        "investmentRemaining",
+        "investmentLimit",
+        "endDate"
+      ]
+    },
+    "clientForename": {
+      "$id": "/properties/clientForename",
+      "type": "string",
+      "title": "The Clientforename Schema",
+      "description": "The forename of the HTS account holder.",
+      "minLength": 1,
+      "maxLength": 26,
+      "examples": [
+        "John"
+      ]
+    },
+    "clientSurname": {
+      "$id": "/properties/clientSurname",
+      "type": "string",
+      "title": "The Clientsurname Schema",
+      "description": "The surname of the HTS account holder.",
+      "minLength": 1,
+      "maxLength": 300,
+      "examples": [
+        "Smith"
+      ]
+    },
+    "dateOfBirth": {
+      "$id": "/properties/dateOfBirth",
+      "type": "string",
+      "title": "The Dateofbirth Schema",
+      "description": "The date of birth of the HTS account holder..",
+      "minLength": 10,
+      "maxLength": 10,
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+      "examples": [
+        "1963-11-01"
+      ]
+    },
+    "addressLine1": {
+      "$id": "/properties/addressLine1",
+      "type": "string",
+      "title": "The Addressline1 Schema",
+      "description": "Address line for the account holder.",
+      "minLength": 1,
+      "maxLength": 35,
+      "examples": [
+        "Line 1"
+      ]
+    },
+    "addressLine2": {
+      "$id": "/properties/addressLine2",
+      "type": "string",
+      "title": "The Addressline2 Schema",
+      "description": "Address line for the account holder.",
+      "minLength": 1,
+      "maxLength": 35,
+      "examples": [
+        "Line 2"
+      ]
+    },
+    "addressLine3": {
+      "$id": "/properties/addressLine3",
+      "type": "string",
+      "title": "The Addressline3 Schema",
+      "description": "Address line for the account holder.",
+      "minLength": 1,
+      "maxLength": 35,
+      "examples": [
+        " "
+      ]
+    },
+    "addressLine4": {
+      "$id": "/properties/addressLine4",
+      "type": "string",
+      "title": "The Addressline4 Schema",
+      "description": "Address line for the account holder.",
+      "minLength": 0,
+      "maxLength": 35,
+      "examples": [
+        " "
+      ]
+    },
+    "addressLine5": {
+      "$id": "/properties/addressLine5",
+      "type": "string",
+      "title": "The Addressline5 Schema",
+      "description": "Address line for the account holder.",
+      "minLength": 0,
+      "maxLength": 35,
+      "examples": [
+        " "
+      ]
+    },
+    "postcode": {
+      "$id": "/properties/postcode",
+      "type": "string",
+      "title": "The Postcode Schema",
+      "description": "Postcode for the account holder.",
+      "examples": [
+        "SV1 1QA"
+      ]
+    },
+    "countryCode": {
+      "$id": "/properties/countryCode",
+      "type": "string",
+      "title": "The Countrycode Schema",
+      "description": "Country code for the account holder.",
+      "examples": [
+        "GB"
+      ]
+    },
+    "emailAddress": {
+      "$id": "/properties/emailAddress",
+      "type": "string",
+      "title": "The Emailaddress Schema",
+      "description": "Email address of the account holder.",
+      "minLength": 0,
+      "maxLength": 254,
+      "examples": [
+        "email.address@domain.com"
+      ]
+    },
+    "commsPreference": {
+      "$id": "/properties/dematerializationValue",
+      "type": "string",
+      "title": "The Dematerializationvalue Schema",
+      "description": "Indicates if the customer is Digitally Excluded.",
+      "minLength": 2,
+      "maxLength": 2,
+      "pattern": "00|02",
+      "examples": [
+        "02"
+      ]
+    },
+    "clientBlockingCode": {
+      "$id": "/properties/clientBlockingCode",
+      "type": "string",
+      "title": "The Clientblockingcode Schema",
+      "description": "Indicates if the client is blocked.",
+      "minLength": 0,
+      "maxLength": 2,
+      "examples": [
+        "00"
+      ]
+    },
+    "clientBlockingReasonCode": {
+      "$id": "/properties/clientBlockingReasonCode",
+      "type": "string",
+      "title": "The Clientblockingreasoncode Schema",
+      "description": "Indicates a reason for client blocking.",
+      "minLength": 0,
+      "maxLength": 2,
+      "examples": [
+        "00"
+      ]
+    },
+    "clientCancellationStatus": {
+      "$id": "/properties/clientCancellationStatus",
+      "type": "string",
+      "title": "The Clientcancellationstatus Schema",
+      "description": "Indicates if the customer has be canclled.",
+      "minLength": 0,
+      "maxLength": 1,
+      "examples": [
+        " "
+      ]
+    },
+    "nbaAccountNumber": {
+      "$id": "/properties/nbaAccountNumber",
+      "type": "string",
+      "title": "The Nbaaccountnumber Schema",
+      "description": "Account number for Nominated Bank Account.",
+      "minLength": 0,
+      "maxLength": 8,
+      "examples": [
+        "11111111"
+      ]
+    },
+    "nbaPayee": {
+      "$id": "/properties/nbaPayee",
+      "type": "string",
+      "title": "The Nbapayee Schema",
+      "description": "Payee for Nominated Bank Account.",
+      "minLength": 0,
+      "maxLength": 38,
+      "examples": [
+        "Mr J Smith"
+      ]
+    },
+    "nbaRollNumber": {
+      "$id": "/properties/nbaRollNumber",
+      "type": "string",
+      "title": "The Nbarollnumber Schema",
+      "description": "Roll number for Nominated Bank Account.",
+      "minLength": 0,
+      "maxLength": 18,
+      "examples": [
+        " "
+      ]
+    },
+    "nbaSortCode": {
+      "$id": "/properties/nbaSortCode",
+      "type": "string",
+      "title": "The Nbasortcode Schema",
+      "description": "Sort code for Nominated Bank Account.",
+      "minLength": 0,
+      "maxLength": 6,
+      "examples": [
+        "801497"
+      ]
+    },
+    "terms": {
+      "$id": "/properties/termList",
+      "type": "array",
+      "items": {
+        "$id": "/properties/termList/items",
+        "type": "object",
+        "properties": {
+          "termNumber": {
+            "$id": "/properties/termList/items/properties/termNumber",
+            "type": "integer",
+            "title": "The Termnumber Schema",
+            "description": "The term number (1 or 2).",
+            "minLength": 1,
+            "maxLength": 1,
+            "examples": [
+              "1"
+            ]
+          },
+          "startDate": {
+            "$id": "/properties/termList/items/properties/startDate",
+            "type": "string",
+            "title": "The Startdate Schema",
+            "description": "The start date for the term.",
+            "minLength": 10,
+            "maxLength": 10,
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+            "examples": [
+              "2018-01-01"
+            ]
+          },
+          "endDate": {
+            "$id": "/properties/termList/items/properties/endDate",
+            "type": "string",
+            "title": "The Enddate Schema",
+            "description": "The end date for the term.",
+            "minLength": 10,
+            "maxLength": 10,
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+            "examples": [
+              "2019-12-31"
+            ]
+          },
+          "maxBalance": {
+            "$id": "/properties/termList/items/properties/maxBalance",
+            "type": "string",
+            "title": "The Maxbalance Schema",
+            "description": "The highest balance of the account for this term.",
+            "minLength": 3,
+            "maxLength": 7,
+            "pattern": "^\\d{1,}\\.\\d{2}$",
+            "examples": [
+              "600.00"
+            ]
+          },
+          "bonusEstimate": {
+            "$id": "/properties/termList/items/properties/bonusEstimate",
+            "type": "string",
+            "title": "The Bonusestimate Schema",
+            "description": "The estimated bonus for this term.",
+            "minLength": 3,
+            "maxLength": 7,
+            "pattern": "^\\d{1,}\\.\\d{2}$",
+            "examples": [
+              "300.00"
+            ]
+          },
+          "bonusPaid": {
+            "$id": "/properties/termList/items/properties/bonusPaid",
+            "type": "string",
+            "title": "The Bonuspaid Schema",
+            "description": "The bonus that has been paid to the customer in this term.",
+            "minLength": 3,
+            "maxLength": 7,
+            "pattern": "^\\d{1,}\\.\\d{2}$",
+            "examples": [
+              "0.00"
+            ]
+          }
+        },
+        "required": [
+          "termNumber",
+          "startDate",
+          "endDate",
+          "maxBalance",
+          "bonusEstimate",
+          "bonusPaid"
+        ]
+      }
+    }
+  },
+  "required": [
+    "version",
+    "accountNumber",
+    "availableWithdrawal",
+    "accountBalance",
+    "accountBlockingCode",
+    "accountBlockingReasonCode",
+    "currentInvestmentMonth",
+    "clientForename",
+    "clientSurname",
+    "dateOfBirth",
+    "addressLine1",
+    "addressLine2",
+    "postcode",
+    "commsPreference",
+    "clientBlockingCode",
+    "clientBlockingReasonCode",
+    "terms"
+  ]
+}

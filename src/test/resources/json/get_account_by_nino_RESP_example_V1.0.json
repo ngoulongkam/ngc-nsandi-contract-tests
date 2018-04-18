@@ -1,0 +1,52 @@
+{
+	"version":"V1.0",
+	"correlationId":"551485a3-001d-91e8-060e-890c40505bd7",
+	"accountNumber":"1100000112057",
+	"availableWithdrawal":"575.00",
+	"accountBalance":"600.00",
+	"accountClosedFlag":" ",
+	"accountBlockingCode":"00",
+	"accountBlockingReasonCode":"00",
+	"currentInvestmentMonth": {
+		"investmentRemaining": "25.00",
+		"investmentLimit": "50.00",
+		"endDate": "2018-02-28"
+	},
+
+	"clientForename":"John",
+	"clientSurname":"Smith",
+	"dateOfBirth":"1963-11-01",
+	"addressLine1":"Line 1",
+	"addressLine2":"Line 2",
+	"postcode":"SV1 1QA",
+	"countryCode":"GB",
+	"emailAddress":"email.address@domain.com",
+	"commsPreference":"02",
+	"clientBlockingCode":"00",
+	"clientBlockingReasonCode":"00",
+	"clientCancellationStatus":" ",
+
+	"nbaAccountNumber":"11111111",
+	"nbaPayee":"Mr J Smith",
+	"nbaRollNumber":" ",
+	"nbaSortCode":"801497",
+
+	"terms": [
+		{
+			"termNumber":1,
+			"startDate":"2018-01-01",
+			"endDate":"2019-12-31",
+			"maxBalance":"0.00",
+			"bonusEstimate":"0.00",
+			"bonusPaid":"0.00"
+		},
+		{
+			"termNumber":2,
+			"startDate":"2020-01-01",
+			"endDate":"2021-12-31",
+			"maxBalance":"0.00",
+			"bonusEstimate":"0.00",
+			"bonusPaid":"0.00"
+		}
+	]
+}
