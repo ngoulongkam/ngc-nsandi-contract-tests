@@ -24,6 +24,7 @@ import play.api.Play
 import play.api.libs.json.{JsObject, JsValue}
 import play.api.test.{DefaultAwaitTimeout, FutureAwaits}
 import uk.gov.hmrc.domain.Nino
+import uk.gov.hmrc.http.logging.Authorization
 import uk.gov.hmrc.http.{CoreGet, HeaderCarrier, HttpReads, HttpResponse}
 import uk.gov.hmrc.ngchelptosavecontract.icd.AccountChecks
 import uk.gov.hmrc.ngchelptosavecontract.scalatest.WSClientSpec
@@ -91,6 +92,17 @@ class AccountSpec
         _ <- correlationIdShouldBeReturned("easy")
         _ <- correlationIdShouldBeReturned("some&nasty+chars <>")
       } yield succeed
+    }
+
+    """Ignore Authorization header - this should be supplied by help-to-save-proxy""" in {
+      val hcWithAuthorization: HeaderCarrier = hc.copy(authorization = Some(Authorization("Bearer aaaaaaaaa")))
+      http.GET[HttpResponse](accountUrlWithParams(Some(ninoWithHtsAccount)))(implicitly[HttpReads[HttpResponse]], hcWithAuthorization, implicitly[ExecutionContext]).map { response =>
+        val jsonBody = response.json
+        withClue(jsonBody) {
+          response.status shouldBe 200
+          (jsonBody \ "accountBalance").as[String] shouldBe "0.00"
+        }
+      }
     }
 
     """Include correlationId in error response when correlationId query parameter passed""" in {
