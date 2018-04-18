@@ -25,7 +25,7 @@ import scala.util.matching.Regex
 
 case class TestResult(testName: String, status: Int, responseBody: String)
 
-object Spreadsheet {
+object AirGapSpreadsheet {
   def response(testName: String): HttpResponse = {
     val testResult = testResultsMap(testName)
     HttpResponse(testResult.status, Some(Json.parse(testResult.responseBody)))

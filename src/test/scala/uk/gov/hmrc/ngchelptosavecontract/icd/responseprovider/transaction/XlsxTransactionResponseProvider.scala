@@ -17,9 +17,9 @@
 package uk.gov.hmrc.ngchelptosavecontract.icd.responseprovider.transaction
 
 import uk.gov.hmrc.http.HttpResponse
-import uk.gov.hmrc.ngchelptosavecontract.support.Spreadsheet
+import uk.gov.hmrc.ngchelptosavecontract.support.AirGapSpreadsheet
 
 object XlsxTransactionResponseProvider extends TransactionTestResponseProvider {
 
-  override def invalidNino: HttpResponse = Spreadsheet.response("NinoDoesNotExist")
+  override def invalidNino: HttpResponse = AirGapSpreadsheet.response("NinoDoesNotExist")
 }
