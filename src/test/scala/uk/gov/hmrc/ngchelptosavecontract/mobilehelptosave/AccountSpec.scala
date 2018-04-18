@@ -124,7 +124,7 @@ class AccountSpec
         jsonBody.as[JsObject].keys should contain("errors")
         (jsonBody \ "correlationId").as[String] shouldBe passedCorrelationId
 
-        shouldBeValidAccountJson(jsonBody)
+        shouldBeValidErrorJson(jsonBody)
       }
     }
 
