@@ -46,7 +46,7 @@ object XlsxAccountResponseProvider extends TestResponseProvider {
 
   override def noSystemId: HttpResponse = Spreadsheet.response("Account-NoSystemId")
 
-  override def noSystemIdNinoOrVersion: HttpResponse = Spreadsheet.response("Account-NoSystemId")
+  override def noSystemIdNinoOrVersion: HttpResponse = Spreadsheet.response("Account-Empty String")
 
   override def allFieldsPopulated: HttpResponse = Spreadsheet.response("Account -Check all fields present in Response")
 
