@@ -31,7 +31,7 @@ import uk.gov.hmrc.ngchelptosavecontract.icd.responseprovider.account.{AccountRe
   * Scenario names are taken from "CR20 scenarios INTERNAL.xlsx" in Google Drive
   */
 class AirGapAccountSpec extends FeatureSpec with GivenWhenThen with Matchers with AccountChecks {
-  private val responses: AccountResponseProvider = XlsxAccountResponseProvider // can be switched to between XlsxAccountResponseProvider and AccountJsonFileResponseProvider
+  private val responses: AccountResponseProvider = XlsxAccountResponseProvider // can be switched to between XlsxAccountResponseProvider and JsonFileAccountResponseProvider
 
   feature("iSIT air gap account JSON - CR20 scenarios") {
     scenario("Incorrect Authorization header") {

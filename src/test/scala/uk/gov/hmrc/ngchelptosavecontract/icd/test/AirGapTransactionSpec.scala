@@ -32,7 +32,7 @@ import uk.gov.hmrc.ngchelptosavecontract.icd.responseprovider.transaction.{Trans
   */
 
 class AirGapTransactionSpec extends FeatureSpec with GivenWhenThen with Matchers with TransactionChecks {
-  private val responses: TransactionResponseProvider = XlsxTransactionResponseProvider // can be switched to between XlsxTransactionResponseProvider and TransactionJsonFileResponseProvider
+  private val responses: TransactionResponseProvider = XlsxTransactionResponseProvider // can be switched to between XlsxTransactionResponseProvider and JsonFileTransactionResponseProvider
 
   feature("iSIT air gap transaction JSON - CR20 scenarios") {
     scenario("Invalid Nino / Request with no Nino / Request with  Nino with spaces") {
