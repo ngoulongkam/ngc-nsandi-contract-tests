@@ -24,6 +24,7 @@ import play.api.Play
 import play.api.libs.json.{JsObject, JsValue}
 import play.api.test.{DefaultAwaitTimeout, FutureAwaits}
 import uk.gov.hmrc.domain.Nino
+import uk.gov.hmrc.http.logging.Authorization
 import uk.gov.hmrc.http.{CoreGet, HeaderCarrier, HttpReads, HttpResponse}
 import uk.gov.hmrc.ngchelptosavecontract.icd.checks.AccountChecks
 import uk.gov.hmrc.ngchelptosavecontract.scalatest.WSClientSpec
@@ -50,7 +51,7 @@ class AccountSpec
 
   private val isoDateRegex = "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
 
-  private val ninoWithHtsAccount = Nino("EM000001A")
+  private val ninoWithHtsAccount = Nino("EM000005A")
   private val ninoWithoutHtsAccount = Nino("EM123456A")
 
   private implicit val hc: HeaderCarrier = HeaderCarrier()
@@ -58,22 +59,20 @@ class AccountSpec
   "GET /nsi-services/account" should {
     """Return 200 and account details when account is present for passed NINO""" in {
       account(ninoWithHtsAccount).map { jsonBody =>
-        (jsonBody \ "accountBalance").as[String] shouldBe "200.00"
+        withClue(jsonBody) {
+          (jsonBody \ "accountBalance").as[String] shouldBe "0.00"
 
-        (jsonBody \ "currentInvestmentMonth" \ "investmentRemaining").as[String] shouldBe "0.00"
-        (jsonBody \ "currentInvestmentMonth" \ "investmentLimit").as[String] shouldBe "50.00"
-        (jsonBody \ "currentInvestmentMonth" \ "endDate").as[String] should fullyMatch regex isoDateRegex
+          (jsonBody \ "currentInvestmentMonth" \ "investmentRemaining").as[String] shouldBe "50.00"
+          (jsonBody \ "currentInvestmentMonth" \ "investmentLimit").as[String] shouldBe "50.00"
+          (jsonBody \ "currentInvestmentMonth" \ "endDate").as[String] should fullyMatch regex isoDateRegex
 
-        ((jsonBody \ "terms")(0) \ "termNumber").as[Int] shouldBe 1
-        ((jsonBody \ "terms")(0) \ "endDate").as[String] should fullyMatch regex isoDateRegex
-        ((jsonBody \ "terms")(0) \ "bonusEstimate").as[String] shouldBe "100.00"
+          ((jsonBody \ "terms") (0) \ "termNumber").as[Int] shouldBe 1
+          ((jsonBody \ "terms") (0) \ "endDate").as[String] should fullyMatch regex isoDateRegex
+          ((jsonBody \ "terms") (0) \ "bonusEstimate").as[String] shouldBe "0.00"
 
-        ((jsonBody \ "terms")(1) \ "termNumber").as[Int] shouldBe 2
-        ((jsonBody \ "terms")(1) \ "endDate").as[String] should fullyMatch regex isoDateRegex
-        ((jsonBody \ "terms")(1) \ "bonusEstimate").as[String] shouldBe "0.00"
-
-        withClue(jsonBody \ "correlationId") {
-          jsonBody.as[JsObject].keys should not contain "correlationId"
+          ((jsonBody \ "terms") (1) \ "termNumber").as[Int] shouldBe 2
+          ((jsonBody \ "terms") (1) \ "endDate").as[String] should fullyMatch regex isoDateRegex
+          ((jsonBody \ "terms") (1) \ "bonusEstimate").as[String] shouldBe "0.00"
         }
       }
     }
@@ -85,7 +84,7 @@ class AccountSpec
           (jsonBody \ "correlationId").as[String] shouldBe passedCorrelationId
 
           // other fields should also be present
-          (jsonBody \ "accountBalance").as[String] shouldBe "200.00"
+          (jsonBody \ "accountBalance").as[String] shouldBe "0.00"
         }
       }
 
@@ -93,6 +92,17 @@ class AccountSpec
         _ <- correlationIdShouldBeReturned("easy")
         _ <- correlationIdShouldBeReturned("some&nasty+chars <>")
       } yield succeed
+    }
+
+    """Ignore Authorization header - this should be supplied by help-to-save-proxy""" in {
+      val hcWithAuthorization: HeaderCarrier = hc.copy(authorization = Some(Authorization("Bearer aaaaaaaaa")))
+      http.GET[HttpResponse](accountUrlWithParams(Some(ninoWithHtsAccount)))(implicitly[HttpReads[HttpResponse]], hcWithAuthorization, implicitly[ExecutionContext]).map { response =>
+        val jsonBody = response.json
+        withClue(jsonBody) {
+          response.status shouldBe 200
+          (jsonBody \ "accountBalance").as[String] shouldBe "0.00"
+        }
+      }
     }
 
     """Include correlationId in error response when correlationId query parameter passed""" in {
@@ -180,8 +190,11 @@ class AccountSpec
   private def accountUrlWithParams(nino: Option[Nino], version: Option[String] = Some(accountApiVersion), systemId: Option[String] = Some(defaultSystemId), correlationId: Option[String] = None): String =
     accountUrlWithParamsUnvalidatedNino(nino.map(_.value), version, systemId, correlationId)
 
-  private def accountUrlWithParamsUnvalidatedNino(nino: Option[String], version: Option[String] = Some(accountApiVersion), systemId: Option[String] = Some(defaultSystemId), correlationId: Option[String] = None): String =
-    accountUrl.toString ? ("nino" -> nino) & ("version" -> version) & ("systemId" -> systemId) & ("correlationId" -> correlationId)
+  private def accountUrlWithParamsUnvalidatedNino(nino: Option[String], version: Option[String] = Some(accountApiVersion), systemId: Option[String] = Some(defaultSystemId), correlationId: Option[String] = None): String = {
+    val url = accountUrl.toString ? ("nino" -> nino) & ("version" -> version) & ("systemId" -> systemId) & ("correlationId" -> correlationId)
+    info(s"Using account URL: $url")
+    url
+  }
 
   // Workaround to prevent ClassCastException being thrown when setting up Play.xercesSaxParserFactory when "test" is run twice in the same sbt session.
   Play
