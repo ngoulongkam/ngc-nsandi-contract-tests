@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.ngchelptosavecontract.icd
+package uk.gov.hmrc.ngchelptosavecontract.icd.checks
 
 import org.scalatest.{Assertion, Matchers}
 import play.api.libs.json.{Reads, __}
