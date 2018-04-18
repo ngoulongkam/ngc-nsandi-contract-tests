@@ -20,7 +20,7 @@ import uk.gov.hmrc.http.HttpResponse
 import uk.gov.hmrc.ngchelptosavecontract.support.JsonFileHttpResponse
 
 // We will probably delete this and use XlsxTransactionResponseProvider instead
-object TransactionJsonFileResponseProvider extends TransactionTestResponseProvider {
+object JsonFileTransactionResponseProvider extends TransactionResponseProvider {
   override def invalidNino: HttpResponse = JsonFileHttpResponse(400, "account-not-found.json")
   override def missingVersionNumber: HttpResponse = JsonFileHttpResponse(400, "no-version.json")
   override def incorrectAuthorizationHeader: HttpResponse = JsonFileHttpResponse(401, "incorrect-authorization-header.json")

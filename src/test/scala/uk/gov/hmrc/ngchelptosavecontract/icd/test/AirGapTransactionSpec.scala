@@ -18,7 +18,7 @@ package uk.gov.hmrc.ngchelptosavecontract.icd.test
 
 import org.scalatest.{FeatureSpec, GivenWhenThen, Matchers}
 import uk.gov.hmrc.ngchelptosavecontract.icd.checks.TransactionChecks
-import uk.gov.hmrc.ngchelptosavecontract.icd.responseprovider.transaction.{TransactionTestResponseProvider, XlsxTransactionResponseProvider}
+import uk.gov.hmrc.ngchelptosavecontract.icd.responseprovider.transaction.{TransactionResponseProvider, XlsxTransactionResponseProvider}
 
 /**
   * Tests that check that the air gap JSON files for NS&I's
@@ -32,7 +32,7 @@ import uk.gov.hmrc.ngchelptosavecontract.icd.responseprovider.transaction.{Trans
   */
 
 class AirGapTransactionSpec extends FeatureSpec with GivenWhenThen with Matchers with TransactionChecks {
-  private val responses: TransactionTestResponseProvider = XlsxTransactionResponseProvider // can be switched to between XlsxTransactionResponseProvider and TransactionJsonFileResponseProvider
+  private val responses: TransactionResponseProvider = XlsxTransactionResponseProvider // can be switched to between XlsxTransactionResponseProvider and TransactionJsonFileResponseProvider
 
   feature("iSIT air gap transaction JSON - CR20 scenarios") {
     scenario("Invalid Nino / Request with no Nino / Request with  Nino with spaces") {
