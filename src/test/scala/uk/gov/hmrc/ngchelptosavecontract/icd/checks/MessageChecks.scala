@@ -16,8 +16,41 @@
 
 package uk.gov.hmrc.ngchelptosavecontract.icd.checks
 
-import org.scalatest.Matchers
+import org.scalatest.{Assertion, Matchers}
+import play.api.libs.json._
+import uk.gov.hmrc.http.HttpResponse
 
 trait MessageChecks extends Matchers {
 
+  def checkNoMessageIdResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 404
+    (response.json \ "errors").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-007")
+  }
+
+  def checkMissingVersionNumberResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 400
+    (response.json \ "errors").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-002")
+  }
+
+  def checkMissingSystemIdResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 400
+    (response.json \ "errors").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-012")
+  }
+
+  def checkAllMandatoryFieldsPopulated(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+    val jsonBody = response.json
+
+    (jsonBody \ "version").as[String] should not be empty
+    (jsonBody \ "customerNino").as[String] should not be empty
+    (jsonBody \ "messageId").as[String] should not be empty
+    (jsonBody \ "title").as[String] should not be empty
+    (jsonBody \ "subject").as[String] should not be empty
+    (jsonBody \ "creationDateTime").as[String] should not be empty
+    (jsonBody \ "readIndicator").as[Boolean] should (be(true) or be(false))
+    (jsonBody \ "sendingMethod").as[String] should not be empty
+    (jsonBody \ "mimeType").as[String] should not be empty
+    (jsonBody \ "encoding").as[String] should not be empty
+    (jsonBody \ "content").as[String] should not be empty
+  }
 }

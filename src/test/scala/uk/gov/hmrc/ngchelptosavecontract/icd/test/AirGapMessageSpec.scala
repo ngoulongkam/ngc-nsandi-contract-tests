@@ -35,10 +35,33 @@ class AirGapMessageSpec extends FeatureSpec with GivenWhenThen with Matchers wit
   private val responses: MessageResponseProvider = XlsxMessageResponseProvider // can be switched to between XlsxMessageResponseProvider and JsonFileMessageResponseProvider
 
   feature("iSIT air gap message JSON - CR20 scenarios") {
-    scenario("pending") {
-      When("pending")
+    scenario("No Message ID") {
+      When("Get Message API is called without a messageId")
+      val response = responses.noMessageId
+      Then("404 - HTS-API015-007 error should be returned")
+      checkNoMessageIdResponse(response)
+    }
 
-      Then("pending")
+    scenario("Empty Version Number") {
+      When("Get Message API is called with missing version number")
+      val response = responses.missingVersionNumber
+      Then("400 - HTS-API015-002 error should be returned")
+      checkMissingVersionNumberResponse(response)
+    }
+
+    scenario("SystemID Field not sent") {
+      When("Get Message API is called with no systemId")
+      val response = responses.missingSystemId
+      Then("400 - HTS-API015-012 error should be returned")
+      checkMissingSystemIdResponse(response)
+    }
+
+//    This test will currently fail due to incorrect json format from spreadsheet (MSG05)
+    scenario("Check all mandatory fields populated in Response") {
+      When("A Message API with all mandatory fields populated")
+      val response = responses.allMandatoryFieldsPopulated
+      Then("Response should include all mandatory fields")
+      checkAllMandatoryFieldsPopulated(response)
     }
   }
 }
