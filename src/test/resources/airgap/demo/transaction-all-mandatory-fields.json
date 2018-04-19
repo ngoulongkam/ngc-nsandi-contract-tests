@@ -1,0 +1,89 @@
+{
+  "version": "V1.0",
+  "correlationId": "79b9b564-52e6-4f56-b9ab-ca50bf374072",
+  "finalBalance": "91.01",
+  "startBalance": "0.00",
+  "transactions": [
+    {
+      "sequence": "0000001",
+      "amount": "11.50",
+      "operation": "C",
+      "description": "Debit card online deposit",
+      "transactionReference": "B7K20ZY4A00A0034",
+      "transactionDate": "2017-11-20",
+      "accountingDate": "2017-11-20"
+    },
+    {
+      "sequence": "0000002",
+      "amount": "1.01",
+      "operation": "D",
+      "description": "BACS payment",
+      "transactionReference": "B7K27ZY5A00A000I",
+      "transactionDate": "2017-11-27",
+      "accountingDate": "2017-11-27"
+    },
+    {
+      "sequence": "0000003",
+      "amount": "24.50",
+      "operation": "C",
+      "description": "Debit card online deposit",
+      "transactionReference": "B7K27ZY5A00A000M",
+      "transactionDate": "2017-11-27",
+      "accountingDate": "2017-11-27"
+    },
+    {
+      "sequence": "0000004",
+      "amount": "1.11",
+      "operation": "D",
+      "description": "BACS payment",
+      "transactionReference": "B7K27ZY4A00A000G",
+      "transactionDate": "2017-11-27",
+      "accountingDate": "2017-11-27"
+    },
+    {
+      "sequence": "0000005",
+      "amount": "1.11",
+      "operation": "C",
+      "description": "Reinstatement Adjustment",
+      "transactionReference": "B7K27ZY4A00A000G",
+      "transactionDate": "2017-11-27",
+      "accountingDate": "2017-12-04"
+    },
+    {
+      "sequence": "0000006",
+      "amount": "7.02",
+      "operation": "C",
+      "description": "Debit card online deposit",
+      "transactionReference": "B7L12ZY5A00A001H",
+      "transactionDate": "2017-12-12",
+      "accountingDate": "2017-12-12"
+    },
+    {
+      "sequence": "0000007",
+      "amount": "3.00",
+      "operation": "D",
+      "description": "BACS payment",
+      "transactionReference": "B7L12ZY5A00A001K",
+      "transactionDate": "2017-12-12",
+      "accountingDate": "2017-12-12"
+    },
+    {
+      "sequence": "0000008",
+      "amount": "2.00",
+      "operation": "C",
+      "description": "Debit card online deposit",
+      "transactionReference": "B7L12ZY5A00A001N",
+      "transactionDate": "2017-12-12",
+      "accountingDate": "2017-12-12"
+    },
+    {
+      "sequence": "0000001",
+      "amount": "50.00",
+      "operation": "C",
+      "description": "Debit card online deposit",
+      "transactionReference": "B8D10ZY5A00A0059",
+      "transactionDate": "2018-04-10",
+      "accountingDate": "2018-04-10"
+    }
+  ]
+}

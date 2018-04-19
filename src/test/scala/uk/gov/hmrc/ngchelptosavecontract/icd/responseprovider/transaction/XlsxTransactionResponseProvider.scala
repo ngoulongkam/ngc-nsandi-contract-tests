@@ -19,7 +19,17 @@ package uk.gov.hmrc.ngchelptosavecontract.icd.responseprovider.transaction
 import uk.gov.hmrc.http.HttpResponse
 import uk.gov.hmrc.ngchelptosavecontract.support.AirGapSpreadsheet
 
-object XlsxTransactionResponseProvider extends TransactionTestResponseProvider {
+object XlsxTransactionResponseProvider extends TransactionResponseProvider {
 
   override def invalidNino: HttpResponse = AirGapSpreadsheet.response("NinoDoesNotExist")
+
+  override def missingVersionNumber: HttpResponse = AirGapSpreadsheet.response("Trans-NoVersion")
+
+  override def incorrectAuthorizationHeader: HttpResponse = AirGapSpreadsheet.response("Incorrect Authorisation Header")
+
+  override def missingSystemId: HttpResponse = AirGapSpreadsheet.response("NoSystemId")
+
+  override def allMandatoryFieldsPopulated: HttpResponse = AirGapSpreadsheet.response("CheckAllMandatoryFields")
+
+  override def accountWithNoTransaction: HttpResponse = AirGapSpreadsheet.response("NinowithZeroTransactions")
 }

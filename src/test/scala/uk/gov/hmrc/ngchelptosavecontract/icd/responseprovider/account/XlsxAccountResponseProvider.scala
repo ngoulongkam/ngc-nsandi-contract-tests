@@ -20,7 +20,7 @@ import org.scalatest.exceptions.TestPendingException
 import uk.gov.hmrc.http.HttpResponse
 import uk.gov.hmrc.ngchelptosavecontract.support.AirGapSpreadsheet
 
-object XlsxAccountResponseProvider extends AccountTestResponseProvider {
+object XlsxAccountResponseProvider extends AccountResponseProvider {
 
   override def incorrectAuthorizationHeader: HttpResponse = AirGapSpreadsheet.response("Account-IncorrectAuthorizationHeader")
 

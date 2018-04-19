@@ -18,7 +18,7 @@ package uk.gov.hmrc.ngchelptosavecontract.icd.test
 
 import org.scalatest.{FeatureSpec, GivenWhenThen, Matchers}
 import uk.gov.hmrc.ngchelptosavecontract.icd.checks.TransactionChecks
-import uk.gov.hmrc.ngchelptosavecontract.icd.responseprovider.transaction.{TransactionTestResponseProvider, XlsxTransactionResponseProvider}
+import uk.gov.hmrc.ngchelptosavecontract.icd.responseprovider.transaction.{TransactionResponseProvider, XlsxTransactionResponseProvider}
 
 /**
   * Tests that check that the air gap JSON files for NS&I's
@@ -32,7 +32,7 @@ import uk.gov.hmrc.ngchelptosavecontract.icd.responseprovider.transaction.{Trans
   */
 
 class AirGapTransactionSpec extends FeatureSpec with GivenWhenThen with Matchers with TransactionChecks {
-  private val responses: TransactionTestResponseProvider = XlsxTransactionResponseProvider // can be switched to between XlsxTransactionResponseProvider and TransactionJsonFileResponseProvider
+  private val responses: TransactionResponseProvider = XlsxTransactionResponseProvider // can be switched to between XlsxTransactionResponseProvider and JsonFileTransactionResponseProvider
 
   feature("iSIT air gap transaction JSON - CR20 scenarios") {
     scenario("Invalid Nino / Request with no Nino / Request with  Nino with spaces") {
@@ -40,6 +40,41 @@ class AirGapTransactionSpec extends FeatureSpec with GivenWhenThen with Matchers
       val response = responses.invalidNino
       Then("400 - HTS-API015-006 error should be returned")
       checkInvalidNinoResponse(response)
+    }
+
+    scenario("Empty Version Number") {
+      When("Get Transaction API is called with missing version number")
+      val response = responses.missingVersionNumber
+      Then("400 - HTS-API015-002 error should be returned")
+      checkMissingVersionNumberResponse(response)
+    }
+
+    scenario("Incorrect Authorization header") {
+      When("Get Transaction API is called with incorrect authorization header")
+      val response = responses.incorrectAuthorizationHeader
+      Then("401 - HTS-API015-001 error should be returned")
+      checkIncorrectAuthorizationHeader(response)
+    }
+
+    scenario("SystemID Field not sent") {
+      When("Get Transaction API is called with no systemId")
+      val response = responses.missingSystemId
+      Then("400 - HTS-API015-012 error should be returned")
+      checkMissingSystemIdResponse(response)
+    }
+
+    scenario("Check all mandatory fields populated in Response") {
+      When("A Transaction API with all mandatory fields populated")
+      val response = responses.allMandatoryFieldsPopulated
+      Then("Response should include all mandatory fields")
+      checkAllMandatoryFieldsPopulated(response)
+    }
+
+    scenario("NINO with ZERO Transactions") {
+      When("A account have with no transaction made")
+      val response = responses.accountWithNoTransaction
+      Then("Response should not include any transaction fields")
+      checkAccountWithNoTransactionResponse(response)
     }
   }
 }

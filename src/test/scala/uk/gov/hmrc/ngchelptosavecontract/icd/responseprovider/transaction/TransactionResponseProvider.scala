@@ -18,6 +18,11 @@ package uk.gov.hmrc.ngchelptosavecontract.icd.responseprovider.transaction
 
 import uk.gov.hmrc.http.HttpResponse
 
-trait TransactionTestResponseProvider {
+trait TransactionResponseProvider {
   def invalidNino: HttpResponse
+  def missingVersionNumber: HttpResponse
+  def incorrectAuthorizationHeader: HttpResponse
+  def missingSystemId: HttpResponse
+  def allMandatoryFieldsPopulated: HttpResponse
+  def accountWithNoTransaction: HttpResponse
 }
