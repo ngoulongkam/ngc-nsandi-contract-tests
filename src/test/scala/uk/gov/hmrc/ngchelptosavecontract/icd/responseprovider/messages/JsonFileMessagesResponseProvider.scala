@@ -25,4 +25,6 @@ object JsonFileMessagesResponseProvider extends MessagesResponseProvider {
   override def incorrectAuthorizationHeader: HttpResponse = JsonFileHttpResponse(401, "incorrect-authorization-header.json")
   override def missingSystemId: HttpResponse = JsonFileHttpResponse(400, "no-system-id.json")
   override def allMandatoryFieldsPopulated: HttpResponse = JsonFileHttpResponse(200, "messages-all-mandatory-fields.json")
+  override def accountWithNoMessages: HttpResponse = JsonFileHttpResponse(200, "zero-messages.json")
+  override def accountWithMultipleReadMessages: HttpResponse = JsonFileHttpResponse(200, "multiple-read-messages.json")
 }

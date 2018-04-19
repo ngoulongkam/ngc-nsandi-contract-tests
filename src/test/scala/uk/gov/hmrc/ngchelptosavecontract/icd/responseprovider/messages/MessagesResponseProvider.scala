@@ -24,4 +24,6 @@ trait MessagesResponseProvider {
   def incorrectAuthorizationHeader: HttpResponse
   def missingSystemId: HttpResponse
   def allMandatoryFieldsPopulated: HttpResponse
+  def accountWithNoMessages: HttpResponse
+  def accountWithMultipleReadMessages: HttpResponse
 }

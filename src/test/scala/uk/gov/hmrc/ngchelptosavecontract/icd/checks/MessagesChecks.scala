@@ -54,4 +54,23 @@ trait MessagesChecks extends Matchers {
     ((jsonBody \ "messages") (0) \ "readIndicator").as[Boolean] should (be(true) or be(false))
     ((jsonBody \ "messages") (0) \ "sendingMethod").as[String] should not be empty
   }
+
+  def checkAccountWithNoMessages(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+
+    response.body should not include "messageId"
+    response.body should not include "title"
+    response.body should not include "subject"
+    response.body should not include "creationDateTime"
+    response.body should not include "readIndicator"
+    response.body should not include "sendingMethod"
+  }
+
+  def checkAccountWithMultipleReadMessagesResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+    val listOfAllMessageId = (Json.parse(response.body) \\ "messageId").map(_.as[String])
+    val listOfAllReadIndicator = (Json.parse(response.body) \\ "readIndicator").map(_.as[Boolean])
+    listOfAllMessageId.size should be > 1
+    listOfAllReadIndicator.distinct shouldBe List(true)
+  }
 }

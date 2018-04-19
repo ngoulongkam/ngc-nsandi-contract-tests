@@ -1,0 +1,30 @@
+{
+  "version": "V1.0",
+  "correlationId": "551485a3-001d-91e8-060e-890c40505bd7",
+  "messages": [
+    {
+      "messageId": "20083452-b96a-91e7-00ee-890c40505bd7",
+      "title": "Headroom Exceeded",
+      "subject": "Your Help to Save account - you have exceeded your maximum monthly pay-in limit",
+      "creationDateTime": "2017-10-25T09:04:13",
+      "readIndicator": true,
+      "sendingMethod": "secure message"
+    },
+    {
+      "messageId": "92244bc2-db23-91e7-0447-890c40505bd7",
+      "title": "Headroom",
+      "subject": "You have exceeded your monthly pay-in limit",
+      "creationDateTime": "2017-12-06T11:04:59",
+      "readIndicator": true,
+      "sendingMethod": "secure message"
+    },
+    {
+      "messageId": "d3510dd4-17c9-91e8-06a3-890c40505bd7",
+      "title": "Headroom",
+      "subject": "You have exceeded your monthly pay-in limit",
+      "creationDateTime": "2018-02-21T08:39:05",
+      "readIndicator": true,
+      "sendingMethod": "secure message"
+    }
+  ]
+}

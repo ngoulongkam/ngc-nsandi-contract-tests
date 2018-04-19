@@ -69,5 +69,19 @@ class AirGapMessagesSpec extends FeatureSpec with GivenWhenThen with Matchers wi
       Then("Response should include all mandatory fields")
       checkAllMandatoryFieldsPopulated(response)
     }
+
+    scenario("Run Request for NINO with ZERO messages") {
+      When("A account with no messages")
+      val response = responses.accountWithNoMessages
+      Then("Response should not include any messages field")
+      checkAccountWithNoMessages(response)
+    }
+
+    scenario("Response with Multiple Messages Also covering All read") {
+      When("A account with multiple messages and they have all been read")
+      val response = responses.accountWithMultipleReadMessages
+      Then("Response should include multiple messages and all readIndicator should be true")
+      checkAccountWithMultipleReadMessagesResponse(response)
+    }
   }
 }

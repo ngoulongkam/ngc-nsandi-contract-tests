@@ -30,4 +30,8 @@ object XlsxMessagesResponseProvider extends MessagesResponseProvider {
   override def missingSystemId: HttpResponse = AirGapSpreadsheet.response("Messages-NoSystemId")
 
   override def allMandatoryFieldsPopulated: HttpResponse = AirGapSpreadsheet.response("Messages-CheckAllMandatoryFields")
+
+  override def accountWithNoMessages: HttpResponse = AirGapSpreadsheet.response("Messages-NINOwithZeroMessages")
+
+  override def accountWithMultipleReadMessages: HttpResponse = AirGapSpreadsheet.response("Messages-MultipleMessages")
 }
