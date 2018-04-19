@@ -55,7 +55,7 @@ trait TransactionChecks extends Matchers {
     ((jsonBody \ "transactions") (0) \ "description").as[String] should not be empty
     ((jsonBody \ "transactions") (0) \ "transactionReference").as[String] should not be empty
     ((jsonBody \ "transactions") (0) \ "transactionDate").as[String] should not be empty
-    ((jsonBody \ "transactions") (0) \ "accountDate").as[String] should not be empty
+    ((jsonBody \ "transactions") (0) \ "accountingDate").as[String] should not be empty
   }
 
   def checkAccountWithNoTransactionResponse(response: HttpResponse): Assertion = {
@@ -68,6 +68,6 @@ trait TransactionChecks extends Matchers {
     response.body should not include "description"
     response.body should not include "transactionReference"
     response.body should not include "transactionDate"
-    response.body should not include "accountDate"
+    response.body should not include "accountingDate"
   }
 }

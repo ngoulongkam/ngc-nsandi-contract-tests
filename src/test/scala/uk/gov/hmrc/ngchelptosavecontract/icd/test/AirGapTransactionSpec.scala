@@ -63,7 +63,6 @@ class AirGapTransactionSpec extends FeatureSpec with GivenWhenThen with Matchers
       checkMissingSystemIdResponse(response)
     }
 
-//    This test currently failed because the json body for transaction should return "accountDate", NOT "accountingDate"
     scenario("Check all mandatory fields populated in Response") {
       When("A Transaction API with all mandatory fields populated")
       val response = responses.allMandatoryFieldsPopulated
