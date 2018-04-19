@@ -84,5 +84,5 @@ object AirGapSpreadsheet {
   }
 
   private def loadWorkbook: Workbook =
-    withResource("/airgap/WebApiTestingReport_17042018.xlsx")(WorkbookFactory.create)
+    withResource("/airgap/WebApiTestingReport_18042018.xlsx")(WorkbookFactory.create)
 }
