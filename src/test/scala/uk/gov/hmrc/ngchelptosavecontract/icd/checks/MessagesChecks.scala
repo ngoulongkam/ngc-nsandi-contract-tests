@@ -16,8 +16,42 @@
 
 package uk.gov.hmrc.ngchelptosavecontract.icd.checks
 
-import org.scalatest.Matchers
+import org.scalatest.{Assertion, Matchers}
+import play.api.libs.json._
+import uk.gov.hmrc.http.HttpResponse
 
 trait MessagesChecks extends Matchers {
 
+  def checkInvalidNinoResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 400
+    (response.json \ "errors").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-006")
+  }
+
+  def checkMissingVersionNumberResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 400
+    (response.json \ "errors").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-002")
+  }
+
+  def checkIncorrectAuthorizationHeader(response: HttpResponse): Assertion = {
+    response.status shouldBe 401
+    (response.json \ "errors").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-001")
+  }
+
+  def checkMissingSystemIdResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 400
+    (response.json \ "errors").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-012")
+  }
+
+  def checkAllMandatoryFieldsPopulated(response: HttpResponse): Assertion = {
+    response.status shouldBe 200
+    val jsonBody = response.json
+
+    (jsonBody \ "version").as[String] should not be empty
+    ((jsonBody \ "messages") (0) \ "messageId").as[String] should not be empty
+    ((jsonBody \ "messages") (0) \ "title").as[String] should not be empty
+    ((jsonBody \ "messages") (0) \ "subject").as[String] should not be empty
+    ((jsonBody \ "messages") (0) \ "creationDateTime").as[String] should not be empty
+    ((jsonBody \ "messages") (0) \ "readIndicator").as[Boolean] should (be(true) or be(false))
+    ((jsonBody \ "messages") (0) \ "sendingMethod").as[String] should not be empty
+  }
 }

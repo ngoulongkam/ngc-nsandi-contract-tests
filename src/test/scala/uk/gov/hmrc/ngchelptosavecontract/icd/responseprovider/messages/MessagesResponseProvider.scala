@@ -16,6 +16,12 @@
 
 package uk.gov.hmrc.ngchelptosavecontract.icd.responseprovider.messages
 
-trait MessagesResponseProvider {
+import uk.gov.hmrc.http.HttpResponse
 
+trait MessagesResponseProvider {
+  def invalidNino: HttpResponse
+  def missingVersionNumber: HttpResponse
+  def incorrectAuthorizationHeader: HttpResponse
+  def missingSystemId: HttpResponse
+  def allMandatoryFieldsPopulated: HttpResponse
 }

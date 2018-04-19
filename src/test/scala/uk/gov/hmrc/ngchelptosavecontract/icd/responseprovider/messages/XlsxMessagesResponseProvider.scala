@@ -16,6 +16,18 @@
 
 package uk.gov.hmrc.ngchelptosavecontract.icd.responseprovider.messages
 
+import uk.gov.hmrc.http.HttpResponse
+import uk.gov.hmrc.ngchelptosavecontract.support.AirGapSpreadsheet
+
 object XlsxMessagesResponseProvider extends MessagesResponseProvider {
 
+  override def invalidNino: HttpResponse = AirGapSpreadsheet.response("Messages-Invalid NINO")
+
+  override def missingVersionNumber: HttpResponse = AirGapSpreadsheet.response("Messages-NoVersion")
+
+  override def incorrectAuthorizationHeader: HttpResponse = AirGapSpreadsheet.response("Messages-IncorrectAuthorisationHeader")
+
+  override def missingSystemId: HttpResponse = AirGapSpreadsheet.response("Messages-NoSystemId")
+
+  override def allMandatoryFieldsPopulated: HttpResponse = AirGapSpreadsheet.response("Messages-CheckAllMandatoryFields")
 }

@@ -16,6 +16,13 @@
 
 package uk.gov.hmrc.ngchelptosavecontract.icd.responseprovider.messages
 
-object JsonFileMessagesResponseProvider extends MessagesResponseProvider {
+import uk.gov.hmrc.http.HttpResponse
+import uk.gov.hmrc.ngchelptosavecontract.support.JsonFileHttpResponse
 
+object JsonFileMessagesResponseProvider extends MessagesResponseProvider {
+  override def invalidNino: HttpResponse = JsonFileHttpResponse(400, "account-not-found.json")
+  override def missingVersionNumber: HttpResponse = JsonFileHttpResponse(400, "no-version.json")
+  override def incorrectAuthorizationHeader: HttpResponse = JsonFileHttpResponse(401, "incorrect-authorization-header.json")
+  override def missingSystemId: HttpResponse = JsonFileHttpResponse(400, "no-system-id.json")
+  override def allMandatoryFieldsPopulated: HttpResponse = JsonFileHttpResponse(200, "messages-all-mandatory-fields.json")
 }
