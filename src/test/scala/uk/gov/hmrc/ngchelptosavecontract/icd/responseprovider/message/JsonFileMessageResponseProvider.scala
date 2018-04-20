@@ -25,4 +25,6 @@ object JsonFileMessageResponseProvider extends MessageResponseProvider {
   override def missingVersionNumber: HttpResponse = JsonFileHttpResponse(400, "no-version.json")
   override def missingSystemId: HttpResponse = JsonFileHttpResponse(400, "no-system-id.json")
   override def allMandatoryFieldsPopulated: HttpResponse = JsonFileHttpResponse(200, "message-all-mandatory-fields.json")
+  override def nullAuthorizationHeader: HttpResponse = JsonFileHttpResponse(401, "null-authorization-header.json")
+  override def invalidMessageId: HttpResponse = JsonFileHttpResponse(404, "invalid-message-id.json")
 }

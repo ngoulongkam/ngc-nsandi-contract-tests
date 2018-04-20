@@ -53,4 +53,14 @@ trait MessageChecks extends Matchers {
     (jsonBody \ "encoding").as[String] should not be empty
     (jsonBody \ "content").as[String] should not be empty
   }
+
+  def checkNullAuthorizationHeaderResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 401
+    (response.json \ "errors").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-001")
+  }
+
+  def checkInvalidMessageIdResponse(response: HttpResponse): Assertion = {
+    response.status shouldBe 404
+    (response.json \ "errors").as[Seq[String]](Reads.seq((__ \ "errorMessageId").read[String])) shouldBe List("HTS-API015-009")
+  }
 }

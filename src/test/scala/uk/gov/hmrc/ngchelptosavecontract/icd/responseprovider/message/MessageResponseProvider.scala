@@ -24,4 +24,6 @@ trait MessageResponseProvider {
   def missingVersionNumber: HttpResponse
   def missingSystemId: HttpResponse
   def allMandatoryFieldsPopulated: HttpResponse
+  def nullAuthorizationHeader: HttpResponse
+  def invalidMessageId: HttpResponse
 }

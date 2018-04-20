@@ -63,5 +63,19 @@ class AirGapMessageSpec extends FeatureSpec with GivenWhenThen with Matchers wit
       Then("Response should include all mandatory fields")
       checkAllMandatoryFieldsPopulated(response)
     }
+
+    scenario("Null Authorization header") {
+      When("Get Message API is called with null authorization header")
+      val response = responses.nullAuthorizationHeader
+      Then("401 HTS-API015-001 error should be returned")
+      checkNullAuthorizationHeaderResponse(response)
+    }
+
+    scenario("Request with Invalid Message ID") {
+      When("Get Message API is called with an invalid messageId")
+      val response = responses.invalidMessageId
+      Then("404 HTS-API015-009 error should be returned")
+      checkInvalidMessageIdResponse(response)
+    }
   }
 }
