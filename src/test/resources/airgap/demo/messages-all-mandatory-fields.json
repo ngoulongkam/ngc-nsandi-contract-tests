@@ -1,0 +1,14 @@
+{
+  "version": "V1.0",
+  "correlationId": "551485a3-001d-91e8-060e-890c40505bd7",
+  "messages": [
+    {
+      "messageId": "3e35fd72-cab0-91e7-026d-890c40505bd7",
+      "title": "Welcome Letter",
+      "subject": "Your Welcome Pack",
+      "creationDateTime": "2017-11-16T09:26:42",
+      "readIndicator": true,
+      "sendingMethod": "secure document"
+    }
+  ]
+}
