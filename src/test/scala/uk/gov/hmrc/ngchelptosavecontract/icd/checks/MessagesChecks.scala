@@ -68,9 +68,9 @@ trait MessagesChecks extends Matchers {
 
   def checkAccountWithMultipleReadMessagesResponse(response: HttpResponse): Assertion = {
     response.status shouldBe 200
+
+    (Json.parse(response.body) \\ "readIndicator").foreach(_.as[Boolean] shouldBe true)
     val listOfAllMessageId = (Json.parse(response.body) \\ "messageId").map(_.as[String])
-    val listOfAllReadIndicator = (Json.parse(response.body) \\ "readIndicator").map(_.as[Boolean])
     listOfAllMessageId.size should be > 1
-    listOfAllReadIndicator.distinct shouldBe List(true)
   }
 }

@@ -18,7 +18,7 @@ package uk.gov.hmrc.ngchelptosavecontract.icd.test
 
 import org.scalatest.{FeatureSpec, GivenWhenThen, Matchers}
 import uk.gov.hmrc.ngchelptosavecontract.icd.checks.MessagesChecks
-import uk.gov.hmrc.ngchelptosavecontract.icd.responseprovider.messages.{MessagesResponseProvider, XlsxMessagesResponseProvider}
+import uk.gov.hmrc.ngchelptosavecontract.icd.responseprovider.messages.{JsonFileMessagesResponseProvider, MessagesResponseProvider}
 
 /**
   * Tests that check that the air gap JSON files for NS&I's
@@ -32,7 +32,7 @@ import uk.gov.hmrc.ngchelptosavecontract.icd.responseprovider.messages.{Messages
   */
 
 class AirGapMessagesSpec extends FeatureSpec with GivenWhenThen with Matchers with MessagesChecks {
-  private val responses: MessagesResponseProvider = XlsxMessagesResponseProvider // can be switched to between XlsxMessagesResponseProvider and JsonFileMessagesResponseProvider
+  private val responses: MessagesResponseProvider = JsonFileMessagesResponseProvider // can be switched to between XlsxMessagesResponseProvider and JsonFileMessagesResponseProvider
 
   feature("iSIT air gap messages JSON - CR20 scenarios") {
     scenario("Invalid NINO") {
